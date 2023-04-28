@@ -6,7 +6,8 @@ USE atrouver;
 CREATE TABLE IF NOT EXISTS `Country` (
     id      INT NOT NULL AUTO_INCREMENT,
     label   VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id, label)
+    PRIMARY KEY (id),
+    UNIQUE(label)
 );
 
 CREATE TABLE IF NOT EXISTS `Locality` (
@@ -121,4 +122,23 @@ ALTER TABLE `Supply` ADD CONSTRAINT `Supply_cost` CHECK (cost > 0);
 
 /* INSERTS */
 
+ -- Pays :
+INSERT INTO Country (label) VALUES ('Belgique'), ('France'), ('Pays-Bas'), ('Allemagne'), ('Luxembourg'), ('Suisse'), ('Royaume-Uni'), ('Irlande'), ('Espagne'), ('Portugal');
 
+-- Localités :
+
+    -- Belgique :
+    INSERT INTO Locality (label, zip_code, country_id) VALUES ('Bruxelles', '1000', 1), ('Liège', '4000', 1), ('Namur', '5000', 1), ('Anvers', '2000', 1), ('Gand', '9000', 1);
+
+    -- France :
+    INSERT INTO Locality (label, zip_code, country_id) VALUES ('Paris', '75000', 2), ('Lyon', '69000', 2), ('Marseille', '13000', 2), ('Lille', '59000', 2), ('Bordeaux', '33000', 2);
+
+    -- Allemagne :
+    INSERT INTO Locality (label, zip_code, country_id) VALUES ('Berlin', '10178', 4), ('Munich', '80331', 4), ('Francfort', '60306', 4), ('Hambourg', '20099', 4), ('Cologne', '50667', 4);
+
+    -- Luxembourg :
+    INSERT INTO Locality (label, zip_code, country_id) VALUES ('Luxembourg', '1009', 5), ('Esch-sur-Alzette', '4002', 5), ('Dudelange', '3450', 5), ('Pétange', '4730', 5), ('Ettelbruck', '9055', 5);
+
+-- Customers :
+
+INSERT INTO Customer (first_name, last_name, email, phone_number, address, zip_code, locality_id, billing_address, billing_zip_code, billing_locality_id, type) VALUES ('Jean', 'Dupont', 'jean.dupont@gmail.com', '02 123 45 67', 'Rue du Midi 10', '1000', 1, 'Rue Royale 20', '1000', 1, 0);
