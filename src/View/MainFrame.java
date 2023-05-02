@@ -1,15 +1,17 @@
 package View;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
-    private JMenu searchMenu, applicationMenu, aboutMenu, statisticsMenu;
-    private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedItem, searchBoughtHistoryItem;
+    private JMenu searchMenu, productMenu, applicationMenu, aboutMenu, statisticsMenu;
+    private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedItem, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productSearchItem;
+
     public MainFrame() {
         super("My App", null);
-        setLayout(null);
-        setBounds(0,0,500,500);
+        setLayout(new BorderLayout());
+        setBounds(0, 0, 500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // create a menu bar
@@ -18,6 +20,7 @@ public class MainFrame extends JFrame {
         applicationMenu = new JMenu("Application");
         aboutMenu = new JMenu("A propos");
         statisticsMenu = new JMenu("Statistiques");
+        productMenu = new JMenu("Produits");
 
         // create menu items
         exitProgramItem = new JMenuItem("Quitter");
@@ -27,6 +30,11 @@ public class MainFrame extends JFrame {
         searchWhoSuppliedItem = new JMenuItem("Fournisseur du produit");
         searchBoughtHistoryItem = new JMenuItem("Historique d'achat");
 
+        productAddItem = new JMenuItem("Ajouter");
+        productEditItem = new JMenuItem("Modifier");
+        productDeleteItem = new JMenuItem("Supprimer");
+        productSearchItem = new JMenuItem("Rechercher");
+
         searchMenu.add(searchWhoBoughtItem);
         searchMenu.add(searchWhoSuppliedItem);
         searchMenu.add(searchBoughtHistoryItem);
@@ -34,10 +42,19 @@ public class MainFrame extends JFrame {
         aboutMenu.add(aboutItem);
         statisticsMenu.add(statisticsItem);
 
+        productMenu.add(productAddItem);
+        productMenu.add(productEditItem);
+        productMenu.add(productDeleteItem);
+        productMenu.add(productSearchItem);
+
+
         mainMenuBar.add(applicationMenu);
+        mainMenuBar.add(productMenu);
         mainMenuBar.add(searchMenu);
         mainMenuBar.add(statisticsMenu);
         mainMenuBar.add(aboutMenu);
+
+        add(new MainPanel());
 
         setJMenuBar(mainMenuBar);
         setVisible(true);
