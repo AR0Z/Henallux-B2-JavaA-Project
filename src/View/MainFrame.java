@@ -54,6 +54,9 @@ public class MainFrame extends JFrame {
         mainMenuBar.add(statisticsMenu);
         mainMenuBar.add(aboutMenu);
 
+        exitProgramItem.addActionListener(e -> System.exit(0));
+        aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Application de gestion de produits", "A propos", JOptionPane.INFORMATION_MESSAGE));
+
         add(new MainPanel());
 
         setJMenuBar(mainMenuBar);
