@@ -85,7 +85,12 @@ public class MainFrame extends JFrame {
             repaint();
         });
 
-
+        productEditItem.addActionListener(e -> {
+            clearMainFrame();
+            add(editProductPanel);
+            revalidate();
+            repaint();
+        });
 
         add(new MainPanel());
 

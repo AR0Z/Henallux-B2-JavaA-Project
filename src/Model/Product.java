@@ -1,6 +1,6 @@
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Product {
     private int id;
@@ -15,7 +15,6 @@ public class Product {
     private String description;
     private String imgLink;
     private Category category;
-
     private int category_FK;
 
     public Product(int id, String name, String color, double price, double cost, double size, int stock, Date additionDate, Boolean isShippable, String description, String imgLink, Category category, int category_FK) {
@@ -35,7 +34,7 @@ public class Product {
     }
 
     public Product() {
-        this(0, "", "", 0, 0, 0, 0, null, false, "", "", null, 0);
+        this(-1, "", "", 0, 0, 0, 0, null, false, "", "", null, -1);
     }
 
     public void setId(int id) {
@@ -105,4 +104,54 @@ public class Product {
                 ", category_FK=" + category_FK +
                 '}';
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public Date getAdditionDate() {
+        return additionDate;
+    }
+
+    public Boolean getShippable() {
+        return isShippable;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImgLink() {
+        return imgLink;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public int getCategory_FK() {
+        return category_FK;
+    }
+
+    public int getId() { return this.id; }
 }

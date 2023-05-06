@@ -27,9 +27,9 @@ public class ProductManager {
         }
     }
 
-    public void editProduct() {
+    public void editProduct(Product product) {
         try {
-            dao.editProduct();
+            dao.editProduct(product);
         } catch (editProductException e) {
             throw new RuntimeException(e);
         }

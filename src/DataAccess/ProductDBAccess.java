@@ -4,6 +4,7 @@ import Exceptions.*;
 import Model.*;
 import java.util.ArrayList;
 import java.sql.*;
+import java.time.LocalDate;
 
 
 public class ProductDBAccess implements DataAccess {
@@ -11,12 +12,51 @@ public class ProductDBAccess implements DataAccess {
 
     @Override
     public void addProduct(Product product) throws addProductException {
-
+        try {
+            String sqlInstruction = "insert into product (label, color, price, cost, size, stock, addition_date, is_shippable, information, image_link, category_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            Connection connection = SingletonConnexion.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setString(2, product.getColor());
+            preparedStatement.setDouble(3, product.getPrice());
+            preparedStatement.setDouble(4, product.getCost());
+            preparedStatement.setDouble(5, product.getSize());
+            preparedStatement.setInt(6, product.getStock());
+            preparedStatement.setDate(7, new java.sql.Date(Date.valueOf(LocalDate.now()).getTime()));
+            preparedStatement.setBoolean(8, product.getShippable());
+            preparedStatement.setString(9, product.getDescription());
+            preparedStatement.setString(10, product.getImgLink());
+            preparedStatement.setInt(11, product.getCategory_FK());
+            preparedStatement.executeUpdate();
+        } catch (SQLException | DBExceptions e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public void editProduct() throws editProductException {
-
+    public void editProduct(Product product) throws editProductException {
+        try {
+            Connection connection = SingletonConnexion.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement("update product set label = ?, color = ?, price = ?, cost = ?, size = ?, stock = ?, addition_date = ?, is_shippable = ?, information = ?, image_link = ?, category_id = ? where id = ?;");
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setString(2, product.getColor());
+            preparedStatement.setDouble(3, product.getPrice());
+            preparedStatement.setDouble(4, product.getCost());
+            preparedStatement.setDouble(5, product.getSize());
+            preparedStatement.setInt(6, product.getStock());
+            preparedStatement.setDate(7, (java.sql.Date) product.getAdditionDate());
+            preparedStatement.setBoolean(8, product.getShippable());
+            preparedStatement.setString(9, product.getDescription());
+            preparedStatement.setString(10, product.getImgLink());
+            preparedStatement.setInt(11, product.getCategory_FK());
+            preparedStatement.setInt(12, product.getId());
+            preparedStatement.executeUpdate();
+            System.out.println(product.getName() + product.getColor() + product.getPrice() + product.getCost() + product.getSize() + product.getStock() + product.getAdditionDate() + product.getShippable() + product.getDescription() + product.getImgLink() + product.getCategory_FK() + product.getId());
+            System.out.println(product);
+        } catch (SQLException | DBExceptions e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -31,7 +71,7 @@ public class ProductDBAccess implements DataAccess {
     public ArrayList<Category> getAllCategories() throws getAllCategoriesException {
         ArrayList<Category> categories = new ArrayList<>();
         try {
-            String sqlInstruction = "select * from category";
+            String sqlInstruction = "select * from category;";
             Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
@@ -42,10 +82,7 @@ public class ProductDBAccess implements DataAccess {
                 category.setLabel(data.getString("label"));
                 categories.add(category);
             }
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (DBExceptions e) {
+        } catch (SQLException | DBExceptions e) {
             throw new RuntimeException(e);
         }
         return categories;
@@ -55,7 +92,7 @@ public class ProductDBAccess implements DataAccess {
     public ArrayList<Product> getAllProducts() throws getAllProductsException {
         ArrayList<Product> products = new ArrayList<>();
         try {
-            String sqlInstruction = "select * from product";
+            String sqlInstruction = "select * from product;";
             Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
@@ -75,7 +112,6 @@ public class ProductDBAccess implements DataAccess {
                 product.setImgLink(data.getString("image_link"));
                 products.add(product);
             }
-            connection.close();
         } catch (DBExceptions e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {

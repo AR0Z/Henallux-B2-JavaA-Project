@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public interface DataAccess {
     void addProduct(Product product) throws addProductException;
 
-    void editProduct() throws editProductException;
+    void editProduct(Product product) throws editProductException;
 
     void deleteProduct() throws deleteProductException;
 

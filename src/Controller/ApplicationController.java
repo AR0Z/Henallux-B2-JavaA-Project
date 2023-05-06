@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class ApplicationController {
     private ProductManager productManager;
-
     public ApplicationController(){
          productManager = new ProductManager();
     }
@@ -19,8 +18,8 @@ public class ApplicationController {
         productManager.addProduct(product);
     }
     
-    public void editProduct() {
-        productManager.editProduct();
+    public void editProduct(Product product) {
+        productManager.editProduct(product);
     }
     
     public void deleteProduct() {

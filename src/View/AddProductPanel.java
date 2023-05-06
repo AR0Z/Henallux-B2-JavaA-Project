@@ -1,13 +1,11 @@
 package View;
 
 import Controller.ApplicationController;
-import Model.Category;
-import Model.Product;
+import Model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
-
+import java.util.ArrayList;
 
 public class AddProductPanel extends JPanel {
     private JLabel nameLabel, colorLabel, priceLabel, costLabel, sizeLabel, stockLabel, shippableLabel, descriptionLabel, imgLinkLabel, categoryLabel;
@@ -19,8 +17,9 @@ public class AddProductPanel extends JPanel {
     private JButton submitButton, clearButton;
     private ArrayList<Category> categories;
     private JScrollPane scrollPane;
+
     public AddProductPanel() {
-        setLayout(new GridLayout(12, 2, 5, 5)); // 11 rows, 2 columns, 5px horizontal and vertical gaps
+        setLayout(new GridLayout(12, 2, 5, 5));
         add(new JLabel("Menu d'ajout de produit", SwingConstants.CENTER));
         add(new JLabel("Les champs marqués d'une * sont obligatoires", SwingConstants.CENTER));
 
@@ -35,6 +34,15 @@ public class AddProductPanel extends JPanel {
         colorComboBox = new JComboBox<>(new String[]{"Rouge", "Bleu", "Vert", "Jaune", "Noir", "Blanc", "Rose", "Gris", "Orange", "Marron"});
         add(colorLabel);
         add(colorComboBox);
+
+        categories = applicationController.getAllCategories();
+        categoryLabel = new JLabel("*Category:", SwingConstants.RIGHT);
+        categoryComboBox = new JComboBox<>();
+        for (Category category : categories) {
+            categoryComboBox.addItem(category.getLabel());
+        }
+        add(categoryLabel);
+        add(categoryComboBox);
 
         priceLabel = new JLabel("*Price:", SwingConstants.RIGHT);
         priceField = new JTextField();
@@ -74,12 +82,6 @@ public class AddProductPanel extends JPanel {
         add(imgLinkLabel);
         add(imgLinkField);
 
-        categories = applicationController.getAllCategories();
-        categoryLabel = new JLabel("*Category:", SwingConstants.RIGHT);
-        categoryComboBox = new JComboBox<>();
-        for (Category category : categories) {
-            categoryComboBox.addItem(category.getLabel());
-        }
 
         submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> submit());
@@ -93,44 +95,60 @@ public class AddProductPanel extends JPanel {
 
     private void submit() {
         Product product = null;
-        if (checkFields()) {
-            try {
-                String name = nameField.getText();
-                String color = colorComboBox.getSelectedItem().toString();
-                double price = Double.parseDouble(priceField.getText());
-                double cost = Double.parseDouble(costField.getText());
-                double size = Double.parseDouble(sizeField.getText());
-                int stock = Integer.parseInt(stockField.getText());
-                Boolean shippable = shippableCheckBox.isSelected();
-                String description = descriptionTextArea.getText();
-                String imgLink = imgLinkField.getText();
-                Category category = categories.get(categoryComboBox.getSelectedIndex());
+        try {
+            if (!checkFields())
+                throw new Exception("Veuillez remplir tous les champs obligatoire");
+            String name = nameField.getText();
+            if (!isNameValid(name))
+                throw new Exception("Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)");
+            String color = colorComboBox.getSelectedItem().toString();
+            double price = Double.parseDouble(priceField.getText());
+            if (!isDoubleValid(price))
+                throw new Exception("Le prix doit être supérieur à 0");
+            double cost = Double.parseDouble(costField.getText());
+            if (!isDoubleValid(cost))
+                throw new Exception("Le coût doit être supérieur à 0");
+            double size = Double.parseDouble(sizeField.getText());
+            if (!isDoubleValid(size))
+                throw new Exception("La taille doit être supérieure à 0");
+            int stock = Integer.parseInt(stockField.getText());
+            if (!isIntValid(stock))
+                throw new Exception("Le stock doit être supérieur à 0");
 
-
-                product = new Product(-1, name, color, price, cost, size, stock, (java.sql.Date) new Date(),shippable, description, imgLink, category, -1);
-                applicationController.addProduct(product);
-                JOptionPane.showMessageDialog(null, "Produit ajouté avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                clear();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
+            Boolean shippable = shippableCheckBox.isSelected();
+            String description = descriptionTextArea.getText();
+            String imgLink = imgLinkField.getText();
+            Category category = categories.get(categoryComboBox.getSelectedIndex());
+            product = new Product(-1, name, color, price, cost, size, stock, null, shippable, description, imgLink, category, category.getId());
+            JOptionPane.showMessageDialog(null, "Produit ajouté avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
+            clear();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
-        else
-            JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs obligatoire", "Erreur", JOptionPane.ERROR_MESSAGE);
-        if (product != null)
-            System.out.println(product);
-
+        applicationController.addProduct(product);
     }
+
+    private Boolean isNameValid(String name) {
+        return name.matches("^[a-zA-Z0-9]{3,50}$");
+    }
+
+    private Boolean isDoubleValid(double number) {
+        return number > 0;
+    }
+
+    private Boolean isIntValid(int number) {
+        return number > 0;
+    }
+
 
     private Boolean checkFields() {
         Boolean check = true;
         for (Component component : getComponents()) {
             if (component instanceof JTextField) {
-                component.setBackground(new Color(237,123,133, 255));
+                component.setBackground(new Color(237, 123, 133, 255));
                 if (((JTextField) component).getText().isBlank() && component != imgLinkField && component != descriptionTextArea) {
                     check = false;
-                }
-                else
+                } else
                     component.setBackground(Color.WHITE);
             }
         }
