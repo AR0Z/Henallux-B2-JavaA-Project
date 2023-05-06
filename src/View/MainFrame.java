@@ -2,17 +2,20 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import Controller.*;
 
 public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
     private JMenu searchMenu, productMenu, applicationMenu, aboutMenu, statisticsMenu;
     private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedItem, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productSearchItem;
-
+    private ApplicationController applicationController;
     public MainFrame() {
         super("My App", null);
         setLayout(new BorderLayout());
         setBounds(0, 0, 500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        applicationController = new ApplicationController();
 
         // create a menu bar
         mainMenuBar = new JMenuBar();
@@ -56,7 +59,14 @@ public class MainFrame extends JFrame {
 
         exitProgramItem.addActionListener(e -> System.exit(0));
         aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Application de gestion de produits", "A propos", JOptionPane.INFORMATION_MESSAGE));
-
+        productAddItem.addActionListener(e -> applicationController.addProduct());
+        productEditItem.addActionListener(e -> applicationController.editProduct());
+        productDeleteItem.addActionListener(e -> applicationController.deleteProduct());
+        productSearchItem.addActionListener(e -> applicationController.searchProduct());
+        searchWhoBoughtItem.addActionListener(e -> applicationController.searchWhoBought());
+        searchWhoSuppliedItem.addActionListener(e -> applicationController.searchWhoSupplied());
+        searchBoughtHistoryItem.addActionListener(e -> applicationController.searchBoughtHistory());
+        statisticsItem.addActionListener(e -> applicationController.showStatistics());
         add(new MainPanel());
 
         setJMenuBar(mainMenuBar);

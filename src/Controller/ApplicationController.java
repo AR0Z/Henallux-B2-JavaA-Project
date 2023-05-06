@@ -1,6 +1,10 @@
 package Controller;
 
 import Business.*;
+import Exceptions.getAllProductsException;
+import Model.Product;
+
+import java.util.ArrayList;
 
 public class ApplicationController {
     private ProductManager productManager;
@@ -9,35 +13,43 @@ public class ApplicationController {
          productManager = new ProductManager();
     }
     
-    public  void addProduct() {
+    public void addProduct() {
         productManager.addProduct();
     }
     
-    public  void editProduct() {
+    public void editProduct() {
         productManager.editProduct();
     }
     
-    public  void deleteProduct() {
+    public void deleteProduct() {
         productManager.deleteProduct();
     }
     
-    public  void searchProduct() {
+    public void searchProduct() {
         productManager.searchProduct();
     }
     
-    public  void searchWhoBought() {
+    public void searchWhoBought() {
         productManager.searchWhoBought();
     }
     
-    public  void searchWhoSupplied() {
+    public void searchWhoSupplied() {
         productManager.searchWhoSupplied();
     }
     
-    public  void searchBoughtHistory() {
+    public void searchBoughtHistory() {
         productManager.searchBoughtHistory();
     }
     
-    public  void showStatistics() {
+    public void showStatistics() {
         productManager.showStatistics();
+    }
+
+    public ArrayList<Product> getAllProducts() {
+        try {
+            return productManager.getAllProducts();
+        } catch (getAllProductsException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

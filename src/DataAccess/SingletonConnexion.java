@@ -1,18 +1,17 @@
 package DataAccess;
 
-import Exceptions.DBExceptions;
-
+import Exceptions.*;
 import java.sql.*;
 
 public class SingletonConnexion {
     private static Connection instance;
 
     private SingletonConnexion() throws SQLException {
-        instance = DriverManager.getConnection(
-                "jdbc:mysql://127.0.0.1:3306/java_project",
-                "root",
-                "root"
-        );
+        try {
+            instance = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/atrouver", "root", "root");
+        } catch (SQLException exception) {
+            throw new SQLException(exception.getMessage());
+        }
     }
 
     public static Connection getInstance() throws DBExceptions {

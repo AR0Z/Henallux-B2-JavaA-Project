@@ -148,3 +148,24 @@ INSERT INTO Customer (first_name, last_name, email, phone, street_and_number, lo
 
 INSERT INTO `Order` (order_date, is_paid, customer_id, reduction, type_order, date_of_payment, shipping_adress) VALUES ('2020-01-01', 1, 1, 0, 0, '2020-01-01', 'Rue du Midi 10');
 INSERT INTO `Order` (order_date, is_paid, customer_id, reduction, type_order, date_of_payment, shipping_adress) VALUES ('2020-01-01', 1, 2, 0, 0, '2020-01-01', 'Rue du Midi 16');
+
+-- Lines :
+
+
+-- Products :
+
+INSERT INTO Product (label, color, price, cost, size, stock, addition_date, is_shippable, category_id, information, image_link) VALUES ('Chaise', 'Blanc', 50, 20, 50, 10, '2020-01-01', 1, 1, 'Chaise en bois', 'https://www.ikea.com/be/fr/images/products/ingolf-chaise-blanc__0717143_PE731522_S5.JPG?f=s');
+INSERT INTO Product (label, color, price, cost, size, stock, addition_date, is_shippable, category_id, information, image_link) VALUES ('Table', 'Blanc', 100, 50, 100, 10, '2020-01-01', 1, 1, 'Table en bois', 'https://www.ikea.com/be/fr/images/products/ingatorp-table-extensible-blanc__0717144_PE731523_S5.JPG?f=s');
+INSERT INTO Product (label, color, price, cost, size, stock, addition_date, is_shippable, category_id, information, image_link) VALUES ('Armoire', 'Blanc', 200, 100, 200, 10, '2020-01-01', 1, 1, 'Armoire en bois', 'https://www.ikea.com/be/fr/images/products/brimnes-armoire-avec-3-portes-blanc__0717145_PE731524_S5.JPG?f=s');
+INSERT INTO Product (label, color, price, cost, size, stock, addition_date, is_shippable, category_id, information, image_link) VALUES ('Canapé', 'Blanc', 300, 150, 300, 10, '2020-01-01', 1, 1, 'Canapé en bois', 'https://www.ikea.com/be/fr/images/products/ektorp-canape-3-places-nordvalla-blanc__0717146_PE731525_S5.JPG?f=s');
+INSERT INTO Product (label, color, price, cost, size, stock, addition_date, is_shippable, category_id, information, image_link) VALUES ('Bureau', 'Blanc', 400, 200, 400, 10, '2020-01-01', 1, 1, 'Bureau en bois', 'https://www.ikea.com/be/fr/images/products/malm-bureau-blanc__0717147_PE731526_S5.JPG?f=s');
+
+-- Categories :
+
+INSERT INTO Category (label) VALUES ('Meubles'), ('Décoration'), ('Luminaires'), ('Tapis'), ('Rangements'), ('Cuisine'), ('Salle de bain'), ('Chambre'), ('Jardin'), ('Bureau');
+
+-- Suppliers :
+
+INSERT INTO Supplier (label, phone, email, street_and_number, locality_id) VALUES ('IKEA', '02/719.19.22', 'ikea.supply@ikea.com', 'Rue du centre 5', 2);
+INSERT INTO Supplier (label, phone, email, street_and_number, locality_id) VALUES ('Leen Bakker', '02/719.19.22', 'leenbekker.supply@gmail.com', 'Rue du centre 2', 4);
+

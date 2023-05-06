@@ -2,11 +2,11 @@ package View;
 
 import javax.swing.*;
 
-public class SearchFormPanel extends JPanel {
+public class SearchProductPanel extends JPanel {
 
     private JComboBox<String> searchByComboBox;
 
-    public SearchFormPanel() {
+    public SearchProductPanel() {
         add(new JLabel("Rechercher un produit"));
         searchByComboBox = new JComboBox<>(new String[]{"Par nom", "Par référence"});
         add(searchByComboBox);

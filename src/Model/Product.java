@@ -16,7 +16,9 @@ public class Product {
     private String imgLink;
     private Category category;
 
-    public Product(int id, String name, String color, double price, double cost, double size, int stock, Date additionDate, String description, boolean isShippable, String imgLink) {
+    private int category_FK;
+
+    public Product(int id, String name, String color, double price, double cost, double size, int stock, Date additionDate, boolean isShippable, String description, String imgLink, Category category, int category_FK) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -28,20 +30,59 @@ public class Product {
         this.isShippable = isShippable;
         this.description = description;
         this.imgLink = imgLink;
+        this.category = category;
+        this.category_FK = category_FK;
     }
 
-    public Product(int id, String name, String color, double price, double cost, double size, int stock, Date additionDate, String description, boolean isShippable) { // no image link
-        this(id, name, color, price, cost, size, stock, additionDate, description, isShippable, null);
+    public Product() {
+        this(0, "", "", 0, 0, 0, 0, null, false, "", "", null, 0);
     }
 
-    public Product(int id, String name, String color, double price, double cost, double size, int stock, Date additionDate, boolean isShippable, String imgLink) { // no desc
-        this(id, name, color, price, cost, size, stock, additionDate, null, isShippable, imgLink);
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Product(int id, String name, String color, double price, double cost, double size, int stock, Date additionDate, boolean isShippable) { // no image link nor desc
-        this(id, name, color, price, cost, size, stock, additionDate, null, isShippable, null);
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public void setColor(String color) {
+        this.color = color;
+    }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public void setSize(double size) {
+        this.size = size;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public void setAdditionDate(Date additionDate) {
+        this.additionDate = additionDate;
+    }
+
+    public void setShippable(boolean shippable) {
+        isShippable = shippable;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImgLink(String imgLink) {
+        this.imgLink = imgLink;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

@@ -1,6 +1,9 @@
 package DataAccess;
 
 import Exceptions.*;
+import Model.*;
+
+import java.util.ArrayList;
 
 
 public interface DataAccess {
@@ -12,11 +15,13 @@ public interface DataAccess {
 
     void searchProduct() throws searchProductException;
 
-    void searchWhoBought();
+    ArrayList<Product> getAllProducts() throws getAllProductsException;
 
-    void searchWhoSupplied();
+    void searchWhoBought() throws searchWhoBoughtException;
 
-    void searchBoughtHistory();
+    void searchWhoSupplied() throws searchWhoSuppliedException;
 
-    void showStatistics();
+    void searchBoughtHistory() throws searchBoughtHistoryException;
+
+    void showStatistics() throws showStatisticsException;
 }
