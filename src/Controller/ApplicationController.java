@@ -15,8 +15,8 @@ public class ApplicationController {
          productManager = new ProductManager();
     }
     
-    public void addProduct() {
-        productManager.addProduct();
+    public void addProduct(Product product) {
+        productManager.addProduct(product);
     }
     
     public void editProduct() {

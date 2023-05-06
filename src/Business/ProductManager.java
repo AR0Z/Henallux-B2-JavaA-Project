@@ -19,9 +19,9 @@ public class ProductManager {
         this.dao = dao;
     }
 
-    public void addProduct() {
+    public void addProduct(Product product) {
         try {
-            dao.addProduct();
+            dao.addProduct(product);
         } catch (addProductException e) {
             throw new RuntimeException(e);
         }

@@ -15,7 +15,23 @@ public class Category {
         this(id,label,null);
     }
 
+    public Category() {
+        this(0,null,null);
+    }
+
     public String getLabel() {
         return label;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

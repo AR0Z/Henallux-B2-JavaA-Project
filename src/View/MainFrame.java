@@ -7,7 +7,7 @@ import Controller.*;
 public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
     private JMenu searchMenu, productMenu, applicationMenu, aboutMenu, statisticsMenu;
-    private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedItem, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productSearchItem;
+    private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedItem, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productSearchItem, mainMenuItem;
     private ApplicationController applicationController;
     private AddProductPanel addProductPanel;
     private EditProductPanel editProductPanel;
@@ -17,7 +17,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super("My App", null);
         setLayout(new BorderLayout());
-        setBounds(0, 0, 500, 500);
+        setBounds(0, 0, 600, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         applicationController = new ApplicationController();
@@ -37,6 +37,7 @@ public class MainFrame extends JFrame {
 
         // create menu items
         exitProgramItem = new JMenuItem("Quitter");
+        mainMenuItem = new JMenuItem("Accueil");
         aboutItem = new JMenuItem("Details");
         statisticsItem = new JMenuItem("Afficher");
         searchWhoBoughtItem = new JMenuItem("Acheteur du produit");
@@ -52,6 +53,7 @@ public class MainFrame extends JFrame {
         searchMenu.add(searchWhoSuppliedItem);
         searchMenu.add(searchBoughtHistoryItem);
         applicationMenu.add(exitProgramItem);
+        applicationMenu.add(mainMenuItem);
         aboutMenu.add(aboutItem);
         statisticsMenu.add(statisticsItem);
 
@@ -70,15 +72,33 @@ public class MainFrame extends JFrame {
         exitProgramItem.addActionListener(e -> System.exit(0));
         aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Application de gestion de produits", "A propos", JOptionPane.INFORMATION_MESSAGE));
         productAddItem.addActionListener(e -> {
-            removeAll();
+            clearMainFrame();
             add(addProductPanel);
             revalidate();
             repaint();
         });
+
+        mainMenuItem.addActionListener(e -> {
+            clearMainFrame();
+            add(new MainPanel());
+            revalidate();
+            repaint();
+        });
+
+
+
         add(new MainPanel());
 
         setJMenuBar(mainMenuBar);
         setVisible(true);
     }
 
+    public void clearMainFrame() {
+        for (Component component : this.getContentPane().getComponents()) {
+            if (component instanceof MainPanel)
+                remove(component);
+        }
+        revalidate();
+        repaint();
+    }
 }

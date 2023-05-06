@@ -11,14 +11,14 @@ public class Product {
     private double size;
     private int stock;
     private Date additionDate;
-    private boolean isShippable;
+    private Boolean isShippable;
     private String description;
     private String imgLink;
     private Category category;
 
     private int category_FK;
 
-    public Product(int id, String name, String color, double price, double cost, double size, int stock, Date additionDate, boolean isShippable, String description, String imgLink, Category category, int category_FK) {
+    public Product(int id, String name, String color, double price, double cost, double size, int stock, Date additionDate, Boolean isShippable, String description, String imgLink, Category category, int category_FK) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -70,7 +70,7 @@ public class Product {
         this.additionDate = additionDate;
     }
 
-    public void setShippable(boolean shippable) {
+    public void setShippable(Boolean shippable) {
         isShippable = shippable;
     }
 
@@ -84,5 +84,25 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    // toString
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + "'" +
+                ", color='" + color + "'" +
+                ", price=" + price +
+                ", cost=" + cost +
+                ", size=" + size +
+                ", stock=" + stock +
+                ", additionDate=" + additionDate +
+                ", isShippable=" + isShippable +
+                ", description='" + description + "'" +
+                ", imgLink='" + imgLink + "'" +
+                ", category=" + category +
+                ", category_FK=" + category_FK +
+                '}';
     }
 }

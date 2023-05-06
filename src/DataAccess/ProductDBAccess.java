@@ -10,7 +10,7 @@ public class ProductDBAccess implements DataAccess {
 
 
     @Override
-    public void addProduct() throws addProductException {
+    public void addProduct(Product product) throws addProductException {
 
     }
 
@@ -30,7 +30,24 @@ public class ProductDBAccess implements DataAccess {
     }
     public ArrayList<Category> getAllCategories() throws getAllCategoriesException {
         ArrayList<Category> categories = new ArrayList<>();
-
+        try {
+            String sqlInstruction = "select * from category";
+            Connection connection = SingletonConnexion.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            Category category;
+            while (data.next()) {
+                category = new Category();
+                category.setId(data.getInt("id"));
+                category.setLabel(data.getString("label"));
+                categories.add(category);
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (DBExceptions e) {
+            throw new RuntimeException(e);
+        }
         return categories;
     }
 
