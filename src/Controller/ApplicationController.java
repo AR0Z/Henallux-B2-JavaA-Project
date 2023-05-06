@@ -1,9 +1,8 @@
 package Controller;
 
-import Business.ProductManager;
+import Business.*;
 
 public class ApplicationController {
-
     private ProductManager productManager;
 
     public ApplicationController(){
@@ -41,8 +40,4 @@ public class ApplicationController {
     public  void showStatistics() {
         productManager.showStatistics();
     }
-    
-    
-
-
 }

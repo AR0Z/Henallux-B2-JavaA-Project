@@ -1,9 +1,6 @@
 package DataAccess;
 
-import Exceptions.addProductException;
-import Exceptions.deleteProductException;
-import Exceptions.editProductException;
-import Exceptions.searchProductException;
+import Exceptions.*;
 
 public class ProductDBAccess implements DataAccess {
 

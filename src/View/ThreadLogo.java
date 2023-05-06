@@ -2,12 +2,9 @@ package View;
 
 public class ThreadLogo extends Thread {
     private MainPanel mainPanel;
-    private int i = 0;
-
     public ThreadLogo(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
-
     public void run() {
         int i = 1;
         while (true) {

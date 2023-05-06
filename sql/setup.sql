@@ -141,4 +141,10 @@ INSERT INTO Country (label) VALUES ('Belgique'), ('France'), ('Pays-Bas'), ('All
 
 -- Customers :
 
-INSERT INTO Customer (first_name, last_name, email, phone_number, address, zip_code, locality_id, billing_address, billing_zip_code, billing_locality_id, type) VALUES ('Jean', 'Dupont', 'jean.dupont@gmail.com', '02 123 45 67', 'Rue du Midi 10', '1000', 1, 'Rue Royale 20', '1000', 1, 0);
+INSERT INTO Customer (first_name, last_name, email, street_and_number, locality_id, type_customer) VALUES ('Marie', 'Martin', 'marie.martin@gmail.com', 'Rue du Midi 10', 1, 0);
+INSERT INTO Customer (first_name, last_name, email, phone, street_and_number, locality_id, billing_address, type_customer) VALUES ('Pierre', 'Durant', 'pîerre.durant@gmail.com', '0478/12.34.56', 'Rue du Midi 16', 1, 'Rue du Midi 16', 1);
+
+-- Orders :
+
+INSERT INTO `Order` (order_date, is_paid, customer_id, reduction, type_order, date_of_payment, shipping_adress) VALUES ('2020-01-01', 1, 1, 0, 0, '2020-01-01', 'Rue du Midi 10');
+INSERT INTO `Order` (order_date, is_paid, customer_id, reduction, type_order, date_of_payment, shipping_adress) VALUES ('2020-01-01', 1, 2, 0, 0, '2020-01-01', 'Rue du Midi 16');

@@ -1,6 +1,6 @@
 package Business;
 
-import DataAccess.ProductDBAccess;
+import DataAccess.*;
 
 public class ProductManager {
 
