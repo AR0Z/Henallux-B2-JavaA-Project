@@ -1,7 +1,9 @@
 package Controller;
 
 import Business.*;
+import Exceptions.getAllCategoriesException;
 import Exceptions.getAllProductsException;
+import Model.Category;
 import Model.Product;
 
 import java.util.ArrayList;
@@ -49,6 +51,14 @@ public class ApplicationController {
         try {
             return productManager.getAllProducts();
         } catch (getAllProductsException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Category> getAllCategories() {
+        try {
+            return productManager.getAllCategories();
+        } catch (getAllCategoriesException e) {
             throw new RuntimeException(e);
         }
     }

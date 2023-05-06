@@ -9,6 +9,11 @@ public class MainFrame extends JFrame {
     private JMenu searchMenu, productMenu, applicationMenu, aboutMenu, statisticsMenu;
     private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedItem, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productSearchItem;
     private ApplicationController applicationController;
+    private AddProductPanel addProductPanel;
+    private EditProductPanel editProductPanel;
+    private RemoveProductPanel removeProductPanel;
+    private SearchProductPanel searchProductPanel;
+
     public MainFrame() {
         super("My App", null);
         setLayout(new BorderLayout());
@@ -16,6 +21,11 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         applicationController = new ApplicationController();
+
+        addProductPanel = new AddProductPanel();
+        editProductPanel = new EditProductPanel();
+        removeProductPanel = new RemoveProductPanel();
+        searchProductPanel = new SearchProductPanel();
 
         // create a menu bar
         mainMenuBar = new JMenuBar();
@@ -59,14 +69,12 @@ public class MainFrame extends JFrame {
 
         exitProgramItem.addActionListener(e -> System.exit(0));
         aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Application de gestion de produits", "A propos", JOptionPane.INFORMATION_MESSAGE));
-        productAddItem.addActionListener(e -> applicationController.addProduct());
-        productEditItem.addActionListener(e -> applicationController.editProduct());
-        productDeleteItem.addActionListener(e -> applicationController.deleteProduct());
-        productSearchItem.addActionListener(e -> applicationController.searchProduct());
-        searchWhoBoughtItem.addActionListener(e -> applicationController.searchWhoBought());
-        searchWhoSuppliedItem.addActionListener(e -> applicationController.searchWhoSupplied());
-        searchBoughtHistoryItem.addActionListener(e -> applicationController.searchBoughtHistory());
-        statisticsItem.addActionListener(e -> applicationController.showStatistics());
+        productAddItem.addActionListener(e -> {
+            removeAll();
+            add(addProductPanel);
+            revalidate();
+            repaint();
+        });
         add(new MainPanel());
 
         setJMenuBar(mainMenuBar);

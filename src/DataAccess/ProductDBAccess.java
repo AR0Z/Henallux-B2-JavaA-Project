@@ -28,6 +28,11 @@ public class ProductDBAccess implements DataAccess {
     public void searchProduct() throws searchProductException {
 
     }
+    public ArrayList<Category> getAllCategories() throws getAllCategoriesException {
+        ArrayList<Category> categories = new ArrayList<>();
+
+        return categories;
+    }
 
     @Override
     public ArrayList<Product> getAllProducts() throws getAllProductsException {

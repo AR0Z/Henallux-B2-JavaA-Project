@@ -2,7 +2,7 @@ package Business;
 
 import DataAccess.*;
 import Exceptions.*;
-import Model.Product;
+import Model.*;
 
 import java.util.ArrayList;
 
@@ -85,5 +85,9 @@ public class ProductManager {
 
     public ArrayList<Product> getAllProducts() throws getAllProductsException {
         return dao.getAllProducts();
+    }
+
+    public ArrayList<Category> getAllCategories() throws getAllCategoriesException {
+        return dao.getAllCategories();
     }
 }

@@ -16,6 +16,7 @@ public interface DataAccess {
     void searchProduct() throws searchProductException;
 
     ArrayList<Product> getAllProducts() throws getAllProductsException;
+    ArrayList<Category> getAllCategories() throws getAllCategoriesException;
 
     void searchWhoBought() throws searchWhoBoughtException;
 

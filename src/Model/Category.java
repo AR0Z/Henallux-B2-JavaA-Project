@@ -14,4 +14,8 @@ public class Category {
     public Category(int id, String label) {
         this(id,label,null);
     }
+
+    public String getLabel() {
+        return label;
+    }
 }
