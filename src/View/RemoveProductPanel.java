@@ -11,7 +11,7 @@ public class RemoveProductPanel extends JPanel {
 
     private ApplicationController applicationController;
     private ArrayList<Product> products;
-    private JComboBox<String> productComboBox;
+    private ProductComboBox productComboBox;
     private Product product;
     private JButton submitButton;
     private JPanel topPanel, bottomPanel;
@@ -20,12 +20,7 @@ public class RemoveProductPanel extends JPanel {
         topPanel.add(new JLabel("Menu de suppression de produit", SwingConstants.CENTER));
         applicationController = new ApplicationController();
         products = applicationController.getAllProducts();
-        productComboBox = new JComboBox<>();
-        productComboBox.addItem("Choisir un produit");
-        for (Product product : products) {
-            productComboBox.addItem(product.getName());
-        }
-
+        productComboBox = new ProductComboBox();
         productComboBox.addActionListener(l -> {
             if (productComboBox.getSelectedIndex() >= 1) {
                 product = products.get(productComboBox.getSelectedIndex() - 1);
@@ -49,20 +44,13 @@ public class RemoveProductPanel extends JPanel {
                 if (product != null) {
                     applicationController.deleteProduct(product);
                     JOptionPane.showMessageDialog(this, "Le produit a bien été supprimé !", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                    updateProducts();
+                    productComboBox.update();
                 }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Veuillez sélectionner un produit !", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-    private void updateProducts() {
-        products.removeAll(products);
-        products = applicationController.getAllProducts();
-        productComboBox.removeAllItems();
-        productComboBox.addItem("Choisir un produit");
-        for (Product product : products) {
-            productComboBox.addItem(product.getName());
-        }
-    }
+
+
 }

@@ -42,7 +42,7 @@ public class SearchProductPanel extends JPanel {
                 data[i][11] = products.get(i).getImgLink();
             }
             table = new JTable(data, columnNames);
-            table.setPreferredScrollableViewportSize(new Dimension(700, 70));
+            table.setPreferredScrollableViewportSize(new Dimension(700, 300));
             table.setFillsViewportHeight(true);
             table.getColumnModel().getColumn(0).setPreferredWidth(20);
             table.getColumnModel().getColumn(1).setPreferredWidth(70);

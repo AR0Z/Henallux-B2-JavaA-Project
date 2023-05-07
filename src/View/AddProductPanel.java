@@ -96,30 +96,7 @@ public class AddProductPanel extends JPanel {
     private void submit() {
         Product product = null;
         try {
-            if (!checkFields())
-                throw new Exception("Veuillez remplir tous les champs obligatoire");
-            String name = nameField.getText();
-            if (!isNameValid(name))
-                throw new Exception("Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)");
-            String color = colorComboBox.getSelectedItem().toString();
-            double price = Double.parseDouble(priceField.getText());
-            if (!isDoubleValid(price))
-                throw new Exception("Le prix doit être supérieur à 0");
-            double cost = Double.parseDouble(costField.getText());
-            if (!isDoubleValid(cost))
-                throw new Exception("Le coût doit être supérieur à 0");
-            double size = Double.parseDouble(sizeField.getText());
-            if (!isDoubleValid(size))
-                throw new Exception("La taille doit être supérieure à 0");
-            int stock = Integer.parseInt(stockField.getText());
-            if (!isIntValid(stock))
-                throw new Exception("Le stock doit être supérieur à 0");
-
-            Boolean shippable = shippableCheckBox.isSelected();
-            String description = descriptionTextArea.getText();
-            String imgLink = imgLinkField.getText();
-            Category category = categories.get(categoryComboBox.getSelectedIndex());
-            product = new Product(-1, name, color, price, cost, size, stock, null, shippable, description, imgLink, category, category.getId());
+            product = validProduct(product);
             JOptionPane.showMessageDialog(null, "Produit ajouté avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
             clear();
         } catch (Exception e) {
@@ -161,5 +138,35 @@ public class AddProductPanel extends JPanel {
                 ((JTextField) component).setText("");
             }
         }
+    }
+
+    private Product validProduct(Product product) throws Exception{
+        product = new Product();
+        if (!checkFields())
+            throw new Exception("Veuillez remplir tous les champs obligatoire");
+        product.setName(nameField.getText());
+        if (!isNameValid(product.getName()))
+            throw new Exception("Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)");
+        product.setColor(colorComboBox.getSelectedItem().toString());
+        product.setPrice(Double.parseDouble(priceField.getText()));
+        if (!isDoubleValid(product.getPrice()))
+            throw new Exception("Le prix doit être supérieur à 0");
+        product.setCost(Double.parseDouble(costField.getText()));
+        if (!isDoubleValid(product.getCost()))
+            throw new Exception("Le coût doit être supérieur à 0");
+        product.setSize(Double.parseDouble(sizeField.getText()));
+        if (!isDoubleValid(product.getSize()))
+            throw new Exception("La taille doit être supérieure à 0");
+        product.setStock(Integer.parseInt(stockField.getText()));
+        if (!isIntValid(product.getStock()))
+            throw new Exception("Le stock doit être supérieur à 0");
+        product.setShippable(shippableCheckBox.isSelected());
+        product.setDescription(descriptionTextArea.getText());
+        product.setImgLink(imgLinkField.getText());
+        product.setCategory(categories.get(categoryComboBox.getSelectedIndex() + 1));
+        product.setId(-1);
+        product.setAdditionDate(null);
+        product.setCategory_FK(categories.get(categoryComboBox.getSelectedIndex() + 1).getId());
+        return product;
     }
 }
