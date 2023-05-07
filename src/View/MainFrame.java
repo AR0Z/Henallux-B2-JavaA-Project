@@ -13,6 +13,7 @@ public class MainFrame extends JFrame {
     private EditProductPanel editProductPanel;
     private RemoveProductPanel removeProductPanel;
     private SearchProductPanel searchProductPanel;
+    private SearchBoughtHistoryItemPanel searchBoughtHistoryItemPanel;
     private MainPanel mainPanel;
     public MainFrame() {
         super("My App", null);
@@ -26,6 +27,7 @@ public class MainFrame extends JFrame {
         editProductPanel = new EditProductPanel();
         removeProductPanel = new RemoveProductPanel();
         searchProductPanel = new SearchProductPanel();
+        searchBoughtHistoryItemPanel = new SearchBoughtHistoryItemPanel();
 
         // create a menu bar
         mainMenuBar = new JMenuBar();
@@ -42,7 +44,7 @@ public class MainFrame extends JFrame {
         statisticsItem = new JMenuItem("Afficher");
         searchWhoBoughtItem = new JMenuItem("Acheteur du produit");
         searchWhoSuppliedItem = new JMenuItem("Fournisseur du produit");
-        searchBoughtHistoryItem = new JMenuItem("Historique d'achat");
+        searchBoughtHistoryItem = new JMenuItem("Historique d'achat d'un client");
 
         productAddItem = new JMenuItem("Ajouter");
         productEditItem = new JMenuItem("Modifier");
@@ -104,6 +106,13 @@ public class MainFrame extends JFrame {
         productSearchItem.addActionListener(e -> {
             clearMainFrame();
             add(searchProductPanel);
+            revalidate();
+            repaint();
+        });
+
+        searchBoughtHistoryItem.addActionListener(e -> {
+            clearMainFrame();
+            add(searchBoughtHistoryItemPanel);
             revalidate();
             repaint();
         });

@@ -22,7 +22,7 @@ public interface DataAccess {
 
     void searchWhoSupplied() throws searchWhoSuppliedException;
 
-    void searchBoughtHistory() throws searchBoughtHistoryException;
+    ArrayList<SearchBoughtHistory> searchBoughtHistory(Customer customer) throws searchBoughtHistoryException;
 
     void showStatistics() throws showStatisticsException;
 }

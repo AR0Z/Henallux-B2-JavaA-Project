@@ -2,16 +2,21 @@ package Controller;
 
 import Business.*;
 import Exceptions.getAllCategoriesException;
+import Exceptions.getAllCustomersException;
 import Exceptions.getAllProductsException;
 import Model.Category;
+import Model.Customer;
 import Model.Product;
+import Model.SearchBoughtHistory;
 
 import java.util.ArrayList;
 
 public class ApplicationController {
     private ProductManager productManager;
+    private ApplicationManager applicationManager;
     public ApplicationController(){
          productManager = new ProductManager();
+         applicationManager = new ApplicationManager();
     }
     
     public void addProduct(Product product) {
@@ -38,8 +43,8 @@ public class ApplicationController {
         productManager.searchWhoSupplied();
     }
     
-    public void searchBoughtHistory() {
-        productManager.searchBoughtHistory();
+    public ArrayList<SearchBoughtHistory> searchBoughtHistory(Customer customer) {
+        return productManager.searchBoughtHistory(customer);
     }
     
     public void showStatistics() {
@@ -58,6 +63,14 @@ public class ApplicationController {
         try {
             return productManager.getAllCategories();
         } catch (getAllCategoriesException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Customer> getAllCustomers() {
+        try {
+            return applicationManager.getAllCustomers();
+        } catch (getAllCustomersException e) {
             throw new RuntimeException(e);
         }
     }

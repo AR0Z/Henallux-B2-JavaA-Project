@@ -1,2 +1,4 @@
-package Exceptions;public class getAllCustomersException {
+package Exceptions;
+
+public class getAllCustomersException extends Exception {
 }

@@ -23,4 +23,12 @@ public class Customer {
     public Customer(int id, String lastName, String firstName, String email, int localityFK, String streetAndNumber) {
         this(id, lastName, firstName, email, localityFK, null, streetAndNumber);
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName(){
+        return lastName + " " + firstName;
+    }
 }

@@ -137,8 +137,28 @@ public class ProductDBAccess implements DataAccess {
     }
 
     @Override
-    public void searchBoughtHistory() throws searchBoughtHistoryException {
+    public ArrayList<SearchBoughtHistory> searchBoughtHistory(Customer customer) throws searchBoughtHistoryException {
+        ArrayList<SearchBoughtHistory> searchBoughtHistoryList = new ArrayList<>();
 
+        try {
+            String sqlInstruction = "select c.label, p.label, l.unitary_price, l.quantity, o.id from product p inner join `category` c on c.id = p.category_id inner join `line` l on p.id = l.product_id inner join `order` o on l.order_id = o.id inner join customer on o.customer_id = customer.id where customer.id = (?) order by o.id desc";
+            Connection connection = SingletonConnexion.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, customer.getId());
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            SearchBoughtHistory searchBoughtHistory;
+
+            while(data.next()){
+                searchBoughtHistory = new SearchBoughtHistory(data.getInt("o.id"), data.getInt("l.quantity"), data.getDouble("l.unitary_price"), data.getString("p.label"), data.getString("c.label"));
+                searchBoughtHistoryList.add(searchBoughtHistory);
+            }
+        } catch (SQLException | DBExceptions e) {
+            throw new RuntimeException(e);
+        }
+
+        return searchBoughtHistoryList;
     }
 
     @Override

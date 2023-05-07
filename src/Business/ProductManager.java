@@ -67,9 +67,9 @@ public class ProductManager {
         }
     }
 
-    public  void searchBoughtHistory() {
+    public  ArrayList<SearchBoughtHistory> searchBoughtHistory(Customer customer) {
         try {
-            dao.searchBoughtHistory();
+            return dao.searchBoughtHistory(customer);
         } catch (searchBoughtHistoryException e) {
             throw new RuntimeException(e);
         }
