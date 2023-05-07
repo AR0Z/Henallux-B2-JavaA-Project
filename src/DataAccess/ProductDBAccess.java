@@ -51,17 +51,22 @@ public class ProductDBAccess implements DataAccess {
             preparedStatement.setInt(11, product.getCategory_FK());
             preparedStatement.setInt(12, product.getId());
             preparedStatement.executeUpdate();
-            System.out.println(product.getName() + product.getColor() + product.getPrice() + product.getCost() + product.getSize() + product.getStock() + product.getAdditionDate() + product.getShippable() + product.getDescription() + product.getImgLink() + product.getCategory_FK() + product.getId());
-            System.out.println(product);
         } catch (SQLException | DBExceptions e) {
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void deleteProduct() throws deleteProductException {
-
+    public void deleteProduct(Product product) throws deleteProductException {
+        try {
+            String sqlInstruction = "delete from product where id = ?;";
+            Connection connection = SingletonConnexion.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, product.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException | DBExceptions e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -110,6 +115,7 @@ public class ProductDBAccess implements DataAccess {
                 product.setShippable(data.getBoolean("is_shippable"));
                 product.setDescription(data.getString("information"));
                 product.setImgLink(data.getString("image_link"));
+                product.setCategory_FK(data.getInt("category_id"));
                 products.add(product);
             }
         } catch (DBExceptions e) {

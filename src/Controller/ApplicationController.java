@@ -22,8 +22,8 @@ public class ApplicationController {
         productManager.editProduct(product);
     }
     
-    public void deleteProduct() {
-        productManager.deleteProduct();
+    public void deleteProduct(Product product) {
+        productManager.deleteProduct(product);
     }
     
     public void searchProduct() {

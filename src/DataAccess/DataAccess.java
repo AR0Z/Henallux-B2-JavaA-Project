@@ -11,7 +11,7 @@ public interface DataAccess {
 
     void editProduct(Product product) throws editProductException;
 
-    void deleteProduct() throws deleteProductException;
+    void deleteProduct(Product product) throws deleteProductException;
 
     void searchProduct() throws searchProductException;
 

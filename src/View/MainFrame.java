@@ -13,11 +13,11 @@ public class MainFrame extends JFrame {
     private EditProductPanel editProductPanel;
     private RemoveProductPanel removeProductPanel;
     private SearchProductPanel searchProductPanel;
-
+    private MainPanel mainPanel;
     public MainFrame() {
         super("My App", null);
         setLayout(new BorderLayout());
-        setBounds(0, 0, 600, 500);
+        setBounds(0, 0, 1000, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         applicationController = new ApplicationController();
@@ -52,8 +52,8 @@ public class MainFrame extends JFrame {
         searchMenu.add(searchWhoBoughtItem);
         searchMenu.add(searchWhoSuppliedItem);
         searchMenu.add(searchBoughtHistoryItem);
-        applicationMenu.add(exitProgramItem);
         applicationMenu.add(mainMenuItem);
+        applicationMenu.add(exitProgramItem);
         aboutMenu.add(aboutItem);
         statisticsMenu.add(statisticsItem);
 
@@ -69,6 +69,8 @@ public class MainFrame extends JFrame {
         mainMenuBar.add(statisticsMenu);
         mainMenuBar.add(aboutMenu);
 
+        mainPanel = new MainPanel();
+
         exitProgramItem.addActionListener(e -> System.exit(0));
         aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Application de gestion de produits", "A propos", JOptionPane.INFORMATION_MESSAGE));
         productAddItem.addActionListener(e -> {
@@ -80,7 +82,7 @@ public class MainFrame extends JFrame {
 
         mainMenuItem.addActionListener(e -> {
             clearMainFrame();
-            add(new MainPanel());
+            add(mainPanel);
             revalidate();
             repaint();
         });
@@ -92,7 +94,21 @@ public class MainFrame extends JFrame {
             repaint();
         });
 
-        add(new MainPanel());
+        productDeleteItem.addActionListener(e -> {
+            clearMainFrame();
+            add(removeProductPanel);
+            revalidate();
+            repaint();
+        });
+
+        productSearchItem.addActionListener(e -> {
+            clearMainFrame();
+            add(searchProductPanel);
+            revalidate();
+            repaint();
+        });
+
+        add(mainPanel);
 
         setJMenuBar(mainMenuBar);
         setVisible(true);
@@ -100,7 +116,7 @@ public class MainFrame extends JFrame {
 
     public void clearMainFrame() {
         for (Component component : this.getContentPane().getComponents()) {
-            if (component instanceof MainPanel)
+            if (component instanceof JPanel)
                 remove(component);
         }
         revalidate();

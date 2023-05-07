@@ -35,9 +35,9 @@ public class ProductManager {
         }
     }
 
-    public void deleteProduct() {
+    public void deleteProduct(Product product) {
         try {
-            dao.deleteProduct();
+            dao.deleteProduct(product);
         } catch (deleteProductException e) {
             throw new RuntimeException(e);
         }

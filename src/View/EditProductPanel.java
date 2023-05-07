@@ -18,36 +18,24 @@ public class EditProductPanel extends JPanel {
     private ArrayList<Category> categories;
     private JScrollPane scrollPane;
     private ArrayList<Product> products;
+
     public EditProductPanel() {
         applicationController = new ApplicationController();
-        products = applicationController.getAllProducts();
         setLayout(new GridLayout(12, 2, 5, 5));
         add(new JLabel("Menu d'édition de produit", SwingConstants.CENTER));
+        products = applicationController.getAllProducts();
         productComboBox = new JComboBox<>();
-        productComboBox.addItem("Sélectionnez un produit");
+        productComboBox.addItem("Choisir un produit");
         for (Product product : products) {
-            productComboBox.addItem(product.getName() + " (" + product.getId() + ")");
+            productComboBox.addItem(product.getName());
         }
-        add(productComboBox);
-
         productComboBox.addActionListener(l -> {
-            if (productComboBox.getSelectedIndex() != 0) {
+            if (productComboBox.getSelectedIndex() >= 1) {
                 Product product = products.get(productComboBox.getSelectedIndex() - 1);
-                nameField.setText(product.getName());
-                colorComboBox.setSelectedItem(product.getColor());
-                categoryComboBox.setSelectedIndex(products.indexOf(product.getCategory()) + 1);
-                priceField.setText(String.valueOf(product.getPrice()));
-                costField.setText(String.valueOf(product.getCost()));
-                sizeField.setText(String.valueOf(product.getSize()));
-                stockField.setText(String.valueOf(product.getStock()));
-                shippableCheckBox.setSelected(product.getShippable());
-                descriptionTextArea.setText(product.getDescription());
-                imgLinkField.setText(product.getImgLink());
-            } else {
-                clear();
-            }
+                updateFields(product);
+            } else clear();
         });
-
+        add(productComboBox);
         nameLabel = new JLabel("*Name:", SwingConstants.RIGHT);
         nameField = new JTextField();
         add(nameLabel);
@@ -119,7 +107,7 @@ public class EditProductPanel extends JPanel {
     public void updateFields(Product product) {
         nameField.setText(product.getName());
         colorComboBox.setSelectedItem(product.getColor());
-        categoryComboBox.setSelectedItem(product.getCategory().getLabel());
+        categoryComboBox.setSelectedIndex(products.indexOf(product.getCategory()) + 1);
         priceField.setText(String.valueOf(product.getPrice()));
         costField.setText(String.valueOf(product.getCost()));
         sizeField.setText(String.valueOf(product.getSize()));
@@ -151,7 +139,6 @@ public class EditProductPanel extends JPanel {
             int stock = Integer.parseInt(stockField.getText());
             if (!isIntValid(stock))
                 throw new Exception("Le stock doit être supérieur à 0");
-
             Boolean shippable = shippableCheckBox.isSelected();
             String description = descriptionTextArea.getText();
             String imgLink = imgLinkField.getText();
@@ -163,18 +150,21 @@ public class EditProductPanel extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         applicationController.editProduct(product);
-        // todo: refresh product list after submit
+        updateProducts();
     }
 
     private Boolean isNameValid(String name) {
         return name.matches("^[a-zA-Z0-9]{3,50}$");
     }
+
     private Boolean isDoubleValid(double number) {
         return number > 0;
     }
+
     private Boolean isIntValid(int number) {
         return number > 0;
     }
+
     private Boolean checkFields() {
         Boolean check = true;
         for (Component component : getComponents()) {
@@ -188,8 +178,9 @@ public class EditProductPanel extends JPanel {
         }
         return check;
     }
+
     public void clear() {
-        productComboBox.setSelectedIndex(0);
+        // productComboBox.setSelectedIndex(0);
         nameField.setText("");
         colorComboBox.setSelectedIndex(0);
         categoryComboBox.setSelectedIndex(0);
@@ -200,5 +191,15 @@ public class EditProductPanel extends JPanel {
         shippableCheckBox.setSelected(false);
         descriptionTextArea.setText("");
         imgLinkField.setText("");
+    }
+
+    public void updateProducts() {
+        products.removeAll(products);
+        products = applicationController.getAllProducts();
+        productComboBox.removeAllItems();
+        productComboBox.addItem("Choisir un produit");
+        for (Product product : products) {
+            productComboBox.addItem(product.getName());
+        }
     }
 }
