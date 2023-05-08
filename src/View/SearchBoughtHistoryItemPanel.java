@@ -26,7 +26,7 @@ public class SearchBoughtHistoryItemPanel extends JPanel {
         comboBoxCustomers.addActionListener(l -> {
             if (comboBoxCustomers.getSelectedIndex() >= 1) {
                 try {
-                    Customer customer = controller.getCustomerById(comboBoxCustomers.getSelectedIndex());
+                    Customer customer = controller.getCustomerById(comboBoxCustomers.getId());
                     updateTable(customer);
                 } catch (DBExceptions e) {
                     e.printStackTrace();
@@ -44,6 +44,10 @@ public class SearchBoughtHistoryItemPanel extends JPanel {
 
         scrollPane = new JScrollPane();
         centerPanel.add(scrollPane);
+    }
+
+    public void updateComboBox(){
+        comboBoxCustomers.update();
     }
 
     public void updateTable(Customer customer){

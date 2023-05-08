@@ -128,4 +128,23 @@ public class ProductDBAccess implements ProductDAO {
         }
         return products;
     }
+
+    public ArrayList<CustomersWhoPurchasedProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions {
+        ArrayList<CustomersWhoPurchasedProduct> customersWhoPurchasedProduct = new ArrayList<>();
+        try {
+            String sqlInstruction = "SELECT c.id, c.first_name, c.last_name, l.quantity, o.order_date FROM `customer` c INNER JOIN `order` o on c.id = o.customer_id INNER JOIN `line` l on o.id = l.order_id INNER JOIN `product` p on l.product_id = p.id WHERE p.id = (?);";
+            Connection connection = SingletonConnexion.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, id);
+            ResultSet data = preparedStatement.executeQuery();
+            CustomersWhoPurchasedProduct customerWhoPurchasedProduct;
+            while (data.next()) {
+                customerWhoPurchasedProduct = new CustomersWhoPurchasedProduct(data.getInt("c.id"), data.getString("c.first_name"), data.getString("c.last_name"), data.getInt("l.quantity"), data.getDate("o.order_date").toLocalDate());
+                customersWhoPurchasedProduct.add(customerWhoPurchasedProduct);
+            }
+        } catch (SQLException e) {
+            throw new DBExceptions(e.getMessage());
+        }
+        return customersWhoPurchasedProduct;
+    }
 }

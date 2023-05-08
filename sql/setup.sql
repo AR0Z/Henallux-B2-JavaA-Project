@@ -170,4 +170,4 @@ INSERT INTO supplier (label, phone, email, street_and_number, locality_id) VALUE
 
 
 
-;
+SELECT c.id, c.first_name, c.last_name, l.quantity, o.order_date FROM `customer` c INNER JOIN `order` o on c.id = o.customer_id INNER JOIN `line` l on o.id = l.order_id INNER JOIN `product` p on l.product_id = p.id WHERE p.id = (?);

@@ -14,6 +14,7 @@ public class MainFrame extends JFrame {
     private RemoveProductPanel removeProductPanel;
     private SearchProductPanel searchProductPanel;
     private SearchBoughtHistoryItemPanel searchBoughtHistoryItemPanel;
+    private SearchCustomerWhoPurchasedProductPanel searchCustomerWhoPurchasedProductPanel;
     private MainPanel mainPanel;
     public MainFrame() {
         super("My App", null);
@@ -28,6 +29,7 @@ public class MainFrame extends JFrame {
         removeProductPanel = new RemoveProductPanel();
         searchProductPanel = new SearchProductPanel();
         searchBoughtHistoryItemPanel = new SearchBoughtHistoryItemPanel();
+        searchCustomerWhoPurchasedProductPanel = new SearchCustomerWhoPurchasedProductPanel();
 
         // create a menu bar
         mainMenuBar = new JMenuBar();
@@ -116,6 +118,14 @@ public class MainFrame extends JFrame {
         searchBoughtHistoryItem.addActionListener(e -> {
             clearMainFrame();
             add(searchBoughtHistoryItemPanel);
+            revalidate();
+            repaint();
+        });
+
+        searchWhoBoughtItem.addActionListener(e -> {
+            clearMainFrame();
+            add(searchCustomerWhoPurchasedProductPanel);
+            searchCustomerWhoPurchasedProductPanel.updateComboBox();
             revalidate();
             repaint();
         });

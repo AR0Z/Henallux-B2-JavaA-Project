@@ -4,10 +4,7 @@ import DataAccess.CategorieDBAcces;
 import DataAccess.CustomerDBAcces;
 import DataAccess.ProductDBAccess;
 import Exceptions.DBExceptions;
-import Model.Category;
-import Model.Customer;
-import Model.Product;
-import Model.Purchase;
+import Model.*;
 
 import java.util.ArrayList;
 
@@ -43,6 +40,10 @@ public class ApplicationManager {
 
     public ArrayList<Product> getAllProducts() throws DBExceptions {
         return productDBAccess.getAllProducts();
+    }
+
+    public ArrayList<CustomersWhoPurchasedProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions {
+        return productDBAccess.getCustomersWhoPurchasedProduct(id);
     }
 
     // Category methods

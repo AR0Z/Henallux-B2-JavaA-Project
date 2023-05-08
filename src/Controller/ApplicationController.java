@@ -2,10 +2,7 @@ package Controller;
 
 import Business.*;
 import Exceptions.DBExceptions;
-import Model.Category;
-import Model.Customer;
-import Model.Product;
-import Model.Purchase;
+import Model.*;
 
 import java.util.ArrayList;
 
@@ -33,6 +30,10 @@ public class ApplicationController {
 
     public ArrayList<Product> getAllProducts() throws DBExceptions {
         return applicationManager.getAllProducts();
+    }
+
+    public ArrayList<CustomersWhoPurchasedProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions {
+        return applicationManager.getCustomersWhoPurchasedProduct(id);
     }
 
     public Category getCategoryById(int id) throws DBExceptions {
