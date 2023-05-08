@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class CustomerDBAcces implements CustomerDAO {
 
-    public Customer getCustomerById(int id) {
+    public Customer getCustomerById(int id) throws DBExceptions {
         Customer customer = null;
 
         try {
@@ -25,8 +25,8 @@ public class CustomerDBAcces implements CustomerDAO {
             if(data.next()){
                 customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getString("email"), data.getInt("locality_id"), data.getString("phone"), data.getString("street_and_number"));
             }
-        } catch (SQLException | DBExceptions e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new DBExceptions(e.getMessage());
         }
 
         return customer;
