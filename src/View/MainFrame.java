@@ -118,6 +118,7 @@ public class MainFrame extends JFrame {
         searchBoughtHistoryItem.addActionListener(e -> {
             clearMainFrame();
             add(searchBoughtHistoryItemPanel);
+            searchBoughtHistoryItemPanel.updateComboBox();
             revalidate();
             repaint();
         });
