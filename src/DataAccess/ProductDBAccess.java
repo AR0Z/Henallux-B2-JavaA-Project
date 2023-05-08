@@ -7,11 +7,11 @@ import java.sql.*;
 import java.time.LocalDate;
 
 
-public class ProductDBAccess implements DataAccess {
+public class ProductDBAccess implements ProductDAO {
 
 
     @Override
-    public void addProduct(Product product) throws addProductException {
+    public void addProduct(Product product) throws DBExceptions {
         try {
             String sqlInstruction = "insert into product (label, color, price, cost, size, stock, addition_date, is_shippable, information, image_link, category_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             Connection connection = SingletonConnexion.getInstance();
@@ -28,73 +28,78 @@ public class ProductDBAccess implements DataAccess {
             preparedStatement.setString(10, product.getImgLink());
             preparedStatement.setInt(11, product.getCategory_FK());
             preparedStatement.executeUpdate();
-        } catch (SQLException | DBExceptions e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new DBExceptions(e.getMessage());
         }
     }
 
     @Override
-    public void editProduct(Product product) throws editProductException {
+    public void editProduct(Product product) throws DBExceptions {
         try {
             Connection connection = SingletonConnexion.getInstance();
-            PreparedStatement preparedStatement = connection.prepareStatement("update product set label = ?, color = ?, price = ?, cost = ?, size = ?, stock = ?, addition_date = ?, is_shippable = ?, information = ?, image_link = ?, category_id = ? where id = ?;");
+            PreparedStatement preparedStatement = connection.prepareStatement("update product set label = ?, color = ?, price = ?, cost = ?, size = ?, stock = ?, is_shippable = ?, information = ?, image_link = ?, category_id = ? where id = ?;");
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getColor());
             preparedStatement.setDouble(3, product.getPrice());
             preparedStatement.setDouble(4, product.getCost());
             preparedStatement.setDouble(5, product.getSize());
             preparedStatement.setInt(6, product.getStock());
-            preparedStatement.setDate(7, (java.sql.Date) product.getAdditionDate());
-            preparedStatement.setBoolean(8, product.getShippable());
-            preparedStatement.setString(9, product.getDescription());
-            preparedStatement.setString(10, product.getImgLink());
-            preparedStatement.setInt(11, product.getCategory_FK());
-            preparedStatement.setInt(12, product.getId());
+            preparedStatement.setBoolean(7, product.getShippable());
+            preparedStatement.setString(8, product.getDescription());
+            preparedStatement.setString(9, product.getImgLink());
+            preparedStatement.setInt(10, product.getCategory_FK());
+            preparedStatement.setInt(11, product.getId());
             preparedStatement.executeUpdate();
-        } catch (SQLException | DBExceptions e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new DBExceptions(e.getMessage());
         }
     }
 
     @Override
-    public void deleteProduct(Product product) throws deleteProductException {
+    public void deleteProduct(int id) throws DBExceptions {
         try {
             String sqlInstruction = "delete from product where id = ?;";
             Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, product.getId());
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
-        } catch (SQLException | DBExceptions e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new DBExceptions(e.getMessage());
         }
     }
 
     @Override
-    public void searchProduct() throws searchProductException {
-
-    }
-    public ArrayList<Category> getAllCategories() throws getAllCategoriesException {
-        ArrayList<Category> categories = new ArrayList<>();
+    public Product getProductById(int id) throws DBExceptions {
+        Product product = null;
         try {
-            String sqlInstruction = "select * from category;";
+            String sqlInstruction = "select * from product where id = ?;";
             Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, id);
             ResultSet data = preparedStatement.executeQuery();
-            Category category;
-            while (data.next()) {
-                category = new Category();
-                category.setId(data.getInt("id"));
-                category.setLabel(data.getString("label"));
-                categories.add(category);
+            if (data.next()) {
+                product = new Product();
+                product.setId(data.getInt("id"));
+                product.setName(data.getString("label"));
+                product.setColor(data.getString("color"));
+                product.setPrice(data.getDouble("price"));
+                product.setCost(data.getDouble("cost"));
+                product.setSize(data.getDouble("size"));
+                product.setStock(data.getInt("stock"));
+                product.setAdditionDate(data.getDate("addition_date"));
+                product.setShippable(data.getBoolean("is_shippable"));
+                product.setDescription(data.getString("information"));
+                product.setImgLink(data.getString("image_link"));
+                product.setCategory_FK(data.getInt("category_id"));
             }
-        } catch (SQLException | DBExceptions e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new DBExceptions(e.getMessage());
         }
-        return categories;
+        return product;
     }
 
     @Override
-    public ArrayList<Product> getAllProducts() throws getAllProductsException {
+    public ArrayList<Product> getAllProducts() throws DBExceptions {
         ArrayList<Product> products = new ArrayList<>();
         try {
             String sqlInstruction = "select * from product;";
@@ -118,51 +123,9 @@ public class ProductDBAccess implements DataAccess {
                 product.setCategory_FK(data.getInt("category_id"));
                 products.add(product);
             }
-        } catch (DBExceptions e) {
-            throw new RuntimeException(e);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBExceptions(e.getMessage());
         }
         return products;
-    }
-
-    @Override
-    public void searchWhoBought() throws searchWhoBoughtException{
-
-    }
-
-    @Override
-    public void searchWhoSupplied() throws searchWhoSuppliedException {
-
-    }
-
-    @Override
-    public ArrayList<SearchBoughtHistory> searchBoughtHistory(Customer customer) throws searchBoughtHistoryException {
-        ArrayList<SearchBoughtHistory> searchBoughtHistoryList = new ArrayList<>();
-
-        try {
-            String sqlInstruction = "select c.label, p.label, l.unitary_price, l.quantity, o.id from product p inner join `category` c on c.id = p.category_id inner join `line` l on p.id = l.product_id inner join `order` o on l.order_id = o.id inner join customer on o.customer_id = customer.id where customer.id = (?) order by o.id desc";
-            Connection connection = SingletonConnexion.getInstance();
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, customer.getId());
-
-            ResultSet data = preparedStatement.executeQuery();
-
-            SearchBoughtHistory searchBoughtHistory;
-
-            while(data.next()){
-                searchBoughtHistory = new SearchBoughtHistory(data.getInt("o.id"), data.getInt("l.quantity"), data.getDouble("l.unitary_price"), data.getString("p.label"), data.getString("c.label"));
-                searchBoughtHistoryList.add(searchBoughtHistory);
-            }
-        } catch (SQLException | DBExceptions e) {
-            throw new RuntimeException(e);
-        }
-
-        return searchBoughtHistoryList;
-    }
-
-    @Override
-    public void showStatistics() throws showStatisticsException {
-
     }
 }

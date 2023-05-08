@@ -78,6 +78,7 @@ public class MainFrame extends JFrame {
         productAddItem.addActionListener(e -> {
             clearMainFrame();
             add(addProductPanel);
+            addProductPanel.updateComboBox();
             revalidate();
             repaint();
         });
@@ -92,6 +93,7 @@ public class MainFrame extends JFrame {
         productEditItem.addActionListener(e -> {
             clearMainFrame();
             add(editProductPanel);
+            editProductPanel.updateComboBox();
             revalidate();
             repaint();
         });
@@ -99,6 +101,7 @@ public class MainFrame extends JFrame {
         productDeleteItem.addActionListener(e -> {
             clearMainFrame();
             add(removeProductPanel);
+            removeProductPanel.updateComboBox();
             revalidate();
             repaint();
         });

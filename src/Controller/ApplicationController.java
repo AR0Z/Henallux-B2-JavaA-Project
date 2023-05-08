@@ -1,77 +1,57 @@
 package Controller;
 
 import Business.*;
-import Exceptions.getAllCategoriesException;
-import Exceptions.getAllCustomersException;
-import Exceptions.getAllProductsException;
+import Exceptions.DBExceptions;
 import Model.Category;
 import Model.Customer;
 import Model.Product;
-import Model.SearchBoughtHistory;
+import Model.Purchase;
 
 import java.util.ArrayList;
 
 public class ApplicationController {
-    private ProductManager productManager;
     private ApplicationManager applicationManager;
     public ApplicationController(){
-         productManager = new ProductManager();
          applicationManager = new ApplicationManager();
     }
     
-    public void addProduct(Product product) {
-        productManager.addProduct(product);
+    public void addProduct(Product product) throws DBExceptions {
+        applicationManager.addProduct(product);
     }
     
-    public void editProduct(Product product) {
-        productManager.editProduct(product);
+    public void editProduct(Product product) throws DBExceptions {
+        applicationManager.editProduct(product);
     }
     
-    public void deleteProduct(Product product) {
-        productManager.deleteProduct(product);
-    }
-    
-    public void searchProduct() {
-        productManager.searchProduct();
-    }
-    
-    public void searchWhoBought() {
-        productManager.searchWhoBought();
-    }
-    
-    public void searchWhoSupplied() {
-        productManager.searchWhoSupplied();
-    }
-    
-    public ArrayList<SearchBoughtHistory> searchBoughtHistory(Customer customer) {
-        return productManager.searchBoughtHistory(customer);
-    }
-    
-    public void showStatistics() {
-        productManager.showStatistics();
+    public void deleteProduct(int id) throws DBExceptions {
+        applicationManager.deleteProduct(id);
     }
 
-    public ArrayList<Product> getAllProducts() {
-        try {
-            return productManager.getAllProducts();
-        } catch (getAllProductsException e) {
-            throw new RuntimeException(e);
-        }
+    public Product getProductById(int id) throws DBExceptions {
+        return applicationManager.getProductById(id);
     }
 
-    public ArrayList<Category> getAllCategories() {
-        try {
-            return productManager.getAllCategories();
-        } catch (getAllCategoriesException e) {
-            throw new RuntimeException(e);
-        }
+    public ArrayList<Product> getAllProducts() throws DBExceptions {
+        return applicationManager.getAllProducts();
     }
 
-    public ArrayList<Customer> getAllCustomers() {
-        try {
-            return applicationManager.getAllCustomers();
-        } catch (getAllCustomersException e) {
-            throw new RuntimeException(e);
-        }
+    public Category getCategoryById(int id) throws DBExceptions {
+        return applicationManager.getCategoryById(id);
+    }
+
+    public ArrayList<Category> getAllCategories() throws DBExceptions {
+        return applicationManager.getAllCategories();
+    }
+
+    public Customer getCustomerById(int id) throws DBExceptions {
+        return applicationManager.getCustomerById(id);
+    }
+
+    public ArrayList<Customer> getAllCustomers() throws DBExceptions {
+        return applicationManager.getAllCustomers();
+    }
+
+    public ArrayList<Purchase> getBoughtHistory(int id) throws DBExceptions {
+        return applicationManager.getBoughtHistory(id);
     }
 }

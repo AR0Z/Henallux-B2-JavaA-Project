@@ -1,19 +1,71 @@
 package Business;
 
-import DataAccess.ClientDBAccess;
-import Exceptions.getAllCustomersException;
+import DataAccess.CategorieDBAcces;
+import DataAccess.CustomerDBAcces;
+import DataAccess.ProductDBAccess;
+import Exceptions.DBExceptions;
+import Model.Category;
 import Model.Customer;
+import Model.Product;
+import Model.Purchase;
 
 import java.util.ArrayList;
 
 public class ApplicationManager {
-    private ClientDBAccess clientDBAccess;
+    private ProductDBAccess productDBAccess;
+    private CategorieDBAcces categorieDBAcces;
+    private CustomerDBAcces customerDBAcces;
+
 
     public ApplicationManager() {
-        clientDBAccess = new ClientDBAccess();
+        productDBAccess = new ProductDBAccess();
+        categorieDBAcces = new CategorieDBAcces();
+        customerDBAcces = new CustomerDBAcces();
     }
 
-    public ArrayList<Customer> getAllCustomers() throws getAllCustomersException {
-        return clientDBAccess.getAllCustomers();
+    // Product methods
+
+    public void addProduct(Product product) throws DBExceptions {
+            productDBAccess.addProduct(product);
+    }
+
+    public void editProduct(Product product) throws DBExceptions {
+            productDBAccess.editProduct(product);
+    }
+
+    public void deleteProduct(int id) throws DBExceptions {
+            productDBAccess.deleteProduct(id);
+    }
+
+    public Product getProductById(int id) throws DBExceptions {
+            return productDBAccess.getProductById(id);
+    }
+
+    public ArrayList<Product> getAllProducts() throws DBExceptions {
+        return productDBAccess.getAllProducts();
+    }
+
+    // Category methods
+
+    public Category getCategoryById(int id) throws DBExceptions {
+        return categorieDBAcces.getCategoryById(id);
+    }
+
+    public ArrayList<Category> getAllCategories() throws DBExceptions {
+        return categorieDBAcces.getAllCategories();
+    }
+
+    // Customer methods
+
+    public Customer getCustomerById(int id) throws DBExceptions {
+        return customerDBAcces.getCustomerById(id);
+    }
+
+    public ArrayList<Customer> getAllCustomers() throws DBExceptions {
+        return customerDBAcces.getAllCustomers();
+    }
+
+    public ArrayList<Purchase> getBoughtHistory(int id) throws DBExceptions {
+        return customerDBAcces.getBoughtHistory(id);
     }
 }

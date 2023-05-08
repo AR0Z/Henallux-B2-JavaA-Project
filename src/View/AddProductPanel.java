@@ -1,21 +1,22 @@
 package View;
 
 import Controller.ApplicationController;
+import Exceptions.DBExceptions;
+import Exceptions.ValueException;
 import Model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class AddProductPanel extends JPanel {
     private JLabel nameLabel, colorLabel, priceLabel, costLabel, sizeLabel, stockLabel, shippableLabel, descriptionLabel, imgLinkLabel, categoryLabel;
     private JTextField nameField, priceField, costField, sizeField, stockField, imgLinkField;
     private JTextArea descriptionTextArea;
-    private JComboBox<String> colorComboBox, categoryComboBox;
+    private JComboBox<String> colorComboBox;
+    private ComboBoxCategories categoryComboBox;
     private JCheckBox shippableCheckBox;
-    private ApplicationController applicationController;
+    private ApplicationController controller;
     private JButton submitButton, clearButton;
-    private ArrayList<Category> categories;
     private JScrollPane scrollPane;
 
     public AddProductPanel() {
@@ -23,7 +24,7 @@ public class AddProductPanel extends JPanel {
         add(new JLabel("Menu d'ajout de produit", SwingConstants.CENTER));
         add(new JLabel("Les champs marqués d'une * sont obligatoires", SwingConstants.CENTER));
 
-        applicationController = new ApplicationController();
+        controller = new ApplicationController();
 
         nameLabel = new JLabel("*Name:", SwingConstants.RIGHT);
         nameField = new JTextField();
@@ -35,12 +36,9 @@ public class AddProductPanel extends JPanel {
         add(colorLabel);
         add(colorComboBox);
 
-        categories = applicationController.getAllCategories();
         categoryLabel = new JLabel("*Category:", SwingConstants.RIGHT);
-        categoryComboBox = new JComboBox<>();
-        for (Category category : categories) {
-            categoryComboBox.addItem(category.getLabel());
-        }
+        categoryComboBox = new ComboBoxCategories();
+
         add(categoryLabel);
         add(categoryComboBox);
 
@@ -93,16 +91,23 @@ public class AddProductPanel extends JPanel {
         setVisible(true);
     }
 
+    public void updateComboBox(){
+        categoryComboBox.update();
+    }
+
     private void submit() {
         Product product = null;
         try {
             product = validProduct(product);
             JOptionPane.showMessageDialog(null, "Produit ajouté avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
             clear();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+
+            controller.addProduct(product);
+        } catch (ValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur value", JOptionPane.ERROR_MESSAGE);
+        } catch (DBExceptions e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur DB", JOptionPane.ERROR_MESSAGE);
         }
-        applicationController.addProduct(product);
     }
 
     private Boolean isNameValid(String name) {
@@ -140,33 +145,40 @@ public class AddProductPanel extends JPanel {
         }
     }
 
-    private Product validProduct(Product product) throws Exception{
-        product = new Product();
-        if (!checkFields())
-            throw new Exception("Veuillez remplir tous les champs obligatoire");
-        product.setName(nameField.getText());
-        if (!isNameValid(product.getName()))
-            throw new Exception("Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)");
-        product.setColor(colorComboBox.getSelectedItem().toString());
-        product.setPrice(Double.parseDouble(priceField.getText()));
-        if (!isDoubleValid(product.getPrice()))
-            throw new Exception("Le prix doit être supérieur à 0");
-        product.setCost(Double.parseDouble(costField.getText()));
-        if (!isDoubleValid(product.getCost()))
-            throw new Exception("Le coût doit être supérieur à 0");
-        product.setSize(Double.parseDouble(sizeField.getText()));
-        if (!isDoubleValid(product.getSize()))
-            throw new Exception("La taille doit être supérieure à 0");
-        product.setStock(Integer.parseInt(stockField.getText()));
-        if (!isIntValid(product.getStock()))
-            throw new Exception("Le stock doit être supérieur à 0");
-        product.setShippable(shippableCheckBox.isSelected());
-        product.setDescription(descriptionTextArea.getText());
-        product.setImgLink(imgLinkField.getText());
-        product.setCategory(categories.get(categoryComboBox.getSelectedIndex() + 1));
-        product.setId(-1);
-        product.setAdditionDate(null);
-        product.setCategory_FK(categories.get(categoryComboBox.getSelectedIndex() + 1).getId());
+    private Product validProduct(Product product) throws ValueException {
+        try {
+            product = new Product();
+            Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
+            if (!checkFields())
+                throw new ValueException("Veuillez remplir tous les champs obligatoire");
+            product.setName(nameField.getText());
+            if (!isNameValid(product.getName()))
+                throw new ValueException("Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)");
+            product.setColor(colorComboBox.getSelectedItem().toString());
+            product.setPrice(Double.parseDouble(priceField.getText()));
+            if (!isDoubleValid(product.getPrice()))
+                throw new ValueException("Le prix doit être supérieur à 0");
+            product.setCost(Double.parseDouble(costField.getText()));
+            if (!isDoubleValid(product.getCost()))
+                throw new ValueException("Le coût doit être supérieur à 0");
+            product.setSize(Double.parseDouble(sizeField.getText()));
+            if (!isDoubleValid(product.getSize()))
+                throw new ValueException("La taille doit être supérieure à 0");
+            product.setStock(Integer.parseInt(stockField.getText()));
+            if (!isIntValid(product.getStock()))
+                throw new ValueException("Le stock doit être supérieur à 0");
+            product.setShippable(shippableCheckBox.isSelected());
+            product.setDescription(descriptionTextArea.getText());
+            product.setImgLink(imgLinkField.getText());
+            product.setCategory(category);
+            product.setId(-1);
+            product.setAdditionDate(null);
+            product.setCategory_FK(category.getId());
+
+        } catch (DBExceptions e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         return product;
     }
 }

@@ -1,13 +1,13 @@
 package Model;
 
-public class SearchBoughtHistory {
+public class Purchase {
     private int orderID;
     private int articleQuantity;
     private double articlePrice;
     private String articleName;
     private String categoryLabel;
 
-    public SearchBoughtHistory(int orderID, int articleQuantity, double articlePrice, String articleName, String categoryLabel) {
+    public Purchase(int orderID, int articleQuantity, double articlePrice, String articleName, String categoryLabel) {
         this.orderID = orderID;
         this.articleQuantity = articleQuantity;
         this.articlePrice = articlePrice;

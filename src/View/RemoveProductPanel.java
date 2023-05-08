@@ -1,32 +1,35 @@
 package View;
 
 import Controller.ApplicationController;
+import Exceptions.DBExceptions;
 import Model.Product;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class RemoveProductPanel extends JPanel {
 
-    private ApplicationController applicationController;
-    private ArrayList<Product> products;
-    private ProductComboBox productComboBox;
-    private Product product;
+    private ApplicationController controller;
+    private ComboBoxProducts comboBoxProducts;
     private JButton submitButton;
     private JPanel topPanel, bottomPanel;
+    private Product product;
     public RemoveProductPanel() {
         topPanel = new JPanel(new FlowLayout());
         topPanel.add(new JLabel("Menu de suppression de produit", SwingConstants.CENTER));
-        applicationController = new ApplicationController();
-        products = applicationController.getAllProducts();
-        productComboBox = new ProductComboBox();
-        productComboBox.addActionListener(l -> {
-            if (productComboBox.getSelectedIndex() >= 1) {
-                product = products.get(productComboBox.getSelectedIndex() - 1);
+        controller = new ApplicationController();
+        comboBoxProducts = new ComboBoxProducts();
+        comboBoxProducts.addActionListener(l -> {
+            if (comboBoxProducts.getSelectedIndex() >= 1) {
+                try {
+                    product = controller.getProductById(comboBoxProducts.getId());
+                } catch (DBExceptions e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
             };
         });
-        topPanel.add(productComboBox);
+        topPanel.add(comboBoxProducts);
 
         bottomPanel = new JPanel(new FlowLayout());
         submitButton = new JButton("Supprimer");
@@ -37,14 +40,23 @@ public class RemoveProductPanel extends JPanel {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
+    public void updateComboBox() {
+        comboBoxProducts.update();
+    }
+
     private void submit() {
-        if (productComboBox.getSelectedIndex() >= 1) {
+        if (comboBoxProducts.getSelectedIndex() >= 1) {
             int response = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment supprimer ce produit ?", "Confirmation", JOptionPane.YES_NO_OPTION);
             if (response == JOptionPane.YES_OPTION) {
                 if (product != null) {
-                    applicationController.deleteProduct(product);
-                    JOptionPane.showMessageDialog(this, "Le produit a bien été supprimé !", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                    productComboBox.update();
+                    try {
+                        controller.deleteProduct(product.getId());
+                        JOptionPane.showMessageDialog(this, "Le produit a bien été supprimé !", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                        comboBoxProducts.update();
+                    } catch (DBExceptions e) {
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         } else {
