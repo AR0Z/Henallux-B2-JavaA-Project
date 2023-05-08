@@ -2,32 +2,32 @@ package View;
 
 import Controller.ApplicationController;
 import Exceptions.DBExceptions;
-import Model.Customer;
-import Model.Purchase;
+import Model.Category;
+import Model.SupplierByCategory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class SearchBoughtHistoryItemPanel extends JPanel {
+public class SupplierByCategoryPanel extends JPanel {
     private ApplicationController controller;
-    private ArrayList<Purchase> searchBoughtHistories;
-    private ComboBoxCustomers comboBoxCustomers;
+    private ArrayList<SupplierByCategory> suppliersByCategory;
+    private ComboBoxCategories comboBoxCategories;
     private JPanel topPanel, centerPanel;
-    private String[] columnNames = {"ID de commande", "Quantité d'article", "Prix d'article", "Nom d'article", "Catégorie d'article"};
+    private String[] columnNames = {"Nom du pays", "Nom de la ville", "Fournisseur"};
     JScrollPane scrollPane;
-    public SearchBoughtHistoryItemPanel() {
+    public SupplierByCategoryPanel() {
         setLayout(new BorderLayout());
 
         topPanel = new JPanel(new FlowLayout());
-        topPanel.add(new JLabel("Menu de recherche d'historique d'achat", SwingConstants.CENTER));
+        topPanel.add(new JLabel("Trouver les fournisseurs qui fournit une catégorie", SwingConstants.CENTER));
         controller = new ApplicationController();
-        comboBoxCustomers = new ComboBoxCustomers();
-        comboBoxCustomers.addActionListener(l -> {
-            if (comboBoxCustomers.getSelectedIndex() >= 1) {
+        comboBoxCategories = new ComboBoxCategories();
+        comboBoxCategories.addActionListener(l -> {
+            if (comboBoxCategories.getSelectedIndex() >= 1) {
                 try {
-                    Customer customer = controller.getCustomerById(comboBoxCustomers.getId());
-                    updateTable(customer);
+                    Category category = controller.getCategoryById(comboBoxCategories.getId());
+                    updateTable(category);
                 } catch (DBExceptions e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -36,7 +36,7 @@ public class SearchBoughtHistoryItemPanel extends JPanel {
             };
         });
 
-        topPanel.add(comboBoxCustomers);
+        topPanel.add(comboBoxCategories);
         add(topPanel, BorderLayout.NORTH);
 
         centerPanel = new JPanel(new FlowLayout());
@@ -47,21 +47,19 @@ public class SearchBoughtHistoryItemPanel extends JPanel {
     }
 
     public void updateComboBox(){
-        comboBoxCustomers.update();
+        comboBoxCategories.update();
     }
 
-    public void updateTable(Customer customer){
+    public void updateTable(Category category){
 
         try{
-            searchBoughtHistories = controller.getBoughtHistory(customer.getId());
+            suppliersByCategory = controller.getSuppliersByCategory(category.getId());
 
-            Object[][] data = new Object[searchBoughtHistories.size()][5];
-            for (int i = 0; i < searchBoughtHistories.size(); i++) {
-                data[i][0] = searchBoughtHistories.get(i).getOrderID();
-                data[i][1] = searchBoughtHistories.get(i).getArticleQuantity();
-                data[i][2] = searchBoughtHistories.get(i).getArticlePrice();
-                data[i][3] = searchBoughtHistories.get(i).getArticleName();
-                data[i][4] = searchBoughtHistories.get(i).getCategoryLabel();
+            Object[][] data = new Object[suppliersByCategory.size()][3];
+            for (int i = 0; i < suppliersByCategory.size(); i++) {
+                data[i][0] = suppliersByCategory.get(i).getCountryName();
+                data[i][1] = suppliersByCategory.get(i).getCityName();
+                data[i][2] = suppliersByCategory.get(i).getSupplierName();
             }
 
             JTable table = new JTable(data, columnNames);

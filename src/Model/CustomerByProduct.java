@@ -2,14 +2,14 @@ package Model;
 
 import java.time.LocalDate;
 
-public class CustomersWhoPurchasedProduct {
+public class CustomerByProduct {
     private int customerID;
     private String customerFirstName;
     private String customerLastName;
     private int Quantity;
     private LocalDate dateOrder;
 
-    public CustomersWhoPurchasedProduct(int customerID, String customerFirstName, String customerLastName, int Quantity, LocalDate dateOrder) {
+    public CustomerByProduct(int customerID, String customerFirstName, String customerLastName, int Quantity, LocalDate dateOrder) {
         this.customerID = customerID;
         this.customerFirstName = customerFirstName;
         this.customerLastName = customerLastName;

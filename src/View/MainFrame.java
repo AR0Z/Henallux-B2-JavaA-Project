@@ -7,14 +7,15 @@ import Controller.*;
 public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
     private JMenu searchMenu, productMenu, applicationMenu, aboutMenu, statisticsMenu;
-    private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedItem, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productSearchItem, mainMenuItem;
+    private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedCategory, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productSearchItem, mainMenuItem;
     private ApplicationController applicationController;
     private AddProductPanel addProductPanel;
     private EditProductPanel editProductPanel;
     private RemoveProductPanel removeProductPanel;
     private SearchProductPanel searchProductPanel;
-    private SearchBoughtHistoryItemPanel searchBoughtHistoryItemPanel;
+    private CustomersByProductPanel customersByProductPanel;
     private SearchCustomerWhoPurchasedProductPanel searchCustomerWhoPurchasedProductPanel;
+    private SupplierByCategoryPanel supplierByCategoryPanel;
     private MainPanel mainPanel;
     public MainFrame() {
         super("My App", null);
@@ -28,8 +29,9 @@ public class MainFrame extends JFrame {
         editProductPanel = new EditProductPanel();
         removeProductPanel = new RemoveProductPanel();
         searchProductPanel = new SearchProductPanel();
-        searchBoughtHistoryItemPanel = new SearchBoughtHistoryItemPanel();
+        customersByProductPanel = new CustomersByProductPanel();
         searchCustomerWhoPurchasedProductPanel = new SearchCustomerWhoPurchasedProductPanel();
+        supplierByCategoryPanel = new SupplierByCategoryPanel();
 
         // create a menu bar
         mainMenuBar = new JMenuBar();
@@ -45,7 +47,7 @@ public class MainFrame extends JFrame {
         aboutItem = new JMenuItem("Details");
         statisticsItem = new JMenuItem("Afficher");
         searchWhoBoughtItem = new JMenuItem("Acheteur du produit");
-        searchWhoSuppliedItem = new JMenuItem("Fournisseur du produit");
+        searchWhoSuppliedCategory = new JMenuItem("Fournisseurs d'une categorie");
         searchBoughtHistoryItem = new JMenuItem("Historique d'achat d'un client");
 
         productAddItem = new JMenuItem("Ajouter");
@@ -54,7 +56,7 @@ public class MainFrame extends JFrame {
         productSearchItem = new JMenuItem("Rechercher");
 
         searchMenu.add(searchWhoBoughtItem);
-        searchMenu.add(searchWhoSuppliedItem);
+        searchMenu.add(searchWhoSuppliedCategory);
         searchMenu.add(searchBoughtHistoryItem);
         applicationMenu.add(mainMenuItem);
         applicationMenu.add(exitProgramItem);
@@ -117,8 +119,8 @@ public class MainFrame extends JFrame {
 
         searchBoughtHistoryItem.addActionListener(e -> {
             clearMainFrame();
-            add(searchBoughtHistoryItemPanel);
-            searchBoughtHistoryItemPanel.updateComboBox();
+            add(customersByProductPanel);
+            customersByProductPanel.updateComboBox();
             revalidate();
             repaint();
         });
@@ -127,6 +129,14 @@ public class MainFrame extends JFrame {
             clearMainFrame();
             add(searchCustomerWhoPurchasedProductPanel);
             searchCustomerWhoPurchasedProductPanel.updateComboBox();
+            revalidate();
+            repaint();
+        });
+
+        searchWhoSuppliedCategory.addActionListener(e -> {
+            clearMainFrame();
+            add(supplierByCategoryPanel);
+            supplierByCategoryPanel.updateComboBox();
             revalidate();
             repaint();
         });

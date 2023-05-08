@@ -32,7 +32,7 @@ public class ApplicationController {
         return applicationManager.getAllProducts();
     }
 
-    public ArrayList<CustomersWhoPurchasedProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions {
+    public ArrayList<CustomerByProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions {
         return applicationManager.getCustomersWhoPurchasedProduct(id);
     }
 
@@ -54,5 +54,9 @@ public class ApplicationController {
 
     public ArrayList<Purchase> getBoughtHistory(int id) throws DBExceptions {
         return applicationManager.getBoughtHistory(id);
+    }
+
+    public ArrayList<SupplierByCategory> getSuppliersByCategory(int id) throws DBExceptions {
+        return applicationManager.getSuppliersByCategory(id);
     }
 }

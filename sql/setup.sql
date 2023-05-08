@@ -167,7 +167,3 @@ INSERT INTO product (label, color, price, cost, size, stock, addition_date, is_s
 
 INSERT INTO supplier (label, phone, email, street_and_number, locality_id) VALUES ('IKEA', '02/719.19.22', 'ikea.supply@ikea.com', 'Rue du centre 5', 2);
 INSERT INTO supplier (label, phone, email, street_and_number, locality_id) VALUES ('Leen Bakker', '02/719.19.22', 'leenbekker.supply@gmail.com', 'Rue du centre 2', 4);
-
-
-
-SELECT c.id, c.first_name, c.last_name, l.quantity, o.order_date FROM `customer` c INNER JOIN `order` o on c.id = o.customer_id INNER JOIN `line` l on o.id = l.order_id INNER JOIN `product` p on l.product_id = p.id WHERE p.id = (?);

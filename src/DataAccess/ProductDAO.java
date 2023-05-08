@@ -17,5 +17,5 @@ public interface ProductDAO {
 
     ArrayList<Product> getAllProducts() throws DBExceptions;
 
-    ArrayList<CustomersWhoPurchasedProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions;
+    ArrayList<CustomerByProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions;
 }

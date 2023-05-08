@@ -42,7 +42,7 @@ public class ApplicationManager {
         return productDBAccess.getAllProducts();
     }
 
-    public ArrayList<CustomersWhoPurchasedProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions {
+    public ArrayList<CustomerByProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions {
         return productDBAccess.getCustomersWhoPurchasedProduct(id);
     }
 
@@ -64,6 +64,10 @@ public class ApplicationManager {
 
     public ArrayList<Customer> getAllCustomers() throws DBExceptions {
         return customerDBAcces.getAllCustomers();
+    }
+
+    public ArrayList<SupplierByCategory> getSuppliersByCategory(int id) throws DBExceptions {
+        return categorieDBAcces.getSuppliersByCategory(id);
     }
 
     public ArrayList<Purchase> getBoughtHistory(int id) throws DBExceptions {

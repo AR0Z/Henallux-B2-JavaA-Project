@@ -2,32 +2,32 @@ package View;
 
 import Controller.ApplicationController;
 import Exceptions.DBExceptions;
-import Model.CustomerByProduct;
-import Model.Product;
+import Model.Customer;
+import Model.Purchase;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class SearchCustomerWhoPurchasedProductPanel extends JPanel {
+public class CustomersByProductPanel extends JPanel {
     private ApplicationController controller;
-    private ArrayList<CustomerByProduct> customerByProducts;
-    private ComboBoxProducts comboBoxProducts;
+    private ArrayList<Purchase> searchBoughtHistories;
+    private ComboBoxCustomers comboBoxCustomers;
     private JPanel topPanel, centerPanel;
-    private String[] columnNames = {"ID du client", "Prénom du client", "Nom du client", "Quantité", "Date d'achat"};
+    private String[] columnNames = {"ID de commande", "Quantité d'article", "Prix d'article", "Nom d'article", "Catégorie d'article"};
     JScrollPane scrollPane;
-    public SearchCustomerWhoPurchasedProductPanel() {
+    public CustomersByProductPanel() {
         setLayout(new BorderLayout());
 
         topPanel = new JPanel(new FlowLayout());
-        topPanel.add(new JLabel("Menu de recherche qui a acheté cet article", SwingConstants.CENTER));
+        topPanel.add(new JLabel("Menu de recherche d'historique d'achat", SwingConstants.CENTER));
         controller = new ApplicationController();
-        comboBoxProducts = new ComboBoxProducts();
-        comboBoxProducts.addActionListener(l -> {
-            if (comboBoxProducts.getSelectedIndex() >= 1) {
+        comboBoxCustomers = new ComboBoxCustomers();
+        comboBoxCustomers.addActionListener(l -> {
+            if (comboBoxCustomers.getSelectedIndex() >= 1) {
                 try {
-                    Product product = controller.getProductById(comboBoxProducts.getId());
-                    updateTable(product);
+                    Customer customer = controller.getCustomerById(comboBoxCustomers.getId());
+                    updateTable(customer);
                 } catch (DBExceptions e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -36,7 +36,7 @@ public class SearchCustomerWhoPurchasedProductPanel extends JPanel {
             };
         });
 
-        topPanel.add(comboBoxProducts);
+        topPanel.add(comboBoxCustomers);
         add(topPanel, BorderLayout.NORTH);
 
         centerPanel = new JPanel(new FlowLayout());
@@ -47,21 +47,21 @@ public class SearchCustomerWhoPurchasedProductPanel extends JPanel {
     }
 
     public void updateComboBox(){
-        comboBoxProducts.update();
+        comboBoxCustomers.update();
     }
 
-    public void updateTable(Product product){
+    public void updateTable(Customer customer){
 
         try{
-            customerByProducts = controller.getCustomersWhoPurchasedProduct(product.getId());
+            searchBoughtHistories = controller.getBoughtHistory(customer.getId());
 
-            Object[][] data = new Object[customerByProducts.size()][5];
-            for (int i = 0; i < customerByProducts.size(); i++) {
-                data[i][0] = customerByProducts.get(i).getCustomerID();
-                data[i][1] = customerByProducts.get(i).getCustomerFirstName();
-                data[i][2] = customerByProducts.get(i).getCustomerLastName();
-                data[i][3] = customerByProducts.get(i).getQuantity();
-                data[i][4] = customerByProducts.get(i).getDateOrder();
+            Object[][] data = new Object[searchBoughtHistories.size()][5];
+            for (int i = 0; i < searchBoughtHistories.size(); i++) {
+                data[i][0] = searchBoughtHistories.get(i).getOrderID();
+                data[i][1] = searchBoughtHistories.get(i).getArticleQuantity();
+                data[i][2] = searchBoughtHistories.get(i).getArticlePrice();
+                data[i][3] = searchBoughtHistories.get(i).getArticleName();
+                data[i][4] = searchBoughtHistories.get(i).getCategoryLabel();
             }
 
             JTable table = new JTable(data, columnNames);
