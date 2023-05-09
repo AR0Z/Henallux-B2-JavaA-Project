@@ -1,8 +1,9 @@
 package View;
 
+import Controller.ApplicationController;
+
 import javax.swing.*;
 import java.awt.*;
-import Controller.*;
 
 public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
@@ -17,6 +18,7 @@ public class MainFrame extends JFrame {
     private SearchCustomerWhoPurchasedProductPanel searchCustomerWhoPurchasedProductPanel;
     private SupplierByCategoryPanel supplierByCategoryPanel;
     private MainPanel mainPanel;
+
     public MainFrame() {
         super("My App", null);
         setLayout(new BorderLayout());

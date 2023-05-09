@@ -1,7 +1,8 @@
 package DataAccess;
 
-import Exceptions.*;
-import Model.*;
+import Exceptions.DBExceptions;
+import Model.CustomerByProduct;
+import Model.Product;
 
 import java.util.ArrayList;
 

@@ -16,7 +16,7 @@ public class ComboBoxCustomers extends JComboBox {
         update();
     }
 
-    public void update(){
+    public void update() {
         if (this.getItemCount() > 0)
             this.removeAllItems();
         try {

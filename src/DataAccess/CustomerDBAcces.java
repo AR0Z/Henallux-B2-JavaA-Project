@@ -22,7 +22,7 @@ public class CustomerDBAcces implements CustomerDAO {
             preparedStatement.setInt(1, id);
             ResultSet data = preparedStatement.executeQuery();
 
-            if(data.next()){
+            if (data.next()) {
                 customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getString("email"), data.getInt("locality_id"), data.getString("phone"), data.getString("street_and_number"));
             }
         } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class CustomerDBAcces implements CustomerDAO {
             ResultSet data = preparedStatement.executeQuery();
             Customer customer;
 
-            while(data.next()){
+            while (data.next()) {
                 customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getString("email"), data.getInt("locality_id"), data.getString("phone"), data.getString("street_and_number"));
                 customers.add(customer);
             }
@@ -67,7 +67,7 @@ public class CustomerDBAcces implements CustomerDAO {
 
             Purchase purchase;
 
-            while(data.next()){
+            while (data.next()) {
                 purchase = new Purchase(data.getInt("o.id"), data.getInt("l.quantity"), data.getDouble("l.unitary_price"), data.getString("p.label"), data.getString("c.label"));
                 purchaseList.add(purchase);
             }

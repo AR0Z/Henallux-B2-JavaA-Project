@@ -3,7 +3,8 @@ package View;
 import Controller.ApplicationController;
 import Exceptions.DBExceptions;
 import Exceptions.ValueException;
-import Model.*;
+import Model.Category;
+import Model.Product;
 
 import javax.swing.*;
 import java.awt.*;
@@ -91,7 +92,7 @@ public class AddProductPanel extends JPanel {
         setVisible(true);
     }
 
-    public void updateComboBox(){
+    public void updateComboBox() {
         categoryComboBox.update();
     }
 
@@ -105,7 +106,7 @@ public class AddProductPanel extends JPanel {
             controller.addProduct(product);
         } catch (ValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur value", JOptionPane.ERROR_MESSAGE);
-        } catch (DBExceptions e){
+        } catch (DBExceptions e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur DB", JOptionPane.ERROR_MESSAGE);
         }
     }

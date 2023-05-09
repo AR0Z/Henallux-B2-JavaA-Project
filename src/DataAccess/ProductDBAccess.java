@@ -1,10 +1,12 @@
 package DataAccess;
 
-import Exceptions.*;
-import Model.*;
-import java.util.ArrayList;
+import Exceptions.DBExceptions;
+import Model.CustomerByProduct;
+import Model.Product;
+
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 public class ProductDBAccess implements ProductDAO {

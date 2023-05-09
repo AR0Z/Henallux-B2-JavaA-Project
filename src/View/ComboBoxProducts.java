@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class ComboBoxProducts extends JComboBox {
     ArrayList<Product> products;
     ApplicationController controller;
+
     public ComboBoxProducts() {
         controller = new ApplicationController();
         update();

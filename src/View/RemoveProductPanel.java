@@ -14,6 +14,7 @@ public class RemoveProductPanel extends JPanel {
     private JButton submitButton;
     private JPanel topPanel, bottomPanel;
     private Product product;
+
     public RemoveProductPanel() {
         topPanel = new JPanel(new FlowLayout());
         topPanel.add(new JLabel("Menu de suppression de produit", SwingConstants.CENTER));
@@ -27,7 +28,8 @@ public class RemoveProductPanel extends JPanel {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
-            };
+            }
+            ;
         });
         topPanel.add(comboBoxProducts);
 

@@ -23,19 +23,19 @@ public class ApplicationManager {
     // Product methods
 
     public void addProduct(Product product) throws DBExceptions {
-            productDBAccess.addProduct(product);
+        productDBAccess.addProduct(product);
     }
 
     public void editProduct(Product product) throws DBExceptions {
-            productDBAccess.editProduct(product);
+        productDBAccess.editProduct(product);
     }
 
     public void deleteProduct(int id) throws DBExceptions {
-            productDBAccess.deleteProduct(id);
+        productDBAccess.deleteProduct(id);
     }
 
     public Product getProductById(int id) throws DBExceptions {
-            return productDBAccess.getProductById(id);
+        return productDBAccess.getProductById(id);
     }
 
     public ArrayList<Product> getAllProducts() throws DBExceptions {

@@ -16,6 +16,7 @@ public class CustomersByProductPanel extends JPanel {
     private JPanel topPanel, centerPanel;
     private String[] columnNames = {"ID de commande", "Quantité d'article", "Prix d'article", "Nom d'article", "Catégorie d'article"};
     JScrollPane scrollPane;
+
     public CustomersByProductPanel() {
         setLayout(new BorderLayout());
 
@@ -33,7 +34,8 @@ public class CustomersByProductPanel extends JPanel {
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
 
-            };
+            }
+            ;
         });
 
         topPanel.add(comboBoxCustomers);
@@ -46,13 +48,13 @@ public class CustomersByProductPanel extends JPanel {
         centerPanel.add(scrollPane);
     }
 
-    public void updateComboBox(){
+    public void updateComboBox() {
         comboBoxCustomers.update();
     }
 
-    public void updateTable(Customer customer){
+    public void updateTable(Customer customer) {
 
-        try{
+        try {
             searchBoughtHistories = controller.getBoughtHistory(customer.getId());
 
             Object[][] data = new Object[searchBoughtHistories.size()][5];

@@ -12,11 +12,11 @@ public class Category {
     }
 
     public Category(int id, String label) {
-        this(id,label,null);
+        this(id, label, null);
     }
 
     public Category() {
-        this(0,null,null);
+        this(0, null, null);
     }
 
     public String getLabel() {
@@ -35,5 +35,7 @@ public class Category {
         this.description = description;
     }
 
-    public int getId() {return this.id;}
+    public int getId() {
+        return this.id;
+    }
 }

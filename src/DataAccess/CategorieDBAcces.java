@@ -2,7 +2,6 @@ package DataAccess;
 
 import Exceptions.DBExceptions;
 import Model.Category;
-import Model.Purchase;
 import Model.SupplierByCategory;
 
 import java.sql.Connection;
@@ -11,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CategorieDBAcces implements CategorieDAO{
+public class CategorieDBAcces implements CategorieDAO {
 
     @Override
     public Category getCategoryById(int id) throws DBExceptions {
@@ -67,7 +66,7 @@ public class CategorieDBAcces implements CategorieDAO{
 
             SupplierByCategory supplierByCategory;
 
-            while(data.next()){
+            while (data.next()) {
                 supplierByCategory = new SupplierByCategory(data.getString("c.label"), data.getString("l.label"), data.getString("s.label"));
                 suppliersByCategory.add(supplierByCategory);
             }

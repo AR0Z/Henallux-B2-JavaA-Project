@@ -1,6 +1,6 @@
 package Controller;
 
-import Business.*;
+import Business.ApplicationManager;
 import Exceptions.DBExceptions;
 import Model.*;
 
@@ -8,18 +8,19 @@ import java.util.ArrayList;
 
 public class ApplicationController {
     private ApplicationManager applicationManager;
-    public ApplicationController(){
-         applicationManager = new ApplicationManager();
+
+    public ApplicationController() {
+        applicationManager = new ApplicationManager();
     }
-    
+
     public void addProduct(Product product) throws DBExceptions {
         applicationManager.addProduct(product);
     }
-    
+
     public void editProduct(Product product) throws DBExceptions {
         applicationManager.editProduct(product);
     }
-    
+
     public void deleteProduct(int id) throws DBExceptions {
         applicationManager.deleteProduct(id);
     }

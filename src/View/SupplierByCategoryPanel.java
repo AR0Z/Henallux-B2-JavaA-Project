@@ -16,6 +16,7 @@ public class SupplierByCategoryPanel extends JPanel {
     private JPanel topPanel, centerPanel;
     private String[] columnNames = {"Nom du pays", "Nom de la ville", "Fournisseur"};
     JScrollPane scrollPane;
+
     public SupplierByCategoryPanel() {
         setLayout(new BorderLayout());
 
@@ -33,7 +34,8 @@ public class SupplierByCategoryPanel extends JPanel {
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
 
-            };
+            }
+            ;
         });
 
         topPanel.add(comboBoxCategories);
@@ -46,13 +48,13 @@ public class SupplierByCategoryPanel extends JPanel {
         centerPanel.add(scrollPane);
     }
 
-    public void updateComboBox(){
+    public void updateComboBox() {
         comboBoxCategories.update();
     }
 
-    public void updateTable(Category category){
+    public void updateTable(Category category) {
 
-        try{
+        try {
             suppliersByCategory = controller.getSuppliersByCategory(category.getId());
 
             Object[][] data = new Object[suppliersByCategory.size()][3];

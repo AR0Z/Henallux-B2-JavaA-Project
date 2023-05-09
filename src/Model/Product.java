@@ -84,6 +84,7 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -151,7 +152,9 @@ public class Product {
         return category_FK;
     }
 
-    public int getId() { return this.id; }
+    public int getId() {
+        return this.id;
+    }
 
     public void setCategory_FK(int categoryFk) {
         this.category_FK = categoryFk;

@@ -3,11 +3,10 @@ package View;
 import Controller.ApplicationController;
 import Exceptions.DBExceptions;
 import Exceptions.ValueException;
-import Model.*;
+import Model.Product;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class EditProductPanel extends JPanel {
     private JLabel nameLabel, colorLabel, priceLabel, costLabel, sizeLabel, stockLabel, shippableLabel, descriptionLabel, imgLinkLabel, categoryLabel;
@@ -21,6 +20,7 @@ public class EditProductPanel extends JPanel {
     private JScrollPane scrollPane;
 
     private ComboBoxProducts comboBoxProducts;
+
     public EditProductPanel() {
         controller = new ApplicationController();
         setLayout(new GridLayout(12, 2, 5, 5));
@@ -135,7 +135,7 @@ public class EditProductPanel extends JPanel {
             }
             controller.editProduct(product);
             comboBoxProducts.update();
-        }   catch (DBExceptions e) {
+        } catch (DBExceptions e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }

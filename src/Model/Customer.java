@@ -28,7 +28,7 @@ public class Customer {
         return id;
     }
 
-    public String getName(){
+    public String getName() {
         return lastName + " " + firstName;
     }
 }

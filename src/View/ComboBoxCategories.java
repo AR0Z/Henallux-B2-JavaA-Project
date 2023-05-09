@@ -16,7 +16,7 @@ public class ComboBoxCategories extends JComboBox {
         update();
     }
 
-    public void update(){
+    public void update() {
         if (this.getItemCount() > 0)
             this.removeAllItems();
         try {
@@ -31,7 +31,7 @@ public class ComboBoxCategories extends JComboBox {
         }
     }
 
-    public int getId(){
+    public int getId() {
         return categories.get(this.getSelectedIndex() - 1).getId();
     }
 }

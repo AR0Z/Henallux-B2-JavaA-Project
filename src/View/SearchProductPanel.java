@@ -2,7 +2,8 @@ package View;
 
 import Controller.ApplicationController;
 import Exceptions.DBExceptions;
-import Model.*;
+import Model.Category;
+import Model.Product;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +18,7 @@ public class SearchProductPanel extends JPanel {
     private ArrayList<Category> categories;
     ApplicationController applicationController;
     JScrollPane scrollPane;
+
     public SearchProductPanel() {
         applicationController = new ApplicationController();
         submitButton = new JButton("Listing des produits");
@@ -74,7 +76,6 @@ public class SearchProductPanel extends JPanel {
         centerPanel.add(scrollPane);
 
         add(centerPanel, BorderLayout.CENTER);
-
 
 
     }

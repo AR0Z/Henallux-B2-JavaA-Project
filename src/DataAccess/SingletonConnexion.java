@@ -1,7 +1,10 @@
 package DataAccess;
 
-import Exceptions.*;
-import java.sql.*;
+import Exceptions.DBExceptions;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class SingletonConnexion {
     private static Connection instance;
