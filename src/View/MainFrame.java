@@ -9,31 +9,12 @@ public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
     private JMenu searchMenu, productMenu, applicationMenu, aboutMenu, statisticsMenu;
     private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedCategory, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productSearchItem, mainMenuItem;
-    private ApplicationController applicationController;
-    private AddProductPanel addProductPanel;
-    private EditProductPanel editProductPanel;
-    private RemoveProductPanel removeProductPanel;
-    private SearchProductPanel searchProductPanel;
-    private CustomersByProductPanel customersByProductPanel;
-    private SearchCustomerWhoPurchasedProductPanel searchCustomerWhoPurchasedProductPanel;
-    private SupplierByCategoryPanel supplierByCategoryPanel;
-    private MainPanel mainPanel;
 
     public MainFrame() {
         super("My App", null);
         setLayout(new BorderLayout());
         setBounds(0, 0, 1000, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        applicationController = new ApplicationController();
-
-        addProductPanel = new AddProductPanel();
-        editProductPanel = new EditProductPanel();
-        removeProductPanel = new RemoveProductPanel();
-        searchProductPanel = new SearchProductPanel();
-        customersByProductPanel = new CustomersByProductPanel();
-        searchCustomerWhoPurchasedProductPanel = new SearchCustomerWhoPurchasedProductPanel();
-        supplierByCategoryPanel = new SupplierByCategoryPanel();
 
         // create a menu bar
         mainMenuBar = new JMenuBar();
@@ -77,12 +58,13 @@ public class MainFrame extends JFrame {
         mainMenuBar.add(statisticsMenu);
         mainMenuBar.add(aboutMenu);
 
-        mainPanel = new MainPanel();
+        MainPanel mainPanel = new MainPanel();
 
         exitProgramItem.addActionListener(e -> System.exit(0));
         aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Application de gestion de produits", "A propos", JOptionPane.INFORMATION_MESSAGE));
         productAddItem.addActionListener(e -> {
             clearMainFrame();
+            AddProductPanel addProductPanel = new AddProductPanel();
             add(addProductPanel);
             addProductPanel.updateComboBox();
             revalidate();
@@ -97,6 +79,7 @@ public class MainFrame extends JFrame {
         });
 
         productEditItem.addActionListener(e -> {
+            EditProductPanel editProductPanel = new EditProductPanel();
             clearMainFrame();
             add(editProductPanel);
             editProductPanel.updateComboBox();
@@ -105,6 +88,7 @@ public class MainFrame extends JFrame {
         });
 
         productDeleteItem.addActionListener(e -> {
+            RemoveProductPanel removeProductPanel = new RemoveProductPanel();
             clearMainFrame();
             add(removeProductPanel);
             removeProductPanel.updateComboBox();
@@ -113,6 +97,7 @@ public class MainFrame extends JFrame {
         });
 
         productSearchItem.addActionListener(e -> {
+            SearchProductPanel searchProductPanel = new SearchProductPanel();
             clearMainFrame();
             add(searchProductPanel);
             revalidate();
@@ -120,6 +105,7 @@ public class MainFrame extends JFrame {
         });
 
         searchBoughtHistoryItem.addActionListener(e -> {
+            CustomersByProductPanel customersByProductPanel = new CustomersByProductPanel();
             clearMainFrame();
             add(customersByProductPanel);
             customersByProductPanel.updateComboBox();
@@ -128,6 +114,7 @@ public class MainFrame extends JFrame {
         });
 
         searchWhoBoughtItem.addActionListener(e -> {
+            SearchCustomerWhoPurchasedProductPanel searchCustomerWhoPurchasedProductPanel = new SearchCustomerWhoPurchasedProductPanel();
             clearMainFrame();
             add(searchCustomerWhoPurchasedProductPanel);
             searchCustomerWhoPurchasedProductPanel.updateComboBox();
@@ -136,6 +123,7 @@ public class MainFrame extends JFrame {
         });
 
         searchWhoSuppliedCategory.addActionListener(e -> {
+            SupplierByCategoryPanel supplierByCategoryPanel = new SupplierByCategoryPanel();
             clearMainFrame();
             add(supplierByCategoryPanel);
             supplierByCategoryPanel.updateComboBox();

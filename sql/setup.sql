@@ -78,7 +78,6 @@ CREATE TABLE IF NOT EXISTS `category`(
     information VARCHAR(500),
     PRIMARY KEY (id)
 );
-
 CREATE TABLE IF NOT EXISTS `supplier`( 
     id                  INT NOT NULL AUTO_INCREMENT,
     label                VARCHAR(50) NOT NULL,
