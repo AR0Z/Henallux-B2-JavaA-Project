@@ -1,14 +1,12 @@
 package View;
 
-import Controller.ApplicationController;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
     private JMenu searchMenu, productMenu, applicationMenu, aboutMenu, statisticsMenu;
-    private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedCategory, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productSearchItem, mainMenuItem;
+    private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedCategory, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productListingItem, mainMenuItem;
 
     public MainFrame() {
         super("My App", null);
@@ -36,7 +34,7 @@ public class MainFrame extends JFrame {
         productAddItem = new JMenuItem("Ajouter");
         productEditItem = new JMenuItem("Modifier");
         productDeleteItem = new JMenuItem("Supprimer");
-        productSearchItem = new JMenuItem("Rechercher");
+        productListingItem = new JMenuItem("Lister");
 
         searchMenu.add(searchWhoBoughtItem);
         searchMenu.add(searchWhoSuppliedCategory);
@@ -49,7 +47,7 @@ public class MainFrame extends JFrame {
         productMenu.add(productAddItem);
         productMenu.add(productEditItem);
         productMenu.add(productDeleteItem);
-        productMenu.add(productSearchItem);
+        productMenu.add(productListingItem);
 
 
         mainMenuBar.add(applicationMenu);
@@ -93,10 +91,10 @@ public class MainFrame extends JFrame {
             repaint();
         });
 
-        productSearchItem.addActionListener(e -> {
-            SearchProductPanel searchProductPanel = new SearchProductPanel();
+        productListingItem.addActionListener(e -> {
+            ListingProductPanel listingProductPanel = new ListingProductPanel();
             clearMainFrame();
-            add(searchProductPanel);
+            add(listingProductPanel);
             revalidate();
             repaint();
         });

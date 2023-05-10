@@ -18,7 +18,6 @@ public class EditProductPanel extends JPanel {
     private ApplicationController controller;
     private JButton submitButton, clearButton;
     private JScrollPane scrollPane;
-
     private ComboBoxProducts comboBoxProducts;
 
     public EditProductPanel() {
@@ -125,15 +124,16 @@ public class EditProductPanel extends JPanel {
         try {
             Product baseProduct = controller.getProductById(comboBoxProducts.getId());
             Product product = null;
-            try {
-                product = validProduct(product, baseProduct);
-                JOptionPane.showMessageDialog(null, "Produit modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                clear();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
+
+            product = validProduct(product, baseProduct);
+
+            if (product == null) return;
+
             controller.editProduct(product);
+            clear();
             comboBoxProducts.update();
+            JOptionPane.showMessageDialog(null, "Produit modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (DBExceptions e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -179,34 +179,47 @@ public class EditProductPanel extends JPanel {
         imgLinkField.setText("");
     }
 
-    private Product validProduct(Product product, Product baseProduct) throws ValueException {
+    private Product validProduct(Product product, Product baseProduct) {
         try {
             product = new Product();
-            if (!checkFields())
-                throw new ValueException("Veuillez remplir tous les champs obligatoire");
             product.setName(nameField.getText());
-            if (!isNameValid(product.getName()))
-                throw new ValueException("Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)");
             product.setColor(colorComboBox.getSelectedItem().toString());
             product.setPrice(Double.parseDouble(priceField.getText()));
-            if (!isDoubleValid(product.getPrice()))
-                throw new ValueException("Le prix doit être supérieur à 0");
-            product.setCost(Double.parseDouble(costField.getText()));
-            if (!isDoubleValid(product.getCost()))
-                throw new ValueException("Le coût doit être supérieur à 0");
-            product.setSize(Double.parseDouble(sizeField.getText()));
-            if (!isDoubleValid(product.getSize()))
-                throw new ValueException("La taille doit être supérieure à 0");
             product.setStock(Integer.parseInt(stockField.getText()));
-            if (!isIntValid(product.getStock()))
-                throw new ValueException("Le stock doit être supérieur à 0");
+            product.setCost(Double.parseDouble(costField.getText()));
+            product.setSize(Double.parseDouble(sizeField.getText()));
             product.setShippable(shippableCheckBox.isSelected());
             product.setDescription(descriptionTextArea.getText());
             product.setImgLink(imgLinkField.getText());
-            product.setCategory(controller.getCategoryById(categoryComboBox.getId()));
             product.setId(baseProduct.getId());
             product.setAdditionDate(baseProduct.getAdditionDate());
-            product.setCategory_FK(baseProduct.getCategory_FK());
+            Boolean check = true;
+            if (!checkFields()) {
+                JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs obligatoire", "Erreur", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            else if (!isNameValid(product.getName())) {
+                JOptionPane.showMessageDialog(null, "Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)", "Erreur", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            else if (!isDoubleValid(product.getPrice())) {
+                JOptionPane.showMessageDialog(null, "Le prix doit être supérieur à 0", "Erreur", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } else if (!isDoubleValid(product.getCost())) {
+                JOptionPane.showMessageDialog(null, "Le coût doit être supérieur à 0", "Erreur", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } else if (!isDoubleValid(product.getSize())) {
+                JOptionPane.showMessageDialog(null, "La taille doit être supérieure à 0", "Erreur", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } else if (!isIntValid(product.getStock())) {
+                JOptionPane.showMessageDialog(null, "Le stock doit être supérieur à 0", "Erreur", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } else if (categoryComboBox.getSelectedIndex() < 1) {
+                JOptionPane.showMessageDialog(null, "Sélectionnez une catégorie", "Erreur", JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
+            product.setCategory(controller.getCategoryById(categoryComboBox.getId()));
+            product.setCategory_FK(categoryComboBox.getId());
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

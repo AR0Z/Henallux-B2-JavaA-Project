@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class SearchProductPanel extends JPanel {
+public class ListingProductPanel extends JPanel {
 
     private JButton submitButton;
     private JPanel topPanel, centerPanel;
@@ -19,9 +19,9 @@ public class SearchProductPanel extends JPanel {
     ApplicationController applicationController;
     JScrollPane scrollPane;
 
-    public SearchProductPanel() {
+    public ListingProductPanel() {
         applicationController = new ApplicationController();
-        submitButton = new JButton("Listing des produits");
+        submitButton = new JButton("Afficher les produits");
         setLayout(new BorderLayout());
         topPanel = new JPanel(new FlowLayout());
         topPanel.add(submitButton);
