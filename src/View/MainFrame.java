@@ -66,7 +66,6 @@ public class MainFrame extends JFrame {
             clearMainFrame();
             AddProductPanel addProductPanel = new AddProductPanel();
             add(addProductPanel);
-            addProductPanel.updateComboBox();
             revalidate();
             repaint();
         });
@@ -82,7 +81,6 @@ public class MainFrame extends JFrame {
             EditProductPanel editProductPanel = new EditProductPanel();
             clearMainFrame();
             add(editProductPanel);
-            editProductPanel.updateComboBox();
             revalidate();
             repaint();
         });
@@ -91,7 +89,6 @@ public class MainFrame extends JFrame {
             RemoveProductPanel removeProductPanel = new RemoveProductPanel();
             clearMainFrame();
             add(removeProductPanel);
-            removeProductPanel.updateComboBox();
             revalidate();
             repaint();
         });
@@ -108,7 +105,6 @@ public class MainFrame extends JFrame {
             CustomersByProductPanel customersByProductPanel = new CustomersByProductPanel();
             clearMainFrame();
             add(customersByProductPanel);
-            customersByProductPanel.updateComboBox();
             revalidate();
             repaint();
         });
@@ -117,7 +113,6 @@ public class MainFrame extends JFrame {
             SearchCustomerWhoPurchasedProductPanel searchCustomerWhoPurchasedProductPanel = new SearchCustomerWhoPurchasedProductPanel();
             clearMainFrame();
             add(searchCustomerWhoPurchasedProductPanel);
-            searchCustomerWhoPurchasedProductPanel.updateComboBox();
             revalidate();
             repaint();
         });
@@ -126,7 +121,6 @@ public class MainFrame extends JFrame {
             SupplierByCategoryPanel supplierByCategoryPanel = new SupplierByCategoryPanel();
             clearMainFrame();
             add(supplierByCategoryPanel);
-            supplierByCategoryPanel.updateComboBox();
             revalidate();
             repaint();
         });
