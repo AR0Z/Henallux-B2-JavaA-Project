@@ -193,7 +193,6 @@ public class EditProductPanel extends JPanel {
             product.setImgLink(imgLinkField.getText());
             product.setId(baseProduct.getId());
             product.setAdditionDate(baseProduct.getAdditionDate());
-            Boolean check = true;
             if (!checkFields()) {
                 JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs obligatoire", "Erreur", JOptionPane.ERROR_MESSAGE);
                 return null;
