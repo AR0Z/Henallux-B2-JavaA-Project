@@ -30,7 +30,6 @@ public class EditProductPanel extends JPanel {
             if (comboBoxProducts.getSelectedIndex() >= 1) {
                 try {
                     Product product = controller.getProductById(comboBoxProducts.getId());
-                    System.out.println(product);
                     updateFields(product);
                 } catch (DBExceptions e) {
                     e.printStackTrace();
