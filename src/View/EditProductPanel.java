@@ -220,8 +220,8 @@ public class EditProductPanel extends JPanel {
             product.setCategory(controller.getCategoryById(categoryComboBox.getId()));
             product.setCategory_FK(categoryComboBox.getId());
         } catch (Exception e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            return null;
         }
         return product;
     }
