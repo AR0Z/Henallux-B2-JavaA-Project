@@ -106,7 +106,8 @@ public class EditProductPanel extends JPanel {
     public void updateFields(Product product) {
         nameField.setText(product.getName());
         colorComboBox.setSelectedItem(product.getColor());
-        categoryComboBox.setSelectedIndex(product.getCategory_FK() - 1);
+        categoryComboBox.setSelectedIndex(product.getCategory_FK());
+        System.out.println(product.getCategory_FK() - 1);
         priceField.setText(String.valueOf(product.getPrice()));
         costField.setText(String.valueOf(product.getCost()));
         sizeField.setText(String.valueOf(product.getSize()));
