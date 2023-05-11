@@ -45,18 +45,27 @@ public class RemoveProductPanel extends JPanel {
 
     private void submit() {
         if (comboBoxProducts.getSelectedIndex() >= 1) {
-            int response = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment supprimer ce produit ?", "Confirmation", JOptionPane.YES_NO_OPTION);
-            if (response == JOptionPane.YES_OPTION) {
-                if (product != null) {
-                    try {
-                        controller.deleteProduct(product.getId());
-                        JOptionPane.showMessageDialog(this, "Le produit a bien été supprimé !", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                        comboBoxProducts.update();
-                    } catch (DBExceptions e) {
-                        e.printStackTrace();
-                        JOptionPane.showMessageDialog(this, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            int response = 0;
+            try {
+                if(!controller.isArticleAvailableForDeleting(product.getId())){
+                    response = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment supprimer ce produit car il se trouve dans une commande (Si vous le supprimez, vous pouvez avoir des erreurs dans le futur) ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                }else{
+                    response = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment supprimer ce produit ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                }
+
+                if (response == JOptionPane.YES_OPTION) {
+                    if (product != null) {
+                        try {
+                            controller.deleteProduct(product.getId());
+                            JOptionPane.showMessageDialog(this, "Le produit a bien été supprimé !", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                            comboBoxProducts.update();
+                        } catch (DBExceptions e) {
+                            e.printStackTrace();
+                            JOptionPane.showMessageDialog(this, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
+                } catch (DBExceptions e) {
             }
         } else {
             JOptionPane.showMessageDialog(this, "Veuillez sélectionner un produit !", "Erreur", JOptionPane.ERROR_MESSAGE);

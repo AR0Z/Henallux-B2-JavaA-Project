@@ -33,6 +33,10 @@ public class ApplicationController {
         return applicationManager.getAllProducts();
     }
 
+    public Boolean isArticleAvailableForDeleting(int id) throws DBExceptions{
+        return applicationManager.isArticleAvailableForDeleting(id);
+    }
+
     public ArrayList<CustomerByProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions {
         return applicationManager.getCustomersWhoPurchasedProduct(id);
     }

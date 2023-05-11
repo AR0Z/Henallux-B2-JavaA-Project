@@ -80,19 +80,7 @@ public class ProductDBAccess implements ProductDAO {
             preparedStatement.setInt(1, id);
             ResultSet data = preparedStatement.executeQuery();
             if (data.next()) {
-                product = new Product();
-                product.setId(data.getInt("id"));
-                product.setName(data.getString("label"));
-                product.setColor(data.getString("color"));
-                product.setPrice(data.getDouble("price"));
-                product.setCost(data.getDouble("cost"));
-                product.setSize(data.getDouble("size"));
-                product.setStock(data.getInt("stock"));
-                product.setAdditionDate(data.getDate("addition_date").toLocalDate());
-                product.setShippable(data.getBoolean("is_shippable"));
-                product.setDescription(data.getString("information"));
-                product.setImgLink(data.getString("image_link"));
-                product.setCategory_FK(data.getInt("category_id"));
+                product = new Product(data.getInt("id"), data.getString("label"), data.getString("color"), data.getDouble("price"), data.getDouble("cost"), data.getDouble("size"), data.getInt("stock"), data.getDate("addition_date").toLocalDate(), data.getBoolean("is_shippable"), data.getString("information"), data.getString("image_link"), data.getInt("category_id"));
             }
         } catch (SQLException e) {
             throw new DBExceptions(e.getMessage());
@@ -110,19 +98,7 @@ public class ProductDBAccess implements ProductDAO {
             ResultSet data = preparedStatement.executeQuery();
             Product product;
             while (data.next()) {
-                product = new Product();
-                product.setId(data.getInt("id"));
-                product.setName(data.getString("label"));
-                product.setColor(data.getString("color"));
-                product.setPrice(data.getDouble("price"));
-                product.setCost(data.getDouble("cost"));
-                product.setSize(data.getDouble("size"));
-                product.setStock(data.getInt("stock"));
-                product.setAdditionDate(data.getDate("addition_date").toLocalDate());
-                product.setShippable(data.getBoolean("is_shippable"));
-                product.setDescription(data.getString("information"));
-                product.setImgLink(data.getString("image_link"));
-                product.setCategory_FK(data.getInt("category_id"));
+                product = new Product(data.getInt("id"), data.getString("label"), data.getString("color"), data.getDouble("price"), data.getDouble("cost"), data.getDouble("size"), data.getInt("stock"), data.getDate("addition_date").toLocalDate(), data.getBoolean("is_shippable"), data.getString("information"), data.getString("image_link"), data.getInt("category_id"));
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -149,4 +125,23 @@ public class ProductDBAccess implements ProductDAO {
         }
         return customerByProduct;
     }
+
+    @Override
+    public Boolean isArticleAvailableForDeleting(int id) throws DBExceptions {
+        boolean isAvailable = false;
+        try {
+            String sqlInstruction = "select * from line where product_id = ?;";
+            Connection connection = SingletonConnexion.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, id);
+            ResultSet data = preparedStatement.executeQuery();
+            if (!data.next()) {
+                isAvailable = true;
+            }
+        } catch (SQLException e) {
+            throw new DBExceptions(e.getMessage());
+        }
+        return isAvailable;
+    }
+
 }

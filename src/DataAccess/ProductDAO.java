@@ -19,4 +19,6 @@ public interface ProductDAO {
     ArrayList<Product> getAllProducts() throws DBExceptions;
 
     ArrayList<CustomerByProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions;
+
+    Boolean isArticleAvailableForDeleting(int id) throws DBExceptions;
 }

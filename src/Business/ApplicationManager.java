@@ -46,6 +46,10 @@ public class ApplicationManager {
         return productDBAccess.getCustomersWhoPurchasedProduct(id);
     }
 
+    public Boolean isArticleAvailableForDeleting(int id) throws DBExceptions {
+        return productDBAccess.isArticleAvailableForDeleting(id);
+    }
+
     // Category methods
 
     public Category getCategoryById(int id) throws DBExceptions {
