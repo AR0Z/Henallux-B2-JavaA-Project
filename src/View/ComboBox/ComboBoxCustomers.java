@@ -1,4 +1,4 @@
-package View;
+package View.ComboBox;
 
 import Controller.ApplicationController;
 import Exceptions.DBExceptions;

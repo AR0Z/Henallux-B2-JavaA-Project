@@ -2,8 +2,9 @@ package View;
 
 import Controller.ApplicationController;
 import Exceptions.DBExceptions;
-import Exceptions.ValueException;
 import Model.Product;
+import View.ComboBox.ComboBoxCategories;
+import View.ComboBox.ComboBoxProducts;
 
 import javax.swing.*;
 import java.awt.*;
@@ -113,11 +114,6 @@ public class EditProductPanel extends JPanel {
         shippableCheckBox.setSelected(product.getShippable());
         descriptionTextArea.setText(product.getDescription());
         imgLinkField.setText(product.getImgLink());
-    }
-
-    public void updateComboBox() {
-        comboBoxProducts.update();
-        categoryComboBox.update();
     }
 
     private void submit() {

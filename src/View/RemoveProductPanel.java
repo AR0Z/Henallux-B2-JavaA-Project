@@ -3,6 +3,7 @@ package View;
 import Controller.ApplicationController;
 import Exceptions.DBExceptions;
 import Model.Product;
+import View.ComboBox.ComboBoxProducts;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,10 +41,6 @@ public class RemoveProductPanel extends JPanel {
         setLayout(new BorderLayout());
         add(topPanel, BorderLayout.NORTH);
         add(bottomPanel, BorderLayout.SOUTH);
-    }
-
-    public void updateComboBox() {
-        comboBoxProducts.update();
     }
 
     private void submit() {

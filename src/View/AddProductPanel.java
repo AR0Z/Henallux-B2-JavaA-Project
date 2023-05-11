@@ -2,9 +2,9 @@ package View;
 
 import Controller.ApplicationController;
 import Exceptions.DBExceptions;
-import Exceptions.ValueException;
 import Model.Category;
 import Model.Product;
+import View.ComboBox.ComboBoxCategories;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,10 +90,6 @@ public class AddProductPanel extends JPanel {
         clearButton.addActionListener(e -> clear());
         add(clearButton);
         setVisible(true);
-    }
-
-    public void updateComboBox() {
-        categoryComboBox.update();
     }
 
     private void submit() {

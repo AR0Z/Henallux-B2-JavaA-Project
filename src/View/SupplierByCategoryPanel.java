@@ -4,6 +4,8 @@ import Controller.ApplicationController;
 import Exceptions.DBExceptions;
 import Model.Category;
 import Model.SupplierByCategory;
+import View.ComboBox.ComboBoxCategories;
+import View.TableModels.SuppliersByCategoryModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +16,9 @@ public class SupplierByCategoryPanel extends JPanel {
     private ArrayList<SupplierByCategory> suppliersByCategory;
     private ComboBoxCategories comboBoxCategories;
     private JPanel topPanel, centerPanel;
-    private String[] columnNames = {"Nom du pays", "Nom de la ville", "Fournisseur"};
-    JScrollPane scrollPane;
+    private JScrollPane scrollPane;
+    private JTable table;
+    private SuppliersByCategoryModel model;
 
     public SupplierByCategoryPanel() {
         setLayout(new BorderLayout());
@@ -48,32 +51,24 @@ public class SupplierByCategoryPanel extends JPanel {
         centerPanel.add(scrollPane);
     }
 
-    public void updateComboBox() {
-        comboBoxCategories.update();
-    }
-
     public void updateTable(Category category) {
 
         try {
             suppliersByCategory = controller.getSuppliersByCategory(category.getId());
 
-            Object[][] data = new Object[suppliersByCategory.size()][3];
-            for (int i = 0; i < suppliersByCategory.size(); i++) {
-                data[i][0] = suppliersByCategory.get(i).getCountryName();
-                data[i][1] = suppliersByCategory.get(i).getCityName();
-                data[i][2] = suppliersByCategory.get(i).getSupplierName();
+            if (table == null){
+                model = new SuppliersByCategoryModel(suppliersByCategory);
+                table = new JTable(model);
+                table.setPreferredScrollableViewportSize(new Dimension(700, 300));
+                table.setFillsViewportHeight(true);
+
+                scrollPane.setViewportView(table);
+                revalidate();
+                repaint();
+            } else {
+                model.update(suppliersByCategory);
             }
 
-            JTable table = new JTable(data, columnNames);
-            table.setPreferredScrollableViewportSize(new Dimension(700, 300));
-            table.setFillsViewportHeight(true);
-
-            scrollPane.setViewportView(table);
-
-            centerPanel.add(scrollPane);
-            add(centerPanel, BorderLayout.CENTER);
-            revalidate();
-            repaint();
         } catch (DBExceptions e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

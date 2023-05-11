@@ -4,6 +4,7 @@ import Controller.ApplicationController;
 import Exceptions.DBExceptions;
 import Model.Category;
 import Model.Product;
+import View.TableModels.AllProductsModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,22 +31,11 @@ public class ListingProductPanel extends JPanel {
             try {
                 products = applicationController.getAllProducts();
                 categories = applicationController.getAllCategories();
-                Object[][] data = new Object[products.size()][12];
-                for (int i = 0; i < products.size(); i++) {
-                    data[i][0] = products.get(i).getId();
-                    data[i][1] = products.get(i).getName();
-                    data[i][2] = products.get(i).getColor();
-                    data[i][3] = products.get(i).getPrice();
-                    data[i][4] = products.get(i).getCost();
-                    data[i][5] = products.get(i).getSize();
-                    data[i][6] = products.get(i).getStock();
-                    data[i][7] = products.get(i).getAdditionDate();
-                    data[i][8] = products.get(i).getShippable();
-                    data[i][9] = categories.get(products.get(i).getCategory_FK() - 1).getLabel();
-                    data[i][10] = products.get(i).getDescription();
-                    data[i][11] = products.get(i).getImgLink();
-                }
-                JTable table = new JTable(data, columnNames);
+                products.forEach(product -> {
+                    product.setCategory(categories.get(product.getCategory_FK() - 1));
+                });
+
+                JTable table = new JTable(new AllProductsModel(products));
                 table.setPreferredScrollableViewportSize(new Dimension(700, 300));
                 table.setFillsViewportHeight(true);
                 table.getColumnModel().getColumn(0).setPreferredWidth(20);

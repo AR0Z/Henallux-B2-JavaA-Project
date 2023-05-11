@@ -100,17 +100,17 @@ public class MainFrame extends JFrame {
         });
 
         searchBoughtHistoryItem.addActionListener(e -> {
-            CustomersByProductPanel customersByProductPanel = new CustomersByProductPanel();
+            PurchasesByCustomerPanel purchasesByCustomerPanel = new PurchasesByCustomerPanel();
             clearMainFrame();
-            add(customersByProductPanel);
+            add(purchasesByCustomerPanel);
             revalidate();
             repaint();
         });
 
         searchWhoBoughtItem.addActionListener(e -> {
-            SearchCustomerWhoPurchasedProductPanel searchCustomerWhoPurchasedProductPanel = new SearchCustomerWhoPurchasedProductPanel();
+            CustomerByProductPanel customerByProductPanel = new CustomerByProductPanel();
             clearMainFrame();
-            add(searchCustomerWhoPurchasedProductPanel);
+            add(customerByProductPanel);
             revalidate();
             repaint();
         });

@@ -1,17 +1,17 @@
-package View;
+package View.ComboBox;
 
 import Controller.ApplicationController;
 import Exceptions.DBExceptions;
-import Model.Category;
+import Model.Product;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class ComboBoxCategories extends JComboBox {
-    ArrayList<Category> categories;
+public class ComboBoxProducts extends JComboBox {
+    ArrayList<Product> products;
     ApplicationController controller;
 
-    public ComboBoxCategories() {
+    public ComboBoxProducts() {
         controller = new ApplicationController();
         update();
     }
@@ -20,10 +20,10 @@ public class ComboBoxCategories extends JComboBox {
         if (this.getItemCount() > 0)
             this.removeAllItems();
         try {
-            categories = controller.getAllCategories();
-            this.addItem("Choisir une catégorie");
-            for (Category category : categories) {
-                this.addItem(category.getLabel() + " (" + category.getId() + ")");
+            products = controller.getAllProducts();
+            this.addItem("Choisir un produit");
+            for (Product product : products) {
+                this.addItem(product.getName() + " (" + product.getId() + ")");
             }
         } catch (DBExceptions e) {
             e.printStackTrace();
@@ -32,6 +32,6 @@ public class ComboBoxCategories extends JComboBox {
     }
 
     public int getId() {
-        return categories.get(this.getSelectedIndex() - 1).getId();
+        return products.get(this.getSelectedIndex() - 1).getId();
     }
 }
