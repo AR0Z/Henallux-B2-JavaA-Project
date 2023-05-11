@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Product {
@@ -10,14 +11,14 @@ public class Product {
     private double cost;
     private double size;
     private int stock;
-    private Date additionDate;
+    private LocalDate additionDate;
     private Boolean isShippable;
     private String description;
     private String imgLink;
     private Category category;
     private int category_FK;
 
-    public Product(int id, String name, String color, double price, double cost, double size, int stock, Date additionDate, Boolean isShippable, String description, String imgLink, Category category, int category_FK) {
+    public Product(int id, String name, String color, double price, double cost, double size, int stock, LocalDate additionDate, Boolean isShippable, String description, String imgLink, Category category, int category_FK) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -65,7 +66,7 @@ public class Product {
         this.stock = stock;
     }
 
-    public void setAdditionDate(Date additionDate) {
+    public void setAdditionDate(LocalDate additionDate) {
         this.additionDate = additionDate;
     }
 
@@ -128,7 +129,7 @@ public class Product {
         return stock;
     }
 
-    public Date getAdditionDate() {
+    public LocalDate getAdditionDate() {
         return additionDate;
     }
 

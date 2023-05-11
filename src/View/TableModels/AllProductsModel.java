@@ -3,6 +3,7 @@ package View.TableModels;
 import Model.Product;
 
 import javax.swing.table.AbstractTableModel;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -44,7 +45,7 @@ public class AllProductsModel extends AbstractTableModel {
             case 5:
                 return Double.class;
             case 7:
-                return Date.class;
+                return LocalDate.class;
             case 8:
                 return Boolean.class;
             default:

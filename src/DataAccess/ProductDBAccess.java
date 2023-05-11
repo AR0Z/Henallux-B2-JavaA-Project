@@ -88,7 +88,7 @@ public class ProductDBAccess implements ProductDAO {
                 product.setCost(data.getDouble("cost"));
                 product.setSize(data.getDouble("size"));
                 product.setStock(data.getInt("stock"));
-                product.setAdditionDate(data.getDate("addition_date"));
+                product.setAdditionDate(data.getDate("addition_date").toLocalDate());
                 product.setShippable(data.getBoolean("is_shippable"));
                 product.setDescription(data.getString("information"));
                 product.setImgLink(data.getString("image_link"));
@@ -118,7 +118,7 @@ public class ProductDBAccess implements ProductDAO {
                 product.setCost(data.getDouble("cost"));
                 product.setSize(data.getDouble("size"));
                 product.setStock(data.getInt("stock"));
-                product.setAdditionDate(data.getDate("addition_date"));
+                product.setAdditionDate(data.getDate("addition_date").toLocalDate());
                 product.setShippable(data.getBoolean("is_shippable"));
                 product.setDescription(data.getString("information"));
                 product.setImgLink(data.getString("image_link"));

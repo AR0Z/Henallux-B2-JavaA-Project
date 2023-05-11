@@ -4,6 +4,7 @@ import Model.CustomerByProduct;
 import Model.Purchase;
 
 import javax.swing.table.AbstractTableModel;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -39,7 +40,7 @@ public class CustomersByProductModel extends AbstractTableModel {
             case 3:
                 return Integer.class;
             case 4:
-                return Date.class;
+                return LocalDate.class;
             default:
                 return String.class;
         }
