@@ -1,8 +1,6 @@
 package Business;
 
-import DataAccess.CategorieDBAcces;
-import DataAccess.CustomerDBAcces;
-import DataAccess.ProductDBAccess;
+import DataAccess.*;
 import Exceptions.DBExceptions;
 import Model.*;
 
@@ -13,11 +11,13 @@ public class ApplicationManager {
     private CategorieDBAcces categorieDBAcces;
     private CustomerDBAcces customerDBAcces;
 
+    private SupplierDBAccess supplierDBAccess;
 
     public ApplicationManager() {
         productDBAccess = new ProductDBAccess();
         categorieDBAcces = new CategorieDBAcces();
         customerDBAcces = new CustomerDBAcces();
+        supplierDBAccess = new SupplierDBAccess();
     }
 
     // Product methods
@@ -76,5 +76,11 @@ public class ApplicationManager {
 
     public ArrayList<Purchase> getBoughtHistory(int id) throws DBExceptions {
         return customerDBAcces.getBoughtHistory(id);
+    }
+
+    // Supplier methods
+
+    public ArrayList<Supplier> getAllSupplier() throws DBExceptions{
+        return supplierDBAccess.getAllProducts();
     }
 }

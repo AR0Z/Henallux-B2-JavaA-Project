@@ -123,6 +123,13 @@ public class MainFrame extends JFrame {
             repaint();
         });
 
+        statisticsItem.addActionListener(e -> {
+            StatisticsPanel statisticsPanel = new StatisticsPanel();
+            clearMainFrame();
+            add(statisticsPanel);
+            revalidate();
+            repaint();
+        });
         add(mainPanel);
 
         setJMenuBar(mainMenuBar);

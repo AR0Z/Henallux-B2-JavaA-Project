@@ -57,6 +57,9 @@ public class ApplicationController {
         return applicationManager.getAllCustomers();
     }
 
+    public ArrayList<Supplier> getAllSupplier() throws DBExceptions {
+        return applicationManager.getAllSupplier();
+    }
     public ArrayList<Purchase> getBoughtHistory(int id) throws DBExceptions {
         return applicationManager.getBoughtHistory(id);
     }
