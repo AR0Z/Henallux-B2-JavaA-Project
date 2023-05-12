@@ -1,5 +1,6 @@
 package View;
 
+import Controller.ApplicationController;
 import Model.Supplier;
 import View.ComboBox.ComboBoxCategories;
 import View.ComboBox.ComboBoxProducts;
@@ -14,15 +15,29 @@ public class StatisticsPanel extends JPanel {
     private ComboBoxCategories comboBoxCategories;
     private JFormattedTextField startDate, endDate;
     private JComboBox<String> comboBoxOrder;
+
+    private ApplicationController controller;
+    private JButton submitButton;
+    private JPanel topPanel, centerPanel;
+    private JTable table;
     public StatisticsPanel() {
-        setLayout(new GridLayout(3,2,5,5));
-        add(new JLabel("Menu de statistique"));
+        controller = new ApplicationController();
+        setLayout(new BorderLayout());
+        topPanel = new JPanel();
+        topPanel.setLayout(new GridLayout(3,2,5,5));
+        add(topPanel, BorderLayout.NORTH);
+        centerPanel = new JPanel();
+        centerPanel.setLayout(new FlowLayout());
+
+        topPanel.add(new JLabel("Menu de statistique"));
         comboBoxSupplier = new ComboBoxSupplier();
-        add(comboBoxSupplier);
+        topPanel.add(comboBoxSupplier);
         comboBoxCategories = new ComboBoxCategories();
-        add(comboBoxCategories);
+        topPanel.add(comboBoxCategories);
 
         comboBoxOrder = new JComboBox<>(new String[]{"Nom", "Vente", "Chiffre d'affaire", "Category"});
-        add(comboBoxOrder);
+        topPanel.add(comboBoxOrder);
+
+
     }
 }

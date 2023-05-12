@@ -2,7 +2,9 @@ package DataAccess;
 
 import Exceptions.DBExceptions;
 import Model.CustomerByProduct;
+import Model.Filter;
 import Model.Product;
+import Model.ProductByFilter;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -144,4 +146,55 @@ public class ProductDBAccess implements ProductDAO {
         return isAvailable;
     }
 
+    @Override
+    public ArrayList<ProductByFilter> getProductsByFilter(Filter filter) throws DBExceptions {
+        try {
+            // sql instruction that selects all products from the database that match the filter criteria
+            // the criteria are the following :
+            // 1. the supplier of the product
+            // 2. the category of the product
+            // 3. the bought date of the product
+            // it can be ordered by :
+            // the name of the product
+            // the price of the product
+            // the quantity sold of the product
+            // the total revenue of the product
+            // or the category of the product
+            // we output the id, the Name, the Price, the Quantity Sold, the Total Revenue and the Category of the product
+            String sqlInstruction = "SELECT p.id, p.label, p.price, SUM(l.quantity) AS quantity_sold, SUM(l.quantity * p.price) AS total_revenue, c.name AS category FROM `product` p INNER JOIN `line` l on p.id = l.product_id INNER JOIN `order` o on l.order_id = o.id INNER JOIN `category` c on p.category_id = c.id INNER JOIN `supplier` s on p.supplier_id = s.id WHERE s.id = ? AND c.id = ? AND o.order_date BETWEEN ? AND ? GROUP BY p.label ORDER BY ";
+            switch (filter.getOrder()) {
+                case "name":
+                    sqlInstruction += "p.label";
+                    break;
+                case "price":
+                    sqlInstruction += "p.price";
+                    break;
+                case "quantity_sold":
+                    sqlInstruction += "quantity_sold";
+                    break;
+                case "total_revenue":
+                    sqlInstruction += "total_revenue";
+                    break;
+                case "category":
+                    sqlInstruction += "c.name";
+                    break;
+            }
+            Connection connection = SingletonConnexion.getInstance();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, filter.getSupplier().getId());
+            preparedStatement.setInt(2, filter.getCategory().getId());
+            preparedStatement.setDate(3, Date.valueOf(filter.getStartDate()));
+            preparedStatement.setDate(4, Date.valueOf(filter.getEndDate()));
+            ResultSet data = preparedStatement.executeQuery();
+            ArrayList<ProductByFilter> products = new ArrayList<>();
+            ProductByFilter product;
+            while (data.next()) {
+                product = new ProductByFilter(data.getInt("p.id"), data.getString("p.label"), data.getInt("quantity_sold"), data.getDouble("total_revenue"), data.getString("category"));
+                products.add(product);
+            }
+            return products;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

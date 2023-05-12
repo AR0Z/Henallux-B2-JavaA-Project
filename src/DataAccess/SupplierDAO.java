@@ -7,5 +7,6 @@ import java.util.ArrayList;
 
 
 public interface SupplierDAO {
-    ArrayList<Supplier> getAllProducts() throws DBExceptions;
+    ArrayList<Supplier> getAllSupplier() throws DBExceptions;
+
 }

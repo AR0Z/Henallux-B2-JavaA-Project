@@ -67,4 +67,8 @@ public class ApplicationController {
     public ArrayList<SupplierByCategory> getSuppliersByCategory(int id) throws DBExceptions {
         return applicationManager.getSuppliersByCategory(id);
     }
+
+    public ArrayList<ProductByFilter> getProductsByFilter(Filter filter) throws DBExceptions {
+        return applicationManager.getProductsByFilter(filter);
+    }
 }

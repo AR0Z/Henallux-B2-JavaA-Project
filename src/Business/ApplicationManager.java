@@ -81,6 +81,10 @@ public class ApplicationManager {
     // Supplier methods
 
     public ArrayList<Supplier> getAllSupplier() throws DBExceptions{
-        return supplierDBAccess.getAllProducts();
+        return supplierDBAccess.getAllSupplier();
+    }
+
+    public ArrayList<ProductByFilter> getProductsByFilter(Filter filter) throws DBExceptions {
+        return productDBAccess.getProductsByFilter(filter);
     }
 }

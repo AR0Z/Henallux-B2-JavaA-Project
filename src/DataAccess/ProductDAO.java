@@ -3,6 +3,8 @@ package DataAccess;
 import Exceptions.DBExceptions;
 import Model.CustomerByProduct;
 import Model.Product;
+import Model.Filter;
+import Model.ProductByFilter;
 
 import java.util.ArrayList;
 
@@ -21,4 +23,5 @@ public interface ProductDAO {
     ArrayList<CustomerByProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions;
 
     Boolean isArticleAvailableForDeleting(int id) throws DBExceptions;
+    ArrayList<ProductByFilter> getProductsByFilter(Filter filter) throws DBExceptions;
 }

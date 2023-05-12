@@ -60,13 +60,8 @@ public class ListingProductPanel extends JPanel {
             }
         });
         centerPanel = new JPanel(new FlowLayout());
-
-
         scrollPane = new JScrollPane();
         centerPanel.add(scrollPane);
-
         add(centerPanel, BorderLayout.CENTER);
-
-
     }
 }
