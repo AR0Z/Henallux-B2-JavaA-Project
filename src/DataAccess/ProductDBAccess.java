@@ -149,19 +149,38 @@ public class ProductDBAccess implements ProductDAO {
     @Override
     public ArrayList<ProductByFilter> getProductsByFilter(Filter filter) throws DBExceptions {
         try {
-            // sql instruction that selects all products from the database that match the filter criteria
-            // the criteria are the following :
-            // 1. the supplier of the product
-            // 2. the category of the product
-            // 3. the bought date of the product
-            // it can be ordered by :
-            // the name of the product
-            // the price of the product
-            // the quantity sold of the product
-            // the total revenue of the product
-            // or the category of the product
-            // we output the id, the Name, the Price, the Quantity Sold, the Total Revenue and the Category of the product
-            String sqlInstruction = "SELECT p.id, p.label, p.price, SUM(l.quantity) AS quantity_sold, SUM(l.quantity * p.price) AS total_revenue, c.name AS category FROM `product` p INNER JOIN `line` l on p.id = l.product_id INNER JOIN `order` o on l.order_id = o.id INNER JOIN `category` c on p.category_id = c.id INNER JOIN `supplier` s on p.supplier_id = s.id WHERE s.id = ? AND c.id = ? AND o.order_date BETWEEN ? AND ? GROUP BY p.label ORDER BY ";
+            /*
+            * SELECT
+    p.id AS product_id,
+    p.label AS product_name,
+    p.price AS product_price,
+    SUM(l.quantity) AS quantity_sold,
+    SUM(l.quantity * l.unitary_price) AS total_revenue,
+    c.label AS category_name
+FROM
+    product AS p
+    JOIN category AS c ON p.category_id = c.id
+    JOIN line AS l ON p.id = l.product_id
+    JOIN `order` AS o ON l.order_id = o.id
+    JOIN supply AS s ON p.id = s.product_id
+    JOIN supplier AS supp ON s.supplier_id = supp.id
+WHERE
+    supp.label = 'supplier_name' AND
+    c.label = 'category_name' AND
+    o.order_date = '2023-05-14'
+GROUP BY
+    p.id, p.label, p.price, c.label
+ORDER BY
+    product_name ASC,
+    product_price ASC,
+    quantity_sold DESC,
+    total_revenue DESC,
+    category_name ASC;
+
+            *
+            * */
+
+                        String sqlInstruction = "";
             switch (filter.getOrder()) {
                 case "name":
                     sqlInstruction += "p.label";

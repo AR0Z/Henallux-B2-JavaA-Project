@@ -1,20 +1,10 @@
 package View.TableModels;
 
+import Model.ProductByFilter;
+
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
 
-public class StatisticsModel extends AbstractTableModel {
-    @Override
-    public int getRowCount() {
-        return 0;
-    }
+public class StatisticsModel  {
 
-    @Override
-    public int getColumnCount() {
-        return 0;
-    }
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        return null;
-    }
 }

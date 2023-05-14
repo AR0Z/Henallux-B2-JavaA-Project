@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class SupplierDBAccess implements SupplierDAO {
     @Override
-    public ArrayList<Supplier> getAllSupplier() throws DBExceptions {
+    public ArrayList<Supplier> getAllSuppliers() throws DBExceptions {
         ArrayList<Supplier> suppliers = new ArrayList<>();
         try {
             String sqlInstruction = "select * from supplier;";

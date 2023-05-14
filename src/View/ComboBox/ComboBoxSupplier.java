@@ -20,7 +20,7 @@ public class ComboBoxSupplier extends JComboBox {
         if (getItemCount() > 0)
             removeAllItems();
         try {
-            suppliers = controller.getAllSupplier();
+            suppliers = controller.getAllSuppliers();
             addItem("Choisir un fournisseur");
             for (Supplier supplier : suppliers) {
                 addItem(supplier.getName() + " (" + supplier.getId() + ")");
