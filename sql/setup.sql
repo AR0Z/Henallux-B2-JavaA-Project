@@ -142,6 +142,18 @@ INSERT INTO country (label) VALUES ('Belgique'), ('France'), ('Pays-Bas'), ('All
 
 INSERT INTO customer (first_name, last_name, email, street_and_number, locality_id, type_customer) VALUES ('Marie', 'Martin', 'marie.martin@gmail.com', 'Rue du Midi 10', 1, 0);
 INSERT INTO customer (first_name, last_name, email, phone, street_and_number, locality_id, billing_address, type_customer) VALUES ('Pierre', 'Durant', 'pîerre.durant@gmail.com', '0478/12.34.56', 'Rue du Midi 16', 1, 'Rue du Midi 16', 1);
+INSERT INTO `customer` (`last_name`, `first_name`, `email`, `locality_id`, `phone`, `street_and_number`, `type_customer`, `has_fidelity_card`, `billing_address`, `TVA`)
+VALUES
+    ('Smith', 'John', 'john.smith@example.com', 1, '1234567890', '123 Main St', 0, 1, '456 Billing St', '123456789'),
+    ('Doe', 'Jane', 'jane.doe@example.com', 2, '0987654321', '456 High St', 0, 0, '789 Billing Rd', '987654321'),
+    ('Garcia', 'Maria', 'maria.garcia@example.com', 3, '5554443333', '789 Oak Ave', 1, 1, '123 Invoice St', '123987456'),
+    ('Kim', 'Ji-eun', 'jekim@example.com', 4, '1231231234', '234 Pine St', 1, 0, '456 Invoice Rd', '456789123'),
+    ('Brown', 'Michael', 'michael.brown@example.com', 5, '9876543210', '567 Main St', 0, 1, '789 Billing St', '987654321'),
+    ('Chen', 'Wei', 'wei.chen@example.com', 6, '1112223333', '890 Elm St', 0, 0, '123 Invoice Rd', '123456789'),
+    ('Singh', 'Raj', 'raj.singh@example.com', 7, '4445556666', '123 Oak St', 1, 1, '456 Billing Ave', '987654321'),
+    ('Garcia', 'Juan', 'juan.garcia@example.com', 8, '7778889999', '456 Pine Ave', 0, 0, '789 Invoice Rd', '456123789'),
+    ('Lee', 'Hae-won', 'haewon.lee@example.com', 9, '5556667777', '789 Maple St', 1, 1, '123 Billing Rd', '789456123'),
+    ('Jones', 'Emily', 'emily.jones@example.com', 10, '2223334444', '234 Oak Ave', 0, 0, '456 Billing St', '456789123');
 
 -- Orders :
 
@@ -166,3 +178,73 @@ INSERT INTO product (label, color, price, cost, size, stock, addition_date, is_s
 
 INSERT INTO supplier (label, phone, email, street_and_number, locality_id) VALUES ('IKEA', '02/719.19.22', 'ikea.supply@ikea.com', 'Rue du centre 5', 2);
 INSERT INTO supplier (label, phone, email, street_and_number, locality_id) VALUES ('Leen Bakker', '02/719.19.22', 'leenbekker.supply@gmail.com', 'Rue du centre 2', 4);
+INSERT INTO `supplier` (label, phone, email, street_and_number, locality_id)
+VALUES
+    ('Zenith Furnishings', '555-1234', 'zenithfurnishings@example.com', '123 Main St.', 1),
+    ('Regal Interiors', '555-5678', 'regalinteriors@example.com', '456 Elm St.', 2),
+    ('Elite Home Decor', '555-9012', 'elitehomedecor@example.com', '789 Oak St.', 3),
+    ('Grand Designs', '555-3456', 'granddesigns@example.com', '321 Pine St.', 4),
+    ('Lavish Living', '555-7890', 'lavishliving@example.com', '654 Maple St.', 5),
+    ('Modern Edge Furniture', '555-2345', 'modernedgefurniture@example.com', '987 Cherry St.', 6),
+    ('Chic Home Furnishings', '555-6789', 'chichomefurnishings@example.com', '246 Cedar St.', 7),
+    ('Signature Style Interiors', '555-0123', 'signaturestyleinteriors@example.com', '135 Birch St.', 8),
+    ('Fine Furnishings Co.', '555-4567', 'finefurnishingsco@example.com', '864 Spruce St.', 9),
+    ('Luxe Living Furniture', '555-8901', 'luxelivingfurniture@example.com', '579 Sycamore St.', 10);
+
+-- Supply :
+
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (25, 1, 1);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (30, 2, 2);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (35, 3, 3);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (40, 4, 4);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (45, 5, 5);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (50, 1, 6);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (55, 2, 7);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (60, 3, 8);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (65, 4, 9);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (70, 5, 10);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (75, 1, 11);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (80, 2, 12);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (85, 3, 1);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (90, 4, 2);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (95, 5, 3);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (100, 1, 4);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (105, 2, 5);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (110, 3, 6);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (115, 4, 7);
+INSERT INTO supply (cost, product_id, supplier_id) VALUES (120, 5, 8);
+
+-- Orders :
+
+INSERT INTO `order` (order_date, is_paid, customer_id, reduction, type_order, date_of_payment, shipping_adress,invoice_details)
+VALUES ('2020-01-01', 1, 2, 0, 1, '2020-01-01', 'Rue du centre 5', 'Facture'),
+       ('2020-01-01', 1, 1, 0, 1, '2020-01-01', 'Rue du centre 5', 'Facture'),
+       ('2020-01-01', 1, 3, 0, 1, '2020-01-01', 'Rue du centre 5', 'Facture'),
+       ('2020-01-01', 1, 1, 0, 0, null, null, 'Facture'),
+       ('2020-01-01', 1, 5, 0, 0, null, null, 'Facture'),
+       ('2020-01-01', 1, 1, 0, 0, null, null, 'Facture'),
+       ('2020-01-01', 1, 1, 0, 1, '2020-01-01', 'Rue du centre 5', 'Facture'),
+       ('2020-01-01', 1, 1, 0, 1, '2020-01-01', 'Rue du centre 5', 'Facture');
+
+-- Order_line :
+
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (2, 50, 1, 1);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (3, 100, 1, 2);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (1, 200, 1, 3);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (2, 300, 1, 4);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (1, 400, 1, 5);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (3, 50, 2, 1);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (2, 100, 2, 2);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (1, 200, 2, 3);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (1, 300, 2, 4);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (2, 400, 2, 5);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (2, 50, 3, 1);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (3, 100, 3, 2);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (1, 200, 3, 3);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (2, 300, 3, 4);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (1, 400, 3, 5);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (3, 50, 4, 1);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (2, 100, 4, 2);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (1, 200, 4, 3);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (1, 300, 4, 4);
+INSERT INTO `line` (quantity, unitary_price, order_id, product_id) VALUES (2, 400, 4, 5);

@@ -165,53 +165,66 @@ FROM
     JOIN supply AS s ON p.id = s.product_id
     JOIN supplier AS supp ON s.supplier_id = supp.id
 WHERE
-    supp.label = 'supplier_name' AND
-    c.label = 'category_name' AND
+    supp.label like ? AND
+    c.label like ? AND
     o.order_date = '2023-05-14'
 GROUP BY
     p.id, p.label, p.price, c.label
 ORDER BY
-    product_name ASC,
-    product_price ASC,
-    quantity_sold DESC,
-    total_revenue DESC,
-    category_name ASC;
+
 
             *
             * */
 
-                        String sqlInstruction = "";
+            String sqlInstruction = "SELECT p.id AS product_id, p.label AS product_name, p.price AS product_price, SUM(l.quantity) AS quantity_sold, SUM(l.quantity * l.unitary_price) AS total_revenue, c.label AS category_name FROM product AS p JOIN category AS c ON p.category_id = c.id JOIN line AS l ON p.id = l.product_id JOIN `order` AS o ON l.order_id = o.id JOIN supply AS s ON p.id = s.product_id JOIN supplier AS supp ON s.supplier_id = supp.id WHERE supp.id LIKE ? AND c.id LIKE ? AND o.order_date BETWEEN ? AND ? GROUP BY p.id, p.label, p.price, c.label ORDER BY ";
             switch (filter.getOrder()) {
-                case "name":
+                case 0:
                     sqlInstruction += "p.label";
                     break;
-                case "price":
-                    sqlInstruction += "p.price";
+                case 1:
+                    sqlInstruction += "quantity_sold DESC";
                     break;
-                case "quantity_sold":
-                    sqlInstruction += "quantity_sold";
+                case 2:
+                    sqlInstruction += "total_revenue DESC";
                     break;
-                case "total_revenue":
-                    sqlInstruction += "total_revenue";
-                    break;
-                case "category":
-                    sqlInstruction += "c.name";
+                case 3:
+                    sqlInstruction += "c.label";
                     break;
             }
             Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, filter.getSupplier().getId());
-            preparedStatement.setInt(2, filter.getCategory().getId());
-            preparedStatement.setDate(3, Date.valueOf(filter.getStartDate()));
-            preparedStatement.setDate(4, Date.valueOf(filter.getEndDate()));
-            ResultSet data = preparedStatement.executeQuery();
-            ArrayList<ProductByFilter> products = new ArrayList<>();
-            ProductByFilter product;
-            while (data.next()) {
-                product = new ProductByFilter(data.getInt("p.id"), data.getString("p.label"), data.getInt("quantity_sold"), data.getDouble("total_revenue"), data.getString("category"));
-                products.add(product);
+            if (filter.getSupplier() == null) {
+                preparedStatement.setString(1, "%");
+            } else {
+                preparedStatement.setInt(1, filter.getSupplier().getId());
             }
-            return products;
+
+            if (filter.getCategory() == null) {
+                preparedStatement.setString(2, "%");
+            } else {
+                preparedStatement.setInt(2, filter.getCategory().getId());
+            }
+
+            if (!filter.getStartDate().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                preparedStatement.setString(3, "2000-01-01");
+            } else {
+                preparedStatement.setString(3, filter.getFormatedDate(filter.getStartDate()));
+            }
+
+            if (!filter.getEndDate().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                preparedStatement.setString(4, LocalDate.now().toString());
+            } else {
+                preparedStatement.setString(4, filter.getFormatedDate(filter.getEndDate()));
+            }
+
+            ResultSet data = preparedStatement.executeQuery();
+            ArrayList<ProductByFilter> productsByFilter = new ArrayList<>();
+            ProductByFilter productByFilter;
+            while (data.next()) {
+                productByFilter = new ProductByFilter(data.getInt("product_id"), data.getString("product_name"), data.getInt("quantity_sold"), data.getDouble("total_revenue"), data.getString("category_name"));
+                productsByFilter.add(productByFilter);
+            }
+            return productsByFilter;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
