@@ -89,7 +89,6 @@ public class StatisticsPanel extends JPanel {
             }
         }
         if (valide) {
-
             try {
                 Category category = null;
                 if (comboBoxCategories.getSelectedIndex() > 0) {
@@ -99,7 +98,7 @@ public class StatisticsPanel extends JPanel {
                 Supplier supplier = null;
                 if (comboBoxSupplier.getSelectedIndex() > 0) {
                     ArrayList<Supplier> suppliers = controller.getAllSuppliers();
-                    supplier = suppliers.get(comboBoxSupplier.getSelectedIndex() + 1);
+                    supplier = suppliers.get(comboBoxSupplier.getSelectedIndex() - 1);
                 }
                 if (!checkBox.isSelected()) {
                     startDate.setText("");
