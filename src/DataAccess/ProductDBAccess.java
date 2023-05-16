@@ -12,13 +12,21 @@ import java.util.ArrayList;
 
 
 public class ProductDBAccess implements ProductDAO {
+    private Connection connection;
+    public ProductDBAccess() {
+        try{
+            connection = SingletonConnexion.getInstance();
+        }catch (DBExceptions exceptions) {
+            exceptions.printStackTrace();
+        }
+
+    }
 
 
     @Override
     public void addProduct(Product product) throws DBExceptions {
         try {
             String sqlInstruction = "insert into product (label, color, price, cost, size, stock, addition_date, is_shippable, information, image_link, category_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getColor());
@@ -40,7 +48,6 @@ public class ProductDBAccess implements ProductDAO {
     @Override
     public void editProduct(Product product) throws DBExceptions {
         try {
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement("update product set label = ?, color = ?, price = ?, cost = ?, size = ?, stock = ?, is_shippable = ?, information = ?, image_link = ?, category_id = ? where id = ?;");
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getColor());
@@ -63,7 +70,6 @@ public class ProductDBAccess implements ProductDAO {
     public void deleteProduct(int id) throws DBExceptions {
         try {
             String sqlInstruction = "delete from product where id = ?;";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -77,7 +83,6 @@ public class ProductDBAccess implements ProductDAO {
         Product product = null;
         try {
             String sqlInstruction = "select * from product where id = ?;";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
             ResultSet data = preparedStatement.executeQuery();
@@ -95,7 +100,6 @@ public class ProductDBAccess implements ProductDAO {
         ArrayList<Product> products = new ArrayList<>();
         try {
             String sqlInstruction = "select * from product;";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
             Product product;
@@ -113,7 +117,6 @@ public class ProductDBAccess implements ProductDAO {
         ArrayList<CustomerByProduct> customerByProduct = new ArrayList<>();
         try {
             String sqlInstruction = "SELECT c.id, c.first_name, c.last_name, l.quantity, o.order_date FROM `customer` c INNER JOIN `order` o on c.id = o.customer_id INNER JOIN `line` l on o.id = l.order_id INNER JOIN `product` p on l.product_id = p.id WHERE p.id = (?);";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
             ResultSet data = preparedStatement.executeQuery();
@@ -133,7 +136,6 @@ public class ProductDBAccess implements ProductDAO {
         boolean isAvailable = false;
         try {
             String sqlInstruction = "select * from line where product_id = ?;";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
             ResultSet data = preparedStatement.executeQuery();
@@ -191,7 +193,6 @@ ORDER BY
                     sqlInstruction += "c.label";
                     break;
             }
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             if (filter.getSupplier() == null) {
                 preparedStatement.setString(1, "%");

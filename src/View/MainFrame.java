@@ -1,18 +1,30 @@
 package View;
 
+import Controller.ApplicationController;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
     private JMenu searchMenu, productMenu, applicationMenu, aboutMenu, statisticsMenu;
     private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedCategory, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productListingItem, mainMenuItem;
-
+    private ApplicationController controller;
     public MainFrame() {
         super("My App", null);
         setLayout(new BorderLayout());
         setBounds(0, 0, 1000, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                controller.closeConnection();
+                System.exit(0);
+            }
+        });
+
+        controller = new ApplicationController();
 
         // create a menu bar
         mainMenuBar = new JMenuBar();
@@ -58,7 +70,10 @@ public class MainFrame extends JFrame {
 
         MainPanel mainPanel = new MainPanel();
 
-        exitProgramItem.addActionListener(e -> System.exit(0));
+        exitProgramItem.addActionListener(e -> {
+            controller.closeConnection();
+            System.exit(0);
+        });
         aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Application de gestion de produits", "A propos", JOptionPane.INFORMATION_MESSAGE));
         productAddItem.addActionListener(e -> {
             clearMainFrame();

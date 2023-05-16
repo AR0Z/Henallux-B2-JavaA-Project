@@ -10,14 +10,19 @@ public class ApplicationManager {
     private ProductDBAccess productDBAccess;
     private CategorieDBAcces categorieDBAcces;
     private CustomerDBAcces customerDBAcces;
-
     private SupplierDBAccess supplierDBAccess;
+    private DBAccess dbAccess;
 
     public ApplicationManager() {
         productDBAccess = new ProductDBAccess();
         categorieDBAcces = new CategorieDBAcces();
         customerDBAcces = new CustomerDBAcces();
         supplierDBAccess = new SupplierDBAccess();
+        dbAccess = new DBAccess();
+    }
+
+    public void closeConnection() {
+        dbAccess.closeConnection();
     }
 
     // Product methods

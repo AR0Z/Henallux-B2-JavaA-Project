@@ -13,6 +13,10 @@ public class ApplicationController {
         applicationManager = new ApplicationManager();
     }
 
+    public void closeConnection() {
+        applicationManager.closeConnection();
+    }
+
     public void addProduct(Product product) throws DBExceptions {
         applicationManager.addProduct(product);
     }

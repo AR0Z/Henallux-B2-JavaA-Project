@@ -12,12 +12,21 @@ import java.util.ArrayList;
 
 public class CategorieDBAcces implements CategorieDAO {
 
+    private Connection connection;
+    public CategorieDBAcces() {
+        try{
+            connection = SingletonConnexion.getInstance();
+        }catch (DBExceptions exceptions) {
+            exceptions.printStackTrace();
+        }
+
+    }
+
     @Override
     public Category getCategoryById(int id) throws DBExceptions {
         Category category = null;
         try {
             String sqlInstruction = "select * from category where id = ?;";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
             ResultSet data = preparedStatement.executeQuery();
@@ -36,7 +45,6 @@ public class CategorieDBAcces implements CategorieDAO {
         ArrayList<Category> categories = new ArrayList<>();
         try {
             String sqlInstruction = "select * from category;";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
             Category category;
@@ -58,7 +66,6 @@ public class CategorieDBAcces implements CategorieDAO {
 
         try {
             String sqlInstruction = "SELECT DISTINCT  c.label, l.label, s.label from `supplier` s INNER JOIN `supply` on s.id = supply.supplier_id INNER JOIN `product` p on supply.product_id = p.id INNER JOIN `category` on p.category_id = category.id INNER JOIN `locality` l on s.locality_id = l.id INNER JOIN `country` c on l.country_id = c.id WHERE category.id = (?);";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
 

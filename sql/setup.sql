@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS `locality` (
     zip_code    VARCHAR(10) NOT NULL,
     country_id  INT NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE(label, zip_code)
+    UNIQUE(label, zip_code),
+    FOREIGN KEY (country_id) REFERENCES `country` (id)
 );
 
 CREATE TABLE IF NOT EXISTS `customer`(
@@ -31,7 +32,8 @@ CREATE TABLE IF NOT EXISTS `customer`(
     has_fidelity_card   BOOLEAN,
     billing_address     VARCHAR(200),
     TVA                 VARCHAR(20),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (locality_id) REFERENCES `locality` (id)
 );
 
 CREATE TABLE IF NOT EXISTS `order`(
@@ -44,15 +46,14 @@ CREATE TABLE IF NOT EXISTS `order`(
     date_of_payment    DATE,
     shipping_adress    VARCHAR(200),
     invoice_details    VARCHAR(500),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (customer_id) REFERENCES `customer` (id)
 );
 
-CREATE TABLE IF NOT EXISTS `line`( 
-    id              INT NOT NULL AUTO_INCREMENT,
-    quantity        INT NOT NULL,
-    unitary_price   INT NOT NULL,
-    order_id        INT NOT NULL,
-    product_id      INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `category`( 
+    id          INT NOT NULL AUTO_INCREMENT,
+    label       VARCHAR(50) NOT NULL,
+    information VARCHAR(500),
     PRIMARY KEY (id)
 );
 
@@ -69,15 +70,11 @@ CREATE TABLE IF NOT EXISTS `product`(
     category_id     INT NOT NULL,
     information     VARCHAR(500),
     image_link      VARCHAR(500),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (category_id) REFERENCES `category` (id)
 );
 
-CREATE TABLE IF NOT EXISTS `category`( 
-    id          INT NOT NULL AUTO_INCREMENT,
-    label       VARCHAR(50) NOT NULL,
-    information VARCHAR(500),
-    PRIMARY KEY (id)
-);
+
 CREATE TABLE IF NOT EXISTS `supplier`( 
     id                  INT NOT NULL AUTO_INCREMENT,
     label                VARCHAR(50) NOT NULL,
@@ -85,7 +82,8 @@ CREATE TABLE IF NOT EXISTS `supplier`(
     email               VARCHAR(200) NOT NULL,
     street_and_number   VARCHAR(200),
     locality_id         INT NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (locality_id) REFERENCES `locality` (id)
 );
 
 CREATE TABLE IF NOT EXISTS `supply`( 
@@ -93,20 +91,21 @@ CREATE TABLE IF NOT EXISTS `supply`(
     cost        INT NOT NULL,
     product_id  INT NOT NULL,
     supplier_id INT NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (product_id) REFERENCES `product` (id) ON DELETE CASCADE,
+    FOREIGN KEY (supplier_id) REFERENCES `supplier` (id)
 );
 
-/* FOREIGN KEY */
-
-ALTER TABLE `locality` ADD FOREIGN KEY (country_id) REFERENCES `country` (id);
-ALTER TABLE `customer` ADD FOREIGN KEY (locality_id) REFERENCES `locality` (id);
-ALTER TABLE `order` ADD FOREIGN KEY (customer_id) REFERENCES `customer` (id);
-ALTER TABLE `line` ADD FOREIGN KEY (order_id) REFERENCES `order` (id);
-ALTER TABLE `line` ADD FOREIGN KEY (product_id) REFERENCES `product` (id);
-ALTER TABLE `product` ADD FOREIGN KEY (category_id) REFERENCES `category` (id);
-ALTER TABLE `supplier` ADD FOREIGN KEY (locality_id) REFERENCES `locality` (id);
-ALTER TABLE `supply` ADD FOREIGN KEY (product_id) REFERENCES `product` (id);
-ALTER TABLE `supply` ADD FOREIGN KEY (supplier_id) REFERENCES `supplier` (id);
+CREATE TABLE IF NOT EXISTS `line`( 
+    id              INT NOT NULL AUTO_INCREMENT,
+    quantity        INT NOT NULL,
+    unitary_price   INT NOT NULL,
+    order_id        INT NOT NULL,
+    product_id      INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (order_id) REFERENCES `order` (id),
+    FOREIGN KEY (product_id) REFERENCES `product` (id) ON DELETE CASCADE
+);
 
 /* CONSTRAINTS */
 

@@ -8,12 +8,21 @@ import java.util.ArrayList;
 
 
 public class SupplierDBAccess implements SupplierDAO {
+
+    private Connection connection;
+    public SupplierDBAccess() {
+        try{
+            connection = SingletonConnexion.getInstance();
+        }catch (DBExceptions exceptions) {
+            exceptions.printStackTrace();
+        }
+
+    }
     @Override
     public ArrayList<Supplier> getAllSuppliers() throws DBExceptions {
         ArrayList<Supplier> suppliers = new ArrayList<>();
         try {
             String sqlInstruction = "select * from supplier;";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
             Supplier supplier;

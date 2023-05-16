@@ -12,12 +12,21 @@ import java.util.ArrayList;
 
 public class CustomerDBAcces implements CustomerDAO {
 
+    private Connection connection;
+    public CustomerDBAcces() {
+        try{
+            connection = SingletonConnexion.getInstance();
+        }catch (DBExceptions exceptions) {
+            exceptions.printStackTrace();
+        }
+
+    }
+
     public Customer getCustomerById(int id) throws DBExceptions {
         Customer customer = null;
 
         try {
             String sqlInstruction = "select * from customer where id = ?;";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
             ResultSet data = preparedStatement.executeQuery();
@@ -37,7 +46,6 @@ public class CustomerDBAcces implements CustomerDAO {
 
         try {
             String sqlInstruction = "select * from customer;";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
             Customer customer;
@@ -59,7 +67,6 @@ public class CustomerDBAcces implements CustomerDAO {
 
         try {
             String sqlInstruction = "select c.label, p.label, l.unitary_price, l.quantity, o.id from product p inner join `category` c on c.id = p.category_id inner join `line` l on p.id = l.product_id inner join `order` o on l.order_id = o.id inner join customer on o.customer_id = customer.id where customer.id = (?) order by o.id desc";
-            Connection connection = SingletonConnexion.getInstance();
             PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
 
