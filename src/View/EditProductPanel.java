@@ -151,7 +151,7 @@ public class EditProductPanel extends JPanel {
                     try {
                         Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
 
-                        Product product = new Product(comboBoxProducts.getId(), nameField.getText(), colorComboBox.getSelectedItem().toString(), price, cost, size, stock, shippableCheckBox.isSelected(), descriptionTextArea.getText(), imgLinkField.getText(), category, category.getId());
+                        Product product = new Product(comboBoxProducts.getId(), nameField.getText(), colorComboBox.getSelectedItem().toString(), price, cost, size, stock, shippableCheckBox.isSelected(), (descriptionTextArea.getText().isBlank() ? null : descriptionTextArea.getText()), (imgLinkField.getText().isBlank() ? null : imgLinkField.getText()), category, category.getId());
 
                         controller.editProduct(product);
                         clear();

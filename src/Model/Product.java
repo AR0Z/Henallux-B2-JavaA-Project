@@ -51,25 +51,6 @@ public class Product {
         this.category = category;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + "'" +
-                ", color='" + color + "'" +
-                ", price=" + price +
-                ", cost=" + cost +
-                ", size=" + size +
-                ", stock=" + stock +
-                ", additionDate=" + additionDate +
-                ", isShippable=" + isShippable +
-                ", description='" + description + "'" +
-                ", imgLink='" + imgLink + "'" +
-                ", category=" + category +
-                ", category_FK=" + category_FK +
-                '}';
-    }
-
     public String getName() {
         return name;
     }

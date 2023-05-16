@@ -127,7 +127,7 @@ public class AddProductPanel extends JPanel {
 
                         Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
 
-                        Product product = new Product(nameField.getText(), colorComboBox.getSelectedItem().toString(), price, cost, size, stock, shippableCheckBox.isSelected(), descriptionTextArea.getText(), imgLinkField.getText(), category, category.getId());
+                        Product product = new Product(nameField.getText(), colorComboBox.getSelectedItem().toString(), price, cost, size, stock, shippableCheckBox.isSelected(), (descriptionTextArea.getText().isBlank() ? null : descriptionTextArea.getText()), (imgLinkField.getText().isBlank() ? null : imgLinkField.getText()), category, category.getId());
 
                         JOptionPane.showMessageDialog(null, "Produit ajouté avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
                         clear();
