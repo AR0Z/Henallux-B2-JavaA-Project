@@ -8,10 +8,13 @@ import View.ComboBox.ComboBoxCategories;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class AddProductPanel extends JPanel {
-    private JLabel nameLabel, colorLabel, priceLabel, costLabel, sizeLabel, stockLabel, shippableLabel, descriptionLabel, imgLinkLabel, categoryLabel;
+    private JLabel nameLabel, colorLabel, priceLabel, costLabel, sizeLabel, stockLabel, shippableLabel, descriptionLabel, imgLinkLabel, categoryLabel, dateLabel;
     private JTextField nameField, priceField, costField, sizeField, stockField, imgLinkField;
+    private JFormattedTextField dateField;
     private JTextArea descriptionTextArea;
     private JComboBox<String> colorComboBox;
     private ComboBoxCategories categoryComboBox;
@@ -21,39 +24,39 @@ public class AddProductPanel extends JPanel {
     private JScrollPane scrollPane;
 
     public AddProductPanel() {
-        setLayout(new GridLayout(12, 2, 5, 5));
+        setLayout(new GridLayout(14, 2, 5, 5));
         add(new JLabel("Menu d'ajout de produit", SwingConstants.CENTER));
         add(new JLabel("Les champs marqués d'une * sont obligatoires", SwingConstants.CENTER));
 
         controller = new ApplicationController();
 
-        nameLabel = new JLabel("*Name:", SwingConstants.RIGHT);
+        nameLabel = new JLabel("*Nom:", SwingConstants.RIGHT);
         nameField = new JTextField();
         add(nameLabel);
         add(nameField);
 
-        colorLabel = new JLabel("*Color:", SwingConstants.RIGHT);
+        colorLabel = new JLabel("*Couleur:", SwingConstants.RIGHT);
         colorComboBox = new JComboBox<>(new String[]{"Rouge", "Bleu", "Vert", "Jaune", "Noir", "Blanc", "Rose", "Gris", "Orange", "Marron"});
         add(colorLabel);
         add(colorComboBox);
 
-        categoryLabel = new JLabel("*Category:", SwingConstants.RIGHT);
+        categoryLabel = new JLabel("*Categorie:", SwingConstants.RIGHT);
         categoryComboBox = new ComboBoxCategories();
 
         add(categoryLabel);
         add(categoryComboBox);
 
-        priceLabel = new JLabel("*Price:", SwingConstants.RIGHT);
+        priceLabel = new JLabel("*Prix:", SwingConstants.RIGHT);
         priceField = new JTextField();
         add(priceLabel);
         add(priceField);
 
-        costLabel = new JLabel("*Cost:", SwingConstants.RIGHT);
+        costLabel = new JLabel("*Cout:", SwingConstants.RIGHT);
         costField = new JTextField();
         add(costLabel);
         add(costField);
 
-        sizeLabel = new JLabel("*Size:", SwingConstants.RIGHT);
+        sizeLabel = new JLabel("*Taille (m³):", SwingConstants.RIGHT);
         sizeField = new JTextField();
         add(sizeLabel);
         add(sizeField);
@@ -63,10 +66,18 @@ public class AddProductPanel extends JPanel {
         add(stockLabel);
         add(stockField);
 
-        shippableLabel = new JLabel("*Is shippable:", SwingConstants.RIGHT);
+
+        shippableLabel = new JLabel("*Est envoyable:", SwingConstants.RIGHT);
         shippableCheckBox = new JCheckBox();
         add(shippableLabel);
         add(shippableCheckBox);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateLabel = new JLabel("Date d'ajout (aujourd'hui si vide):", SwingConstants.RIGHT);
+        dateField = new JFormattedTextField( dateFormat );
+        add(dateLabel);
+        add(dateField);
+
 
         descriptionLabel = new JLabel("Description:", SwingConstants.RIGHT);
         descriptionTextArea = new JTextArea();
@@ -76,17 +87,17 @@ public class AddProductPanel extends JPanel {
         add(descriptionLabel);
         add(scrollPane);
 
-        imgLinkLabel = new JLabel("Image link:", SwingConstants.RIGHT);
+        imgLinkLabel = new JLabel("Lien d'image:", SwingConstants.RIGHT);
         imgLinkField = new JTextField();
         add(imgLinkLabel);
         add(imgLinkField);
 
 
-        submitButton = new JButton("Submit");
+        submitButton = new JButton("Ajouter");
         submitButton.addActionListener(e -> submit());
         add(submitButton);
 
-        clearButton = new JButton("Clear");
+        clearButton = new JButton("Effacer");
         clearButton.addActionListener(e -> clear());
         add(clearButton);
         setVisible(true);
@@ -127,7 +138,18 @@ public class AddProductPanel extends JPanel {
 
                         Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
 
-                        Product product = new Product(nameField.getText(), colorComboBox.getSelectedItem().toString(), price, cost, size, stock, shippableCheckBox.isSelected(), (descriptionTextArea.getText().isBlank() ? null : descriptionTextArea.getText()), (imgLinkField.getText().isBlank() ? null : imgLinkField.getText()), category, category.getId());
+                        Product product = new Product(nameField.getText(),
+                                colorComboBox.getSelectedItem().toString(),
+                                price,
+                                cost,
+                                size,
+                                stock,
+                                (dateField.getText().isBlank() ? LocalDate.parse(dateField.getText()) : null),
+                                shippableCheckBox.isSelected(),
+                                (descriptionTextArea.getText().isBlank() ? null : descriptionTextArea.getText()),
+                                (imgLinkField.getText().isBlank() ? null : imgLinkField.getText()),
+                                category,
+                                category.getId());
 
                         JOptionPane.showMessageDialog(null, "Produit ajouté avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
                         clear();
@@ -161,7 +183,7 @@ public class AddProductPanel extends JPanel {
         for (Component component : getComponents()) {
             if (component instanceof JTextField) {
                 component.setBackground(new Color(237, 123, 133, 255));
-                if (((JTextField) component).getText().isBlank() && component != imgLinkField && component != descriptionTextArea) {
+                if (((JTextField) component).getText().isBlank() && component != imgLinkField && component != descriptionTextArea && component != dateField) {
                     check = false;
                 } else
                     component.setBackground(Color.WHITE);

@@ -48,7 +48,7 @@ public class ProductDBAccess implements ProductDAO {
     @Override
     public void editProduct(Product product) throws DBExceptions {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("update product set label = ?, color = ?, price = ?, cost = ?, size = ?, stock = ?, is_shippable = ?, information = ?, image_link = ?, category_id = ? where id = ?;");
+            PreparedStatement preparedStatement = connection.prepareStatement("update product set label = ?, color = ?, price = ?, cost = ?, size = ?, stock = ?, is_shippable = ?, addition_date = ?,information = ?, image_link = ?, category_id = ? where id = ?;");
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getColor());
             preparedStatement.setDouble(3, product.getPrice());
@@ -56,10 +56,11 @@ public class ProductDBAccess implements ProductDAO {
             preparedStatement.setDouble(5, product.getSize());
             preparedStatement.setInt(6, product.getStock());
             preparedStatement.setBoolean(7, product.getShippable());
-            preparedStatement.setString(8, product.getDescription());
-            preparedStatement.setString(9, product.getImgLink());
-            preparedStatement.setInt(10, product.getCategory_FK());
-            preparedStatement.setInt(11, product.getId());
+            preparedStatement.setDate(8, java.sql.Date.valueOf(product.getAdditionDate()));
+            preparedStatement.setString(9, product.getDescription());
+            preparedStatement.setString(10, product.getImgLink());
+            preparedStatement.setInt(11, product.getCategory_FK());
+            preparedStatement.setInt(12, product.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DBExceptions(e.getMessage());

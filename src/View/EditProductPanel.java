@@ -9,10 +9,16 @@ import View.ComboBox.ComboBoxProducts;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class EditProductPanel extends JPanel {
-    private JLabel nameLabel, colorLabel, priceLabel, costLabel, sizeLabel, stockLabel, shippableLabel, descriptionLabel, imgLinkLabel, categoryLabel;
+    private JLabel nameLabel, colorLabel, priceLabel, costLabel, sizeLabel, stockLabel, shippableLabel, descriptionLabel, imgLinkLabel, categoryLabel, dateLabel;
     private JTextField nameField, priceField, costField, sizeField, stockField, imgLinkField;
+    private JFormattedTextField dateField;
     private JTextArea descriptionTextArea;
     private JComboBox<String> colorComboBox;
     private ComboBoxCategories categoryComboBox;
@@ -21,10 +27,10 @@ public class EditProductPanel extends JPanel {
     private JButton submitButton, clearButton;
     private JScrollPane scrollPane;
     private ComboBoxProducts comboBoxProducts;
-
+    private SimpleDateFormat dateFormat ;
     public EditProductPanel() {
         controller = new ApplicationController();
-        setLayout(new GridLayout(12, 2, 5, 5));
+        setLayout(new GridLayout(14, 2, 5, 5));
         add(new JLabel("Menu d'édition de produit", SwingConstants.CENTER));
         comboBoxProducts = new ComboBoxProducts();
         comboBoxProducts.addActionListener(l -> {
@@ -39,33 +45,33 @@ public class EditProductPanel extends JPanel {
             } else clear();
         });
         add(comboBoxProducts);
-        nameLabel = new JLabel("*Name:", SwingConstants.RIGHT);
+        nameLabel = new JLabel("*Nom:", SwingConstants.RIGHT);
         nameField = new JTextField();
         add(nameLabel);
         add(nameField);
 
-        colorLabel = new JLabel("*Color:", SwingConstants.RIGHT);
+        colorLabel = new JLabel("*Couleur:", SwingConstants.RIGHT);
         colorComboBox = new JComboBox<>(new String[]{"Rouge", "Bleu", "Vert", "Jaune", "Noir", "Blanc", "Rose", "Gris", "Orange", "Marron"});
         add(colorLabel);
         add(colorComboBox);
 
-        categoryLabel = new JLabel("*Category:", SwingConstants.RIGHT);
+        categoryLabel = new JLabel("*Categorie:", SwingConstants.RIGHT);
         categoryComboBox = new ComboBoxCategories();
 
         add(categoryLabel);
         add(categoryComboBox);
 
-        priceLabel = new JLabel("*Price:", SwingConstants.RIGHT);
+        priceLabel = new JLabel("*Prix:", SwingConstants.RIGHT);
         priceField = new JTextField();
         add(priceLabel);
         add(priceField);
 
-        costLabel = new JLabel("*Cost:", SwingConstants.RIGHT);
+        costLabel = new JLabel("*Cout:", SwingConstants.RIGHT);
         costField = new JTextField();
         add(costLabel);
         add(costField);
 
-        sizeLabel = new JLabel("*Size:", SwingConstants.RIGHT);
+        sizeLabel = new JLabel("*Taille (m³):", SwingConstants.RIGHT);
         sizeField = new JTextField();
         add(sizeLabel);
         add(sizeField);
@@ -75,10 +81,16 @@ public class EditProductPanel extends JPanel {
         add(stockLabel);
         add(stockField);
 
-        shippableLabel = new JLabel("*Is shippable:", SwingConstants.RIGHT);
+        shippableLabel = new JLabel("*Est envoyable:", SwingConstants.RIGHT);
         shippableCheckBox = new JCheckBox();
         add(shippableLabel);
         add(shippableCheckBox);
+
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateLabel = new JLabel("Date d'ajout (aujourd'hui si vide)  jj/mm/aaaa:", SwingConstants.RIGHT);
+        dateField = new JFormattedTextField( dateFormat );
+        add(dateLabel);
+        add(dateField);
 
         descriptionLabel = new JLabel("Description:", SwingConstants.RIGHT);
         descriptionTextArea = new JTextArea();
@@ -88,17 +100,17 @@ public class EditProductPanel extends JPanel {
         add(descriptionLabel);
         add(scrollPane);
 
-        imgLinkLabel = new JLabel("Image link:", SwingConstants.RIGHT);
+        imgLinkLabel = new JLabel("Lien d'image:", SwingConstants.RIGHT);
         imgLinkField = new JTextField();
         add(imgLinkLabel);
         add(imgLinkField);
 
 
-        submitButton = new JButton("Submit");
+        submitButton = new JButton("Enregistrer");
         submitButton.addActionListener(e -> submit());
         add(submitButton);
 
-        clearButton = new JButton("Clear");
+        clearButton = new JButton("Effacer");
         clearButton.addActionListener(e -> clear());
         add(clearButton);
         setVisible(true);
@@ -113,6 +125,7 @@ public class EditProductPanel extends JPanel {
         sizeField.setText(String.valueOf(product.getSize()));
         stockField.setText(String.valueOf(product.getStock()));
         shippableCheckBox.setSelected(product.getShippable());
+        dateField.setText(product.getAdditionDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         descriptionTextArea.setText(product.getDescription());
         imgLinkField.setText(product.getImgLink());
     }
@@ -147,17 +160,27 @@ public class EditProductPanel extends JPanel {
                     JOptionPane.showMessageDialog(null, "Le stock doit être supérieur à 0", "Erreur", JOptionPane.ERROR_MESSAGE);
                 } else if (categoryComboBox.getSelectedIndex() < 1) {
                     JOptionPane.showMessageDialog(null, "Sélectionnez une catégorie", "Erreur", JOptionPane.ERROR_MESSAGE);
-                } else {
+                } else if (validateDate()) {
                     try {
                         Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
-
-                        Product product = new Product(comboBoxProducts.getId(), nameField.getText(), colorComboBox.getSelectedItem().toString(), price, cost, size, stock, shippableCheckBox.isSelected(), (descriptionTextArea.getText().isBlank() ? null : descriptionTextArea.getText()), (imgLinkField.getText().isBlank() ? null : imgLinkField.getText()), category, category.getId());
+                        Product product = new Product(comboBoxProducts.getId(),
+                                nameField.getText(),
+                                colorComboBox.getSelectedItem().toString(),
+                                price,
+                                cost,
+                                size,
+                                stock,
+                                (!dateField.getText().isBlank() ? LocalDate.parse(dateField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")) : LocalDate.now()),
+                                shippableCheckBox.isSelected(),
+                                (descriptionTextArea.getText().isBlank() ? null : descriptionTextArea.getText()),
+                                (imgLinkField.getText().isBlank() ? null : imgLinkField.getText()),
+                                category,
+                                category.getId());
 
                         controller.editProduct(product);
                         clear();
                         comboBoxProducts.update();
                         JOptionPane.showMessageDialog(null, "Produit modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
-
                     } catch (DBExceptions e) {
                         e.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -203,9 +226,23 @@ public class EditProductPanel extends JPanel {
         costField.setText("");
         sizeField.setText("");
         stockField.setText("");
+        dateField.setText("");
         shippableCheckBox.setSelected(false);
         descriptionTextArea.setText("");
         imgLinkField.setText("");
     }
 
+    private Boolean validateDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Boolean check = true;
+        try {
+            if (dateFormat.parse(dateField.getText()).getYear() + 1900 < 2000) {
+                JOptionPane.showMessageDialog(null, "Veuillez entrer une date valide (jj/mm/aaaa) postérieur a 2000", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (ParseException ex) {
+            check = false;
+        }
+        return check;
+    }
 }
+

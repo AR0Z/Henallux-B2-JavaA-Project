@@ -34,6 +34,10 @@ public class Product {
         this.category_FK = category_FK;
     }
 
+    public Product(String name, String color, double price, double cost, double size, int stock, LocalDate additionDate, Boolean isShippable, String description, String imgLink, Category category, int category_FK) {
+        this(-1, name, color, price, cost, size, stock, additionDate, isShippable, description, imgLink, category, category_FK);
+    }
+
     public Product(int id, String name, String color, double price, double cost, double size, int stock, boolean isShippable, String description, String imgLink, Category category, int category_FK) {
         this(id, name, color, price, cost, size, stock, null, isShippable, description, imgLink, category, category_FK);
     }
