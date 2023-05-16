@@ -107,7 +107,35 @@ public class Product {
         return this.id;
     }
 
-    public void setCategory_FK(int categoryFk) {
-        this.category_FK = categoryFk;
+    public void setPrice(double price) {
+        if (price <= 0) {
+            this.price = 1;
+        } else {
+            this.price = price;
+        }
+    }
+
+    public void setCost(double cost) {
+        if (cost <= 0) {
+            this.cost = 1;
+        } else {
+            this.cost = cost;
+        }
+    }
+
+    public void setSize(double size) {
+        if (size <= 0) {
+            this.size = 1;
+        } else {
+            this.size = size;
+        }
+    }
+
+    public void setStock(int stock) {
+        if (stock <= 0) {
+            this.stock = 1;
+        } else {
+            this.stock = stock;
+        }
     }
 }
