@@ -11,7 +11,7 @@ public class SingletonConnexion {
 
     private SingletonConnexion() throws SQLException {
         try {
-            instance = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/atrouver", "root", "root");
+            instance = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/maisondumeuble", "root", "root");
         } catch (SQLException exception) {
             throw new SQLException(exception.getMessage());
         }

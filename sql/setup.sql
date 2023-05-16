@@ -1,16 +1,16 @@
-/* create a database "atrouver" if doesn't exist */
-CREATE DATABASE IF NOT EXISTS atrouver;
+/* create a database "maisondumeuble" if doesn't exist */
+CREATE DATABASE maisondumeuble;
 
-USE atrouver;
+USE maisondumeuble;
 
-CREATE TABLE IF NOT EXISTS `country` (
+CREATE TABLE `country` (
     id      INT NOT NULL AUTO_INCREMENT,
     label   VARCHAR(50) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE(label)
 );
 
-CREATE TABLE IF NOT EXISTS `locality` (
+CREATE TABLE `locality` (
     id          INT NOT NULL AUTO_INCREMENT,
     label       VARCHAR(50) NOT NULL,
     zip_code    VARCHAR(10) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `locality` (
     FOREIGN KEY (country_id) REFERENCES `country` (id)
 );
 
-CREATE TABLE IF NOT EXISTS `customer`(
+CREATE TABLE `customer`(
     id                  INT NOT NULL AUTO_INCREMENT,
     last_name           VARCHAR(50) NOT NULL,
     first_name          VARCHAR(50) NOT NULL,
@@ -33,10 +33,11 @@ CREATE TABLE IF NOT EXISTS `customer`(
     billing_address     VARCHAR(200),
     TVA                 VARCHAR(20),
     PRIMARY KEY (id),
-    FOREIGN KEY (locality_id) REFERENCES `locality` (id)
+    FOREIGN KEY (locality_id) REFERENCES `locality` (id),
+    CONSTRAINT `Customer_type` CHECK (type_customer IN (0, 1))
 );
 
-CREATE TABLE IF NOT EXISTS `order`(
+CREATE TABLE `order`(
     id                 INT NOT NULL AUTO_INCREMENT,
     order_date         DATE NOT NULL,
     is_paid            BOOLEAN NOT NULL,
@@ -47,17 +48,18 @@ CREATE TABLE IF NOT EXISTS `order`(
     shipping_adress    VARCHAR(200),
     invoice_details    VARCHAR(500),
     PRIMARY KEY (id),
-    FOREIGN KEY (customer_id) REFERENCES `customer` (id)
+    FOREIGN KEY (customer_id) REFERENCES `customer` (id),
+    CONSTRAINT `Order_type` CHECK (type_order IN (0, 1))
 );
 
-CREATE TABLE IF NOT EXISTS `category`( 
+CREATE TABLE `category`( 
     id          INT NOT NULL AUTO_INCREMENT,
     label       VARCHAR(50) NOT NULL,
     information VARCHAR(500),
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS `product`( 
+CREATE TABLE `product`( 
     id              INT NOT NULL AUTO_INCREMENT,
     label            VARCHAR(50) NOT NULL,
     color           VARCHAR(20) NOT NULL,
@@ -71,11 +73,15 @@ CREATE TABLE IF NOT EXISTS `product`(
     information     VARCHAR(500),
     image_link      VARCHAR(500),
     PRIMARY KEY (id),
-    FOREIGN KEY (category_id) REFERENCES `category` (id)
+    FOREIGN KEY (category_id) REFERENCES `category` (id),
+    CONSTRAINT `Product_price` CHECK (price > 0),
+    CONSTRAINT `Product_cost` CHECK (cost > 0),
+    CONSTRAINT `Product_size` CHECK (size > 0),
+    CONSTRAINT `Product_stock` CHECK (stock > 0)
 );
 
 
-CREATE TABLE IF NOT EXISTS `supplier`( 
+CREATE TABLE `supplier`( 
     id                  INT NOT NULL AUTO_INCREMENT,
     label                VARCHAR(50) NOT NULL,
     phone               VARCHAR(20) NOT NULL,
@@ -86,17 +92,18 @@ CREATE TABLE IF NOT EXISTS `supplier`(
     FOREIGN KEY (locality_id) REFERENCES `locality` (id)
 );
 
-CREATE TABLE IF NOT EXISTS `supply`( 
+CREATE TABLE `supply`( 
     id          INT NOT NULL AUTO_INCREMENT,
     cost        INT NOT NULL,
     product_id  INT NOT NULL,
     supplier_id INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (product_id) REFERENCES `product` (id) ON DELETE CASCADE,
-    FOREIGN KEY (supplier_id) REFERENCES `supplier` (id)
+    FOREIGN KEY (supplier_id) REFERENCES `supplier` (id),
+    CONSTRAINT `Supply_cost` CHECK (cost > 0)
 );
 
-CREATE TABLE IF NOT EXISTS `line`( 
+CREATE TABLE `line`( 
     id              INT NOT NULL AUTO_INCREMENT,
     quantity        INT NOT NULL,
     unitary_price   INT NOT NULL,
@@ -106,16 +113,6 @@ CREATE TABLE IF NOT EXISTS `line`(
     FOREIGN KEY (order_id) REFERENCES `order` (id),
     FOREIGN KEY (product_id) REFERENCES `product` (id) ON DELETE CASCADE
 );
-
-/* CONSTRAINTS */
-
-ALTER TABLE `customer` ADD CONSTRAINT `Customer_type` CHECK (type_customer IN (0, 1));
-ALTER TABLE `order` ADD CONSTRAINT `Order_type` CHECK (type_order IN (0, 1));
-ALTER TABLE `product` ADD CONSTRAINT `Product_price` CHECK (price > 0);
-ALTER TABLE `product` ADD CONSTRAINT `Product_cost` CHECK (cost > 0);
-ALTER TABLE `product` ADD CONSTRAINT `Product_size` CHECK (size > 0);
-ALTER TABLE `product` ADD CONSTRAINT `Product_stock` CHECK (stock > 0);
-ALTER TABLE `supply` ADD CONSTRAINT `Supply_cost` CHECK (cost > 0);
 
 
 /* INSERTS */
