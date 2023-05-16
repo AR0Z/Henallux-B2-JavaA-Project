@@ -9,8 +9,8 @@ import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
     private JMenuBar mainMenuBar;
-    private JMenu searchMenu, productMenu, applicationMenu, aboutMenu, statisticsMenu;
-    private JMenuItem exitProgramItem, aboutItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedCategory, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productListingItem, mainMenuItem;
+    private JMenu searchMenu, productMenu, applicationMenu, statisticsMenu;
+    private JMenuItem exitProgramItem, statisticsItem, searchWhoBoughtItem, searchWhoSuppliedCategory, searchBoughtHistoryItem, productAddItem, productEditItem, productDeleteItem, productListingItem, mainMenuItem;
     private ApplicationController controller;
     public MainFrame() {
         super("My App", null);
@@ -30,14 +30,12 @@ public class MainFrame extends JFrame {
         mainMenuBar = new JMenuBar();
         searchMenu = new JMenu("Rechercher");
         applicationMenu = new JMenu("Application");
-        aboutMenu = new JMenu("A propos");
         statisticsMenu = new JMenu("Statistiques");
         productMenu = new JMenu("Produits");
 
         // create menu items
         exitProgramItem = new JMenuItem("Quitter");
         mainMenuItem = new JMenuItem("Accueil");
-        aboutItem = new JMenuItem("Details");
         statisticsItem = new JMenuItem("Afficher");
         searchWhoBoughtItem = new JMenuItem("Acheteur du produit");
         searchWhoSuppliedCategory = new JMenuItem("Fournisseurs d'une categorie");
@@ -53,7 +51,6 @@ public class MainFrame extends JFrame {
         searchMenu.add(searchBoughtHistoryItem);
         applicationMenu.add(mainMenuItem);
         applicationMenu.add(exitProgramItem);
-        aboutMenu.add(aboutItem);
         statisticsMenu.add(statisticsItem);
 
         productMenu.add(productAddItem);
@@ -66,7 +63,6 @@ public class MainFrame extends JFrame {
         mainMenuBar.add(productMenu);
         mainMenuBar.add(searchMenu);
         mainMenuBar.add(statisticsMenu);
-        mainMenuBar.add(aboutMenu);
 
         MainPanel mainPanel = new MainPanel();
 
@@ -74,7 +70,7 @@ public class MainFrame extends JFrame {
             controller.closeConnection();
             System.exit(0);
         });
-        aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Application de gestion de produits", "A propos", JOptionPane.INFORMATION_MESSAGE));
+        
         productAddItem.addActionListener(e -> {
             clearMainFrame();
             AddProductPanel addProductPanel = new AddProductPanel();
