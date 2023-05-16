@@ -70,7 +70,7 @@ public class MainFrame extends JFrame {
             controller.closeConnection();
             System.exit(0);
         });
-        
+
         productAddItem.addActionListener(e -> {
             clearMainFrame();
             AddProductPanel addProductPanel = new AddProductPanel();
