@@ -1,23 +1,20 @@
 package DataAccess;
 
+import Exceptions.ConnectionException;
 import Exceptions.DBExceptions;
 import Exceptions.GetAllSuppliersException;
 import Model.Supplier;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.concurrent.CompletionException;
 
 
 public class SupplierDBAccess implements SupplierDAO {
 
     private Connection connection;
-    public SupplierDBAccess() {
-        try{
-            connection = SingletonConnexion.getInstance();
-        }catch (DBExceptions exceptions) {
-            exceptions.printStackTrace();
-        }
-
+    public SupplierDBAccess() throws ConnectionException {
+        connection = SingletonConnexion.getInstance();
     }
     @Override
     public ArrayList<Supplier> getAllSuppliers() throws GetAllSuppliersException {

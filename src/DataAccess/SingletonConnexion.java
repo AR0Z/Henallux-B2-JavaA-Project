@@ -1,5 +1,6 @@
 package DataAccess;
 
+import Exceptions.ConnectionException;
 import Exceptions.DBExceptions;
 
 import java.sql.Connection;
@@ -17,12 +18,12 @@ public class SingletonConnexion {
         }
     }
 
-    public static Connection getInstance() throws DBExceptions {
+    public static Connection getInstance() throws ConnectionException {
         if (instance == null) {
             try {
                 new SingletonConnexion();
             } catch (SQLException exception) {
-                throw new DBExceptions(exception.getMessage());
+                throw new ConnectionException();
             }
         }
         return instance;

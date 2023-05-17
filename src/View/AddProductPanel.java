@@ -2,6 +2,7 @@ package View;
 
 import Controller.ApplicationController;
 import Exceptions.AddProductException;
+import Exceptions.ConnectionException;
 import Exceptions.GetCategoryByIdException;
 import Model.Category;
 import Model.Product;
@@ -29,7 +30,11 @@ public class AddProductPanel extends JPanel {
         add(new JLabel("Menu d'ajout de produit", SwingConstants.CENTER));
         add(new JLabel("Les champs marqués d'une * sont obligatoires", SwingConstants.CENTER));
 
-        controller = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        } catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
 
         nameLabel = new JLabel("*Nom:", SwingConstants.RIGHT);
         nameField = new JTextField();

@@ -13,7 +13,7 @@ public class ApplicationManager {
     private SupplierDAO supplierDBAccess;
     private DataAccess dbAccess;
 
-    public ApplicationManager() {
+    public ApplicationManager() throws ConnectionException {
         productDBAccess = new ProductDBAccess();
         categorieDBAcces = new CategorieDBAcces();
         customerDBAcces = new CustomerDBAcces();
@@ -21,7 +21,7 @@ public class ApplicationManager {
         dbAccess = new DBAccess();
     }
 
-    public void closeConnection() throws DBExceptions {
+    public void closeConnection() throws CloseConnectionException {
         dbAccess.closeConnection();
     }
 

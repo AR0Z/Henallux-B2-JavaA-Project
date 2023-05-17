@@ -1,6 +1,7 @@
 package View.ComboBox;
 
 import Controller.ApplicationController;
+import Exceptions.ConnectionException;
 import Exceptions.GetAllSuppliersException;
 import Model.*;
 
@@ -12,7 +13,11 @@ public class ComboBoxSupplier extends JComboBox {
     ApplicationController controller;
 
     public ComboBoxSupplier() {
-        controller = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        } catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         update();
     }
 

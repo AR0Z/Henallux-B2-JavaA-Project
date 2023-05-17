@@ -1,6 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
+import Exceptions.ConnectionException;
 import Exceptions.GetBoughtHistoryException;
 import Exceptions.GetCustomerByIdException;
 import Model.Customer;
@@ -26,7 +27,11 @@ public class PurchasesByCustomerPanel extends JPanel {
 
         topPanel = new JPanel(new FlowLayout());
         topPanel.add(new JLabel("Menu de recherche d'historique d'achat", SwingConstants.CENTER));
-        controller = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        } catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         comboBoxCustomers = new ComboBoxCustomers();
         comboBoxCustomers.addActionListener(l -> {
             if (comboBoxCustomers.getSelectedIndex() >= 1) {

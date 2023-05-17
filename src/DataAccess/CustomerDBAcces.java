@@ -1,9 +1,6 @@
 package DataAccess;
 
-import Exceptions.DBExceptions;
-import Exceptions.GetAllCustomersException;
-import Exceptions.GetBoughtHistoryException;
-import Exceptions.GetCustomerByIdException;
+import Exceptions.*;
 import Model.Customer;
 import Model.Purchase;
 
@@ -16,13 +13,8 @@ import java.util.ArrayList;
 public class CustomerDBAcces implements CustomerDAO {
 
     private Connection connection;
-    public CustomerDBAcces() {
-        try{
-            connection = SingletonConnexion.getInstance();
-        }catch (DBExceptions exceptions) {
-            exceptions.printStackTrace();
-        }
-
+    public CustomerDBAcces() throws ConnectionException {
+        connection = SingletonConnexion.getInstance();
     }
 
     public Customer getCustomerById(int id) throws GetCustomerByIdException {

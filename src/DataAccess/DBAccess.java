@@ -1,5 +1,7 @@
 package DataAccess;
 
+import Exceptions.CloseConnectionException;
+import Exceptions.ConnectionException;
 import Exceptions.DBExceptions;
 
 import java.sql.*;
@@ -7,21 +9,16 @@ import java.sql.*;
 public class DBAccess implements DataAccess {
     private Connection connection;
 
-    public DBAccess() {
-        try{
+    public DBAccess() throws ConnectionException {
             connection = SingletonConnexion.getInstance();
-        }catch (DBExceptions exceptions) {
-            exceptions.printStackTrace();
-        }
-
     }
 
-    public void closeConnection() {
+    public void closeConnection() throws CloseConnectionException {
         try {
             if (connection != null)
                 connection.close();
         } catch (SQLException exceptions) {
-            exceptions.printStackTrace();
+            throw new CloseConnectionException();
         }
     }
 }

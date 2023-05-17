@@ -9,17 +9,13 @@ import Model.ProductByFilter;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.concurrent.CompletionException;
 
 
 public class ProductDBAccess implements ProductDAO {
     private Connection connection;
-    public ProductDBAccess() {
-        try{
-            connection = SingletonConnexion.getInstance();
-        }catch (DBExceptions exceptions) {
-            exceptions.printStackTrace();
-        }
-
+    public ProductDBAccess() throws ConnectionException  {
+        connection = SingletonConnexion.getInstance();
     }
 
 

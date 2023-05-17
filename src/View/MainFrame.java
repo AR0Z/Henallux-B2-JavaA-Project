@@ -1,6 +1,8 @@
 package View;
 
 import Controller.ApplicationController;
+import Exceptions.CloseConnectionException;
+import Exceptions.ConnectionException;
 import Exceptions.DBExceptions;
 
 import javax.swing.*;
@@ -19,17 +21,21 @@ public class MainFrame extends JFrame {
         setBounds(0, 0, 1000, 500);
 
         addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(WindowEvent windowEvent) {
                 try{
                     controller.closeConnection();
-                } catch (DBExceptions dbExceptions) {
-                    dbExceptions.printStackTrace();
+                    System.exit(0);
+                } catch (CloseConnectionException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
-                System.exit(0);
             }
         });
 
-        controller = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        } catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
 
         // create a menu bar
         mainMenuBar = new JMenuBar();
@@ -71,13 +77,13 @@ public class MainFrame extends JFrame {
 
         MainPanel mainPanel = new MainPanel();
 
-        exitProgramItem.addActionListener(e -> {
+        exitProgramItem.addActionListener(event -> {
             try{
                 controller.closeConnection();
-            } catch (DBExceptions dbExceptions) {
-                dbExceptions.printStackTrace();
+                System.exit(0);
+            } catch (CloseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-            System.exit(0);
         });
 
         productAddItem.addActionListener(e -> {

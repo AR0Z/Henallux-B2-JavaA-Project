@@ -1,6 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
+import Exceptions.ConnectionException;
 import Exceptions.GetAllCategoriesException;
 import Exceptions.GetAllProductsException;
 import Model.Category;
@@ -18,11 +19,15 @@ public class ListingProductPanel extends JPanel {
     private ArrayList<Product> products;
     private String[] columnNames = {"id", "nom", "color", "price", "cost", "size", "stock", "addition_date", "is_shippable", "category_id", "information", "image_link"};
     private ArrayList<Category> categories;
-    ApplicationController applicationController;
+    ApplicationController controller;
     JScrollPane scrollPane;
 
     public ListingProductPanel() {
-        applicationController = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        } catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         submitButton = new JButton("Afficher les produits");
         setLayout(new BorderLayout());
         topPanel = new JPanel(new FlowLayout());
@@ -30,8 +35,8 @@ public class ListingProductPanel extends JPanel {
         add(topPanel, BorderLayout.NORTH);
         submitButton.addActionListener(l -> {
             try {
-                products = applicationController.getAllProducts();
-                categories = applicationController.getAllCategories();
+                products = controller.getAllProducts();
+                categories = controller.getAllCategories();
                 products.forEach(product -> {
                     product.setCategory(categories.get(product.getCategory_FK() - 1));
                 });

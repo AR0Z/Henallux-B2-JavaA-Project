@@ -1,9 +1,6 @@
 package DataAccess;
 
-import Exceptions.DBExceptions;
-import Exceptions.GetAllCategoriesException;
-import Exceptions.GetCategoryByIdException;
-import Exceptions.GetSuppliersByCategoryException;
+import Exceptions.*;
 import Model.Category;
 import Model.SupplierByCategory;
 
@@ -16,13 +13,8 @@ import java.util.ArrayList;
 public class CategorieDBAcces implements CategorieDAO {
 
     private Connection connection;
-    public CategorieDBAcces() {
-        try{
-            connection = SingletonConnexion.getInstance();
-        }catch (DBExceptions exceptions) {
-            exceptions.printStackTrace();
-        }
-
+    public CategorieDBAcces() throws ConnectionException {
+        connection = SingletonConnexion.getInstance();
     }
 
     @Override

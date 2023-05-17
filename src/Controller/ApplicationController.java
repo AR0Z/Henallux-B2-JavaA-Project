@@ -9,11 +9,11 @@ import java.util.ArrayList;
 public class ApplicationController {
     private ApplicationManager applicationManager;
 
-    public ApplicationController() {
+    public ApplicationController() throws ConnectionException {
         applicationManager = new ApplicationManager();
     }
 
-    public void closeConnection() throws DBExceptions {
+    public void closeConnection() throws CloseConnectionException {
         applicationManager.closeConnection();
     }
 

@@ -1,6 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
+import Exceptions.ConnectionException;
 import Exceptions.DeleteProductException;
 import Exceptions.GetProductByIdException;
 import Exceptions.IsArticleAvailableForDeletingException;
@@ -21,7 +22,11 @@ public class RemoveProductPanel extends JPanel {
     public RemoveProductPanel() {
         topPanel = new JPanel(new FlowLayout());
         topPanel.add(new JLabel("Menu de suppression de produit", SwingConstants.CENTER));
-        controller = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        } catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         comboBoxProducts = new ComboBoxProducts();
         comboBoxProducts.addActionListener(l -> {
             if (comboBoxProducts.getSelectedIndex() >= 1) {

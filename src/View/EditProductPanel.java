@@ -1,6 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
+import Exceptions.ConnectionException;
 import Exceptions.EditProductException;
 import Exceptions.GetCategoryByIdException;
 import Exceptions.GetProductByIdException;
@@ -30,7 +31,11 @@ public class EditProductPanel extends JPanel {
     private ComboBoxProducts comboBoxProducts;
     private SimpleDateFormat dateFormat ;
     public EditProductPanel() {
-        controller = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        } catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         setLayout(new GridLayout(14, 2, 5, 5));
         add(new JLabel("Menu d'édition de produit", SwingConstants.CENTER));
         comboBoxProducts = new ComboBoxProducts();

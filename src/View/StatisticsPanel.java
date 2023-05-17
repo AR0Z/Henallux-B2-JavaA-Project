@@ -1,10 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.GetAllCategoriesException;
-import Exceptions.GetAllSuppliersException;
-import Exceptions.GetProductByIdException;
-import Exceptions.GetProductsByFilterException;
+import Exceptions.*;
 import Model.Category;
 import Model.Filter;
 import Model.Supplier;
@@ -33,7 +30,11 @@ public class StatisticsPanel extends JPanel {
     private SimpleDateFormat dateFormat;
 
     public StatisticsPanel() {
-        controller = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        } catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         setLayout(new BorderLayout());
         topPanel = new JPanel();
         topPanel.setLayout(new GridLayout(0, 2, 5, 5));

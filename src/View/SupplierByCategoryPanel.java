@@ -1,10 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.GetAllSuppliersException;
-import Exceptions.GetCategoryByIdException;
-import Exceptions.GetCustomerByIdException;
-import Exceptions.GetSuppliersByCategoryException;
+import Exceptions.*;
 import Model.Category;
 import Model.SupplierByCategory;
 import View.ComboBox.ComboBoxCategories;
@@ -28,7 +25,11 @@ public class SupplierByCategoryPanel extends JPanel {
 
         topPanel = new JPanel(new FlowLayout());
         topPanel.add(new JLabel("Trouver les fournisseurs qui fournit une catégorie", SwingConstants.CENTER));
-        controller = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        } catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         comboBoxCategories = new ComboBoxCategories();
         comboBoxCategories.addActionListener(l -> {
             if (comboBoxCategories.getSelectedIndex() >= 1) {

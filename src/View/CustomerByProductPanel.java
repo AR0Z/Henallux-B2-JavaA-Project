@@ -1,6 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
+import Exceptions.ConnectionException;
 import Exceptions.GetCustomersWhoPurchasedProductException;
 import Exceptions.GetProductByIdException;
 import Model.CustomerByProduct;
@@ -26,7 +27,11 @@ public class CustomerByProductPanel extends JPanel {
 
         topPanel = new JPanel(new FlowLayout());
         topPanel.add(new JLabel("Menu de recherche qui a acheté cet article", SwingConstants.CENTER));
-        controller = new ApplicationController();
+        try {
+            controller = new ApplicationController();
+        } catch (ConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         comboBoxProducts = new ComboBoxProducts();
         comboBoxProducts.addActionListener(l -> {
             if (comboBoxProducts.getSelectedIndex() >= 1) {
