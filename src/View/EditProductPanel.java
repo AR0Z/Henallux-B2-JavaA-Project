@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
 public class EditProductPanel extends JPanel {
     private JLabel nameLabel, colorLabel, priceLabel, costLabel, sizeLabel, stockLabel, shippableLabel, descriptionLabel, imgLinkLabel, categoryLabel, dateLabel;
@@ -89,8 +90,9 @@ public class EditProductPanel extends JPanel {
         add(shippableCheckBox);
 
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dateLabel = new JLabel("Date d'ajout (aujourd'hui si vide)  jj/mm/aaaa:", SwingConstants.RIGHT);
+        dateLabel = new JLabel("Date d'ajout jj/mm/aaaa:", SwingConstants.RIGHT);
         dateField = new JFormattedTextField( dateFormat );
+
         add(dateLabel);
         add(dateField);
 
@@ -192,6 +194,8 @@ public class EditProductPanel extends JPanel {
             if (!errorMessage.isBlank()) {
                 JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
             } else {
+                if (validateDate()) {
+
                 try {
                     Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
 
@@ -213,6 +217,7 @@ public class EditProductPanel extends JPanel {
                     clear();
                 } catch (GetCategoryByIdException | EditProductException | ValueException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
                 }
 
             }
@@ -236,7 +241,7 @@ public class EditProductPanel extends JPanel {
         for (Component component : getComponents()) {
             if (component instanceof JTextField) {
                 component.setBackground(new Color(237, 123, 133, 255));
-                if (((JTextField) component).getText().isBlank() && component != imgLinkField && component != descriptionTextArea) {
+                if (((JTextField) component).getText().isBlank() && component != imgLinkField && component != descriptionTextArea && component != dateField) {
                     check = false;
                 } else
                     component.setBackground(Color.WHITE);
@@ -265,6 +270,7 @@ public class EditProductPanel extends JPanel {
         try {
             if (dateFormat.parse(dateField.getText()).getYear() + 1900 < 2000) {
                 JOptionPane.showMessageDialog(null, "Veuillez entrer une date valide (jj/mm/aaaa) postérieur a 2000", "Erreur", JOptionPane.ERROR_MESSAGE);
+                check = false;
             }
         } catch (ParseException ex) {
             check = false;

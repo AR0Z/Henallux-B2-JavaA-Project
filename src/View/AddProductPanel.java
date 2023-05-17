@@ -11,8 +11,10 @@ import View.ComboBox.ComboBoxCategories;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class AddProductPanel extends JPanel {
     private JLabel nameLabel, colorLabel, priceLabel, costLabel, sizeLabel, stockLabel, shippableLabel, descriptionLabel, imgLinkLabel, categoryLabel, dateLabel;
@@ -80,8 +82,9 @@ public class AddProductPanel extends JPanel {
         add(shippableCheckBox);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dateLabel = new JLabel("Date d'ajout (aujourd'hui si vide):", SwingConstants.RIGHT);
-        dateField = new JFormattedTextField( dateFormat );
+        dateLabel = new JLabel("Date d'ajout :", SwingConstants.RIGHT);
+        dateField = new JFormattedTextField(dateFormat);
+        dateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         add(dateLabel);
         add(dateField);
 
@@ -110,7 +113,7 @@ public class AddProductPanel extends JPanel {
         setVisible(true);
     }
 
-    private void submit(){
+    private void submit() {
         if (!checkFields()) {
             JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs obligatoire", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -167,9 +170,13 @@ public class AddProductPanel extends JPanel {
                 errorMessage += "La sélection d'une catégorie est obligatoire.\n";
             }
 
+
+
             if (!errorMessage.isBlank()) {
                 JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
             } else {
+
+
                 try {
                     Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
 
@@ -193,6 +200,7 @@ public class AddProductPanel extends JPanel {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
+
         }
     }
 
@@ -229,5 +237,20 @@ public class AddProductPanel extends JPanel {
                 ((JTextField) component).setText("");
             }
         }
+        dateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+    }
+
+    private Boolean validateDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Boolean check = true;
+        try {
+            if (dateFormat.parse(dateField.getText()).getYear() + 1900 < 2000) {
+                JOptionPane.showMessageDialog(null, "Veuillez entrer une date valide (jj/mm/aaaa) postérieur a 2000", "Erreur", JOptionPane.ERROR_MESSAGE);
+                check = false;
+            }
+        } catch (ParseException ex) {
+            check = false;
+        }
+        return check;
     }
 }
