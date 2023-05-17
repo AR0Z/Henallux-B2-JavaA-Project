@@ -19,23 +19,6 @@ public class ProductByFilter {
     public String getProductName() {
         return productName;
     }
-
-
-    public int getQuantitySold() {
-        int quantity = 0;
-        for (Line line : lines) {
-            quantity += line.getQuantity();
-        }
-        return quantity;
-    }
-
-    public double getTotalRevenue() {
-        double total = 0;
-        for (Line line : lines) {
-            total += line.getPrice() * line.getQuantity();
-        }
-        return total;
-    }
     public String getCategoryName() {
         return categoryName;
     }
