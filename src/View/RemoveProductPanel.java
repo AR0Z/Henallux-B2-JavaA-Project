@@ -51,8 +51,8 @@ public class RemoveProductPanel extends JPanel {
 
     private void submit() {
         if (comboBoxProducts.getSelectedIndex() >= 1) {
-            int response = 0;
             try {
+                int response = 0;
                 if(!controller.isArticleAvailableForDeleting(product.getId())){
                     response = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment supprimer ce produit car il se trouve dans une commande (Si oui, vous pourriez avoir des erreurs dans le futur) ?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 }else{

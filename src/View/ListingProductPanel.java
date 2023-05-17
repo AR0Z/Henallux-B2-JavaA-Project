@@ -33,40 +33,42 @@ public class ListingProductPanel extends JPanel {
         topPanel = new JPanel(new FlowLayout());
         topPanel.add(submitButton);
         add(topPanel, BorderLayout.NORTH);
-        submitButton.addActionListener(l -> {
-            try {
-                products = controller.getAllProducts();
-                categories = controller.getAllCategories();
-                products.forEach(product -> {
-                    product.setCategory(categories.get(product.getCategory_FK() - 1));
-                });
-
-                JTable table = new JTable(new AllProductsModel(products));
-                table.setPreferredScrollableViewportSize(new Dimension(700, 300));
-                table.setFillsViewportHeight(true);
-                table.getColumnModel().getColumn(0).setPreferredWidth(20);
-                table.getColumnModel().getColumn(1).setPreferredWidth(70);
-                table.getColumnModel().getColumn(2).setPreferredWidth(50);
-                table.getColumnModel().getColumn(3).setPreferredWidth(35);
-                table.getColumnModel().getColumn(4).setPreferredWidth(35);
-                table.getColumnModel().getColumn(5).setPreferredWidth(35);
-                table.getColumnModel().getColumn(6).setPreferredWidth(35);
-                table.getColumnModel().getColumn(7).setPreferredWidth(75);
-                table.getColumnModel().getColumn(8).setPreferredWidth(20);
-                table.getColumnModel().getColumn(9).setPreferredWidth(50);
-                table.getColumnModel().getColumn(10).setPreferredWidth(100);
-                table.getColumnModel().getColumn(11).setPreferredWidth(100);
-
-                scrollPane.setViewportView(table);
-                revalidate();
-                repaint();
-            } catch (GetAllProductsException | GetAllCategoriesException e) {
-                JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        submitButton.addActionListener(l -> submit());
         centerPanel = new JPanel(new FlowLayout());
         scrollPane = new JScrollPane();
         centerPanel.add(scrollPane);
         add(centerPanel, BorderLayout.CENTER);
+    }
+
+    private void submit() {
+        try {
+            products = controller.getAllProducts();
+            categories = controller.getAllCategories();
+            products.forEach(product -> {
+                product.setCategory(categories.get(product.getCategory_FK() - 1));
+            });
+
+            JTable table = new JTable(new AllProductsModel(products));
+            table.setPreferredScrollableViewportSize(new Dimension(700, 300));
+            table.setFillsViewportHeight(true);
+            table.getColumnModel().getColumn(0).setPreferredWidth(20);
+            table.getColumnModel().getColumn(1).setPreferredWidth(70);
+            table.getColumnModel().getColumn(2).setPreferredWidth(50);
+            table.getColumnModel().getColumn(3).setPreferredWidth(35);
+            table.getColumnModel().getColumn(4).setPreferredWidth(35);
+            table.getColumnModel().getColumn(5).setPreferredWidth(35);
+            table.getColumnModel().getColumn(6).setPreferredWidth(35);
+            table.getColumnModel().getColumn(7).setPreferredWidth(75);
+            table.getColumnModel().getColumn(8).setPreferredWidth(20);
+            table.getColumnModel().getColumn(9).setPreferredWidth(50);
+            table.getColumnModel().getColumn(10).setPreferredWidth(100);
+            table.getColumnModel().getColumn(11).setPreferredWidth(100);
+
+            scrollPane.setViewportView(table);
+            revalidate();
+            repaint();
+        } catch (GetAllProductsException | GetAllCategoriesException e) {
+            JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

@@ -77,14 +77,11 @@ public class ApplicationManager {
     public ArrayList<Customer> getAllCustomers() throws GetAllCustomersException {
         return customerDBAcces.getAllCustomers();
     }
-
-
     public ArrayList<Purchase> getBoughtHistory(int id) throws GetBoughtHistoryException {
         return customerDBAcces.getBoughtHistory(id);
     }
 
     // Supplier methods
-
     public ArrayList<Supplier> getAllSuppliers() throws GetAllSuppliersException {
         return supplierDBAccess.getAllSuppliers();
     }

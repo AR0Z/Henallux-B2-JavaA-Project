@@ -39,41 +39,41 @@ public class MainFrame extends JFrame {
 
         // create a menu bar
         mainMenuBar = new JMenuBar();
+
         searchMenu = new JMenu("Rechercher");
+        mainMenuBar.add(searchMenu);
         applicationMenu = new JMenu("Application");
+        mainMenuBar.add(applicationMenu);
         statisticsMenu = new JMenu("Statistiques");
+        mainMenuBar.add(statisticsMenu);
         productMenu = new JMenu("Produits");
+        mainMenuBar.add(productMenu);
 
         // create menu items
         exitProgramItem = new JMenuItem("Quitter");
-        mainMenuItem = new JMenuItem("Accueil");
-        statisticsItem = new JMenuItem("Afficher");
-        searchWhoBoughtItem = new JMenuItem("Acheteur du produit");
-        searchWhoSuppliedCategory = new JMenuItem("Fournisseurs d'une categorie");
-        searchBoughtHistoryItem = new JMenuItem("Historique d'achat d'un client");
-
-        productAddItem = new JMenuItem("Ajouter");
-        productEditItem = new JMenuItem("Modifier");
-        productDeleteItem = new JMenuItem("Supprimer");
-        productListingItem = new JMenuItem("Lister");
-
-        searchMenu.add(searchWhoBoughtItem);
-        searchMenu.add(searchWhoSuppliedCategory);
-        searchMenu.add(searchBoughtHistoryItem);
-        applicationMenu.add(mainMenuItem);
         applicationMenu.add(exitProgramItem);
+
+        mainMenuItem = new JMenuItem("Accueil");
+        applicationMenu.add(mainMenuItem);
+
+        statisticsItem = new JMenuItem("Afficher");
         statisticsMenu.add(statisticsItem);
 
+        searchWhoBoughtItem = new JMenuItem("Acheteur du produit");
+        searchMenu.add(searchWhoBoughtItem);
+        searchWhoSuppliedCategory = new JMenuItem("Fournisseurs d'une categorie");
+        searchMenu.add(searchWhoSuppliedCategory);
+        searchBoughtHistoryItem = new JMenuItem("Historique d'achat d'un client");
+        searchMenu.add(searchBoughtHistoryItem);
+
+        productAddItem = new JMenuItem("Ajouter");
         productMenu.add(productAddItem);
+        productEditItem = new JMenuItem("Modifier");
         productMenu.add(productEditItem);
+        productDeleteItem = new JMenuItem("Supprimer");
         productMenu.add(productDeleteItem);
+        productListingItem = new JMenuItem("Lister");
         productMenu.add(productListingItem);
-
-
-        mainMenuBar.add(applicationMenu);
-        mainMenuBar.add(productMenu);
-        mainMenuBar.add(searchMenu);
-        mainMenuBar.add(statisticsMenu);
 
         MainPanel mainPanel = new MainPanel();
 
