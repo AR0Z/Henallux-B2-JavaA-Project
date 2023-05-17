@@ -75,4 +75,12 @@ public class ApplicationController {
     public ArrayList<ProductByFilter> getProductsByFilter(Filter filter) throws GetProductsByFilterException {
         return applicationManager.getProductsByFilter(filter);
     }
+
+    public int getQuantitySold(ArrayList<Line> lines) {
+        return applicationManager.getQuantitySold(lines);
+    }
+
+    public double getTotalRevenue(ArrayList<Line> lines) {
+        return applicationManager.getTotalRevenue(lines);
+    }
 }

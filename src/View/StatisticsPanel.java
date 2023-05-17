@@ -142,7 +142,6 @@ public class StatisticsPanel extends JPanel {
         Boolean check = true;
         try {
             if (dateFormat.parse(startDate.getText()).getYear() + 1900 < 2000) {
-                System.out.println(dateFormat.parse(startDate.getText()).getYear());
                 JOptionPane.showMessageDialog(null, "Veuillez entrer une date de début valide (jj/mm/aaaa) postérieur a 2000", "Erreur", JOptionPane.ERROR_MESSAGE);
             } else if (dateFormat.parse(endDate.getText()).getYear() + 1900 < 2000)
                 JOptionPane.showMessageDialog(null, "Veuillez entrer une date de fin valide (jj/mm/aaaa) postérieur a 2000", "Erreur", JOptionPane.ERROR_MESSAGE);

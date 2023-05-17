@@ -58,7 +58,6 @@ public class RemoveProductPanel extends JPanel {
                 }else{
                     response = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment supprimer ce produit ?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 }
-
                 if (response == JOptionPane.YES_OPTION) {
                     if (product != null) {
                         try {

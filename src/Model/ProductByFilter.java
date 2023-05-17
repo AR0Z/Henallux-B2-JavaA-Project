@@ -20,6 +20,7 @@ public class ProductByFilter {
         return productName;
     }
 
+
     public int getQuantitySold() {
         int quantity = 0;
         for (Line line : lines) {
@@ -35,8 +36,11 @@ public class ProductByFilter {
         }
         return total;
     }
-
     public String getCategoryName() {
         return categoryName;
+    }
+
+    public ArrayList<Line> getLines() {
+        return lines;
     }
 }

@@ -39,9 +39,7 @@ public class SupplierByCategoryPanel extends JPanel {
                 } catch (GetCategoryByIdException e) {
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
-
             }
-            ;
         });
 
         topPanel.add(comboBoxCategories);

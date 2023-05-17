@@ -1,5 +1,7 @@
 package View.TableModels;
 
+import Controller.ApplicationController;
+import Exceptions.ConnectionException;
 import Model.ProductByFilter;
 
 import javax.swing.table.AbstractTableModel;
@@ -29,17 +31,22 @@ public class StatisticsModel extends AbstractTableModel {
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             ProductByFilter product = products.get(rowIndex);
-            switch (columnIndex) {
-                case 0:
-                    return product.getProductName();
-                case 1:
-                    return product.getQuantitySold();
-                case 2:
-                    return product.getTotalRevenue();
-                case 3:
-                    return product.getCategoryName();
-                default:
-                    return null;
+            try {
+                ApplicationController controller = new ApplicationController();
+                switch (columnIndex) {
+                    case 0:
+                        return product.getProductName();
+                    case 1:
+                        return controller.getQuantitySold(product.getLines());
+                    case 2:
+                        return controller.getTotalRevenue(product.getLines());
+                    case 3:
+                        return product.getCategoryName();
+                    default:
+                        return null;
+                }
+            } catch (ConnectionException e) {
+                throw new RuntimeException(e);
             }
         }
 

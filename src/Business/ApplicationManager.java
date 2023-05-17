@@ -92,4 +92,20 @@ public class ApplicationManager {
     public ArrayList<ProductByFilter> getProductsByFilter(Filter filter) throws GetProductsByFilterException {
         return productDBAccess.getProductsByFilter(filter);
     }
+
+    public int getQuantitySold(ArrayList<Line> lines) {
+        int quantity = 0;
+        for (Line line : lines) {
+            quantity += line.getQuantity();
+        }
+        return quantity;
+    }
+
+    public double getTotalRevenue(ArrayList<Line> lines) {
+        double total = 0;
+        for (Line line : lines) {
+            total += line.getPrice() * line.getQuantity();
+        }
+        return total;
+    }
 }
