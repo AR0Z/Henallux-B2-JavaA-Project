@@ -1,10 +1,7 @@
 package DataAccess;
 
 import Exceptions.*;
-import Model.CustomerByProduct;
-import Model.Filter;
-import Model.Product;
-import Model.ProductByFilter;
+import Model.*;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -40,7 +37,6 @@ public class ProductDBAccess implements ProductDAO {
             throw new AddProductException();
         }
     }
-
     @Override
     public void editProduct(Product product) throws EditProductException {
         try {
@@ -62,7 +58,6 @@ public class ProductDBAccess implements ProductDAO {
             throw new EditProductException();
         }
     }
-
     @Override
     public void deleteProduct(int id) throws DeleteProductException {
         try {
@@ -74,7 +69,6 @@ public class ProductDBAccess implements ProductDAO {
             throw new DeleteProductException();
         }
     }
-
     @Override
     public Product getProductById(int id) throws GetProductByIdException {
         Product product = null;
@@ -91,7 +85,6 @@ public class ProductDBAccess implements ProductDAO {
         }
         return product;
     }
-
     @Override
     public ArrayList<Product> getAllProducts() throws GetAllProductsException {
         ArrayList<Product> products = new ArrayList<>();
@@ -109,7 +102,6 @@ public class ProductDBAccess implements ProductDAO {
         }
         return products;
     }
-
     public ArrayList<CustomerByProduct> getCustomersWhoPurchasedProduct(int id) throws GetCustomersWhoPurchasedProductException {
         ArrayList<CustomerByProduct> customerByProduct = new ArrayList<>();
         try {
@@ -127,7 +119,6 @@ public class ProductDBAccess implements ProductDAO {
         }
         return customerByProduct;
     }
-
     @Override
     public Boolean isArticleAvailableForDeleting(int id) throws IsArticleAvailableForDeletingException {
         boolean isAvailable = false;
@@ -192,12 +183,32 @@ public class ProductDBAccess implements ProductDAO {
             ArrayList<ProductByFilter> productsByFilter = new ArrayList<>();
             ProductByFilter productByFilter;
             while (data.next()) {
-                productByFilter = new ProductByFilter(data.getInt("product_id"), data.getString("product_name"), data.getInt("quantity_sold"), data.getDouble("total_revenue"), data.getString("category_name"));
+                productByFilter = new ProductByFilter(data.getInt("product_id"), data.getString("product_name"), data.getString("category_name"), getLineByProduct(data.getInt("product_id")));
                 productsByFilter.add(productByFilter);
             }
             return productsByFilter;
         } catch (SQLException e) {
             throw new GetProductsByFilterException();
+        } catch (GetLineByProductException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    private ArrayList<Line> getLineByProduct(int id) throws GetLineByProductException {
+        ArrayList<Line> lines = new ArrayList<>();
+        try {
+            String sqlInstruction = "select * from line where product_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, id);
+            ResultSet data = preparedStatement.executeQuery();
+            Line line;
+            while (data.next()) {
+                line = new Line(data.getInt("id"), data.getInt("quantity"), data.getDouble("unitary_price"));
+                lines.add(line);
+            }
+        } catch (SQLException e) {
+            throw new GetLineByProductException();
+        }
+        return lines;
     }
 }

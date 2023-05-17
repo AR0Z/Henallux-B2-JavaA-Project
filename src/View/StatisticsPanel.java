@@ -21,7 +21,6 @@ public class StatisticsPanel extends JPanel {
     private ComboBoxCategories comboBoxCategories;
     private JFormattedTextField startDate, endDate;
     private JComboBox<String> comboBoxOrder;
-
     private ApplicationController controller;
     private JButton submitButton;
     private JPanel topPanel, centerPanel;

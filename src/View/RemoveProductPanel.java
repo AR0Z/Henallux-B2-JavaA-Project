@@ -54,7 +54,7 @@ public class RemoveProductPanel extends JPanel {
             int response = 0;
             try {
                 if(!controller.isArticleAvailableForDeleting(product.getId())){
-                    response = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment supprimer ce produit car il se trouve dans une commande (Si vous le supprimez, vous pouvez avoir des erreurs dans le futur) ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                    response = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment supprimer ce produit car il se trouve dans une commande (Si oui, vous pourriez avoir des erreurs dans le futur) ?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 }else{
                     response = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment supprimer ce produit ?", "Confirmation", JOptionPane.YES_NO_OPTION);
                 }
