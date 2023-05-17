@@ -193,7 +193,7 @@ public class ProductDBAccess implements ProductDAO {
             throw new RuntimeException(e);
         }
     }
-
+    
     private ArrayList<Line> getLineByProduct(int id) throws GetLineByProductException {
         ArrayList<Line> lines = new ArrayList<>();
         try {

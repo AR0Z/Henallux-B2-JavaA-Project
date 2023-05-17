@@ -40,14 +40,14 @@ public class MainFrame extends JFrame {
         // create a menu bar
         mainMenuBar = new JMenuBar();
 
-        searchMenu = new JMenu("Rechercher");
-        mainMenuBar.add(searchMenu);
         applicationMenu = new JMenu("Application");
         mainMenuBar.add(applicationMenu);
-        statisticsMenu = new JMenu("Statistiques");
-        mainMenuBar.add(statisticsMenu);
         productMenu = new JMenu("Produits");
         mainMenuBar.add(productMenu);
+        searchMenu = new JMenu("Rechercher");
+        mainMenuBar.add(searchMenu);
+        statisticsMenu = new JMenu("Statistiques");
+        mainMenuBar.add(statisticsMenu);
 
         // create menu items
         exitProgramItem = new JMenuItem("Quitter");
