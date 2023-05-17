@@ -17,11 +17,11 @@ public class ApplicationController {
         applicationManager.closeConnection();
     }
 
-    public void addProduct(Product product) throws AddProductException {
+    public void addProduct(Product product) throws AddProductException, ValueException {
         applicationManager.addProduct(product);
     }
 
-    public void editProduct(Product product) throws EditProductException {
+    public void editProduct(Product product) throws EditProductException, ValueException {
         applicationManager.editProduct(product);
     }
 
