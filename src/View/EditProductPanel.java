@@ -136,65 +136,68 @@ public class EditProductPanel extends JPanel {
 
     private void submit(){
         if (!checkFields()) {
-            JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs obligatoire", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs obligatoire.", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else {
             String errorMessage = "";
             double price = 0, cost = 0, size = 0;
             int stock = 0;
 
             if (!isNameValid(nameField.getText())) {
-                errorMessage += "Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)\n";
+                errorMessage += "Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement).\n";
             }
 
             try {
                 price = Double.parseDouble(priceField.getText());
 
                 if (!isDoubleValid(price)) {
-                    errorMessage += "Le prix doit être supérieur à 0\n";
+                    errorMessage += "Le prix doit être supérieur à 0.\n";
                 }
 
             } catch (NumberFormatException e) {
-                errorMessage += "Le prix doit être un nombre\n";
+                errorMessage += "Le prix doit être un nombre.\n";
             }
 
             try {
                 cost = Double.parseDouble(costField.getText());
 
                 if (!isDoubleValid(cost)) {
-                    errorMessage += "Le coût doit être supérieur à 0\n";
+                    errorMessage += "Le coût doit être supérieur à 0.\n";
                 }
             } catch (NumberFormatException e) {
-                errorMessage += "Le coût doit être un nombre\n";
+                errorMessage += "Le coût doit être un nombre.\n";
             }
 
             try {
                 size = Double.parseDouble(sizeField.getText());
 
                 if (!isDoubleValid(size)) {
-                    errorMessage += "La taille doit être supérieure à 0\n";
+                    errorMessage += "La taille doit être supérieure à 0.\n";
                 }
             } catch (NumberFormatException e) {
-                errorMessage += "La taille doit être un nombre\n";
+                errorMessage += "La taille doit être un nombre.\n";
             }
 
             try {
                 stock = Integer.parseInt(stockField.getText());
 
                 if (!isIntValid(stock)) {
-                    errorMessage += "Le stock doit être supérieur à 0\n";
+                    errorMessage += "Le stock doit être supérieur à 0.\n";
                 }
             } catch (NumberFormatException e) {
-                errorMessage += "Le stock doit être un nombre\n";
+                errorMessage += "Le stock doit être un nombre.\n";
             }
 
             if (categoryComboBox.getSelectedIndex() < 1) {
                 errorMessage += "La sélection d'une catégorie est obligatoire.\n";
             }
 
+            if (!validateDate()) {
+                errorMessage += "Veuillez entrer une date valide (jj/mm/aaaa) postérieur a 2000.\n";
+            }
+
             if (!errorMessage.isBlank()) {
                 JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
             } else {
-                if (validateDate()) {
 
                 try {
                     Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
@@ -213,11 +216,10 @@ public class EditProductPanel extends JPanel {
                             category,
                             category.getId());
                     controller.editProduct(product);
-                    JOptionPane.showMessageDialog(null, "Produit ajouté avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Produit modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     clear();
                 } catch (GetCategoryByIdException | EditProductException | ValueException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                }
                 }
 
             }
@@ -269,7 +271,6 @@ public class EditProductPanel extends JPanel {
         Boolean check = true;
         try {
             if (dateFormat.parse(dateField.getText()).getYear() + 1900 < 2000) {
-                JOptionPane.showMessageDialog(null, "Veuillez entrer une date valide (jj/mm/aaaa) postérieur a 2000", "Erreur", JOptionPane.ERROR_MESSAGE);
                 check = false;
             }
         } catch (ParseException ex) {

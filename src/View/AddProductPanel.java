@@ -170,13 +170,14 @@ public class AddProductPanel extends JPanel {
                 errorMessage += "La sélection d'une catégorie est obligatoire.\n";
             }
 
+            if (!validateDate()) {
+                errorMessage += "Veuillez entrer une date valide (jj/mm/aaaa) postérieur a 2000.\n";
+            }
 
 
             if (!errorMessage.isBlank()) {
                 JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
             } else {
-
-
                 try {
                     Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
 
@@ -245,7 +246,6 @@ public class AddProductPanel extends JPanel {
         Boolean check = true;
         try {
             if (dateFormat.parse(dateField.getText()).getYear() + 1900 < 2000) {
-                JOptionPane.showMessageDialog(null, "Veuillez entrer une date valide (jj/mm/aaaa) postérieur a 2000", "Erreur", JOptionPane.ERROR_MESSAGE);
                 check = false;
             }
         } catch (ParseException ex) {
