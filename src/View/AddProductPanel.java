@@ -187,7 +187,7 @@ public class AddProductPanel extends JPanel {
                             cost,
                             size,
                             stock,
-                            (dateField.getText().isBlank() ? LocalDate.parse(dateField.getText()) : null),
+                            LocalDate.parse(dateField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                             shippableCheckBox.isSelected(),
                             (descriptionTextArea.getText().isBlank() ? null : descriptionTextArea.getText()),
                             (imgLinkField.getText().isBlank() ? null : imgLinkField.getText()),

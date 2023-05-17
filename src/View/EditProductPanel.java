@@ -209,7 +209,7 @@ public class EditProductPanel extends JPanel {
                             cost,
                             size,
                             stock,
-                            (!dateField.getText().isBlank() ? LocalDate.parse(dateField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")) : LocalDate.now()),
+                            LocalDate.parse(dateField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                             shippableCheckBox.isSelected(),
                             (descriptionTextArea.getText().isBlank() ? null : descriptionTextArea.getText()),
                             (imgLinkField.getText().isBlank() ? null : imgLinkField.getText()),
@@ -253,6 +253,7 @@ public class EditProductPanel extends JPanel {
     }
 
     private void clear() {
+        comboBoxProducts.update();
         nameField.setText("");
         colorComboBox.setSelectedIndex(0);
         categoryComboBox.setSelectedIndex(0);

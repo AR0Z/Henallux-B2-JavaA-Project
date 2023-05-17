@@ -27,7 +27,7 @@ public class ProductDBAccess implements ProductDAO {
             preparedStatement.setDouble(4, product.getCost());
             preparedStatement.setDouble(5, product.getSize());
             preparedStatement.setInt(6, product.getStock());
-            preparedStatement.setDate(7, new java.sql.Date(Date.valueOf(LocalDate.now()).getTime()));
+            preparedStatement.setDate(7, new java.sql.Date(Date.valueOf(product.getAdditionDate()).getTime()));
             preparedStatement.setBoolean(8, product.getShippable());
             preparedStatement.setString(9, product.getDescription());
             preparedStatement.setString(10, product.getImgLink());
@@ -193,7 +193,7 @@ public class ProductDBAccess implements ProductDAO {
             throw new RuntimeException(e);
         }
     }
-    
+
     private ArrayList<Line> getLineByProduct(int id) throws GetLineByProductException {
         ArrayList<Line> lines = new ArrayList<>();
         try {
