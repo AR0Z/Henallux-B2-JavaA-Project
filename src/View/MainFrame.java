@@ -24,10 +24,10 @@ public class MainFrame extends JFrame {
             public void windowClosing(WindowEvent windowEvent) {
                 try{
                     controller.closeConnection();
-                    System.exit(0);
                 } catch (CloseConnectionException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
+                System.exit(0);
             }
         });
 
@@ -80,10 +80,10 @@ public class MainFrame extends JFrame {
         exitProgramItem.addActionListener(event -> {
             try{
                 controller.closeConnection();
-                System.exit(0);
             } catch (CloseConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
+            System.exit(0);
         });
 
         productAddItem.addActionListener(e -> {

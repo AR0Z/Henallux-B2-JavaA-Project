@@ -4,6 +4,7 @@ import Controller.ApplicationController;
 import Exceptions.AddProductException;
 import Exceptions.ConnectionException;
 import Exceptions.GetCategoryByIdException;
+import Exceptions.ValueException;
 import Model.Category;
 import Model.Product;
 import View.ComboBox.ComboBoxCategories;
@@ -109,66 +110,90 @@ public class AddProductPanel extends JPanel {
         setVisible(true);
     }
 
-    private void submit() {
-        String fieldName = "";
-        try {
-            if (!checkFields()) {
-                JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs obligatoire", "Erreur", JOptionPane.ERROR_MESSAGE);
+    private void submit(){
+        if (!checkFields()) {
+            JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs obligatoire", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String errorMessage = "";
+            double price = 0, cost = 0, size = 0;
+            int stock = 0;
+
+            if (!isNameValid(nameField.getText())) {
+                errorMessage += "Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)\n";
+            }
+
+            try {
+                price = Double.parseDouble(priceField.getText());
+
+                if (!isDoubleValid(price)) {
+                    errorMessage += "Le prix doit être supérieur à 0\n";
+                }
+
+            } catch (NumberFormatException e) {
+                errorMessage += "Le prix doit être un nombre\n";
+            }
+
+            try {
+                cost = Double.parseDouble(costField.getText());
+
+                if (!isDoubleValid(cost)) {
+                    errorMessage += "Le coût doit être supérieur à 0\n";
+                }
+            } catch (NumberFormatException e) {
+                errorMessage += "Le coût doit être un nombre\n";
+            }
+
+            try {
+                size = Double.parseDouble(sizeField.getText());
+
+                if (!isDoubleValid(size)) {
+                    errorMessage += "La taille doit être supérieure à 0\n";
+                }
+            } catch (NumberFormatException e) {
+                errorMessage += "La taille doit être un nombre\n";
+            }
+
+            try {
+                stock = Integer.parseInt(stockField.getText());
+
+                if (!isIntValid(stock)) {
+                    errorMessage += "Le stock doit être supérieur à 0\n";
+                }
+            } catch (NumberFormatException e) {
+                errorMessage += "Le stock doit être un nombre\n";
+            }
+
+            if (categoryComboBox.getSelectedIndex() < 1) {
+                errorMessage += "La sélection d'une catégorie est obligatoire.\n";
+            }
+
+            if (!errorMessage.isBlank()) {
+                JOptionPane.showMessageDialog(null, errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
             } else {
-                fieldName = "Prix";
-                double price = Double.parseDouble(priceField.getText());
+                try {
+                    Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
 
-                fieldName = "Coût";
-                double cost = Double.parseDouble(costField.getText());
+                    Product product = new Product(nameField.getText(),
+                            colorComboBox.getSelectedItem().toString(),
+                            price,
+                            cost,
+                            size,
+                            stock,
+                            (dateField.getText().isBlank() ? LocalDate.parse(dateField.getText()) : null),
+                            shippableCheckBox.isSelected(),
+                            (descriptionTextArea.getText().isBlank() ? null : descriptionTextArea.getText()),
+                            (imgLinkField.getText().isBlank() ? null : imgLinkField.getText()),
+                            category,
+                            category.getId());
 
-                fieldName = "Taille";
-                double size = Double.parseDouble(sizeField.getText());
-
-                fieldName = "Stock";
-                int stock = Integer.parseInt(stockField.getText());
-
-                if (!isNameValid(nameField.getText())) {
-                    JOptionPane.showMessageDialog(null, "Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)", "Erreur", JOptionPane.ERROR_MESSAGE);
-                } else if (!isDoubleValid(price)) {
-                    JOptionPane.showMessageDialog(null, "Le prix doit être supérieur à 0", "Erreur", JOptionPane.ERROR_MESSAGE);
-                } else if (!isDoubleValid(cost)) {
-                    JOptionPane.showMessageDialog(null, "Le coût doit être supérieur à 0", "Erreur", JOptionPane.ERROR_MESSAGE);
-                } else if (!isDoubleValid(size)) {
-                    JOptionPane.showMessageDialog(null, "La taille doit être supérieure à 0", "Erreur", JOptionPane.ERROR_MESSAGE);
-                } else if (!isIntValid(stock)) {
-                    JOptionPane.showMessageDialog(null, "Le stock doit être supérieur à 0", "Erreur", JOptionPane.ERROR_MESSAGE);
-                } else if (categoryComboBox.getSelectedIndex() < 1) {
-                    JOptionPane.showMessageDialog(null, "Sélectionnez une catégorie", "Erreur", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    try {
-
-                        Category category = controller.getCategoryById(categoryComboBox.getSelectedIndex());
-
-                        Product product = new Product(nameField.getText(),
-                                colorComboBox.getSelectedItem().toString(),
-                                price,
-                                cost,
-                                size,
-                                stock,
-                                (dateField.getText().isBlank() ? LocalDate.parse(dateField.getText()) : null),
-                                shippableCheckBox.isSelected(),
-                                (descriptionTextArea.getText().isBlank() ? null : descriptionTextArea.getText()),
-                                (imgLinkField.getText().isBlank() ? null : imgLinkField.getText()),
-                                category,
-                                category.getId());
-
-                        JOptionPane.showMessageDialog(null, "Produit ajouté avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                        clear();
-                        controller.addProduct(product);
-                    } catch (GetCategoryByIdException | AddProductException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                    }
+                    JOptionPane.showMessageDialog(null, "Produit ajouté avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    clear();
+                    controller.addProduct(product);
+                } catch (GetCategoryByIdException | AddProductException | ValueException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(null, fieldName + " doit être un nombre", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     private Boolean isNameValid(String name) {

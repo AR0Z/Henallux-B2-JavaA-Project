@@ -27,12 +27,48 @@ public class ApplicationManager {
 
     // Product methods
 
-    public void addProduct(Product product) throws AddProductException {
+    public void addProduct(Product product) throws AddProductException, ValueException {
+        String errorMessage = checkProduct(product);
+
+        if (!errorMessage.isBlank())
+            throw new ValueException(errorMessage);
+
+
         productDBAccess.addProduct(product);
     }
 
-    public void editProduct(Product product) throws EditProductException {
+    public void editProduct(Product product) throws EditProductException, ValueException {
+
+        String errorMessage = checkProduct(product);
+
+        if (!errorMessage.isBlank())
+            throw new ValueException(errorMessage);
+
         productDBAccess.editProduct(product);
+    }
+
+    private String checkProduct(Product product) {
+        String errorMessage = "";
+
+        if (!product.getName().matches("^[a-zA-Z0-9éèà]{3,50}$"))
+            errorMessage += "Le nom doit contenir entre 3 et 50 caractères (lettres et chiffres uniquement)\n";
+
+        if (product.getPrice() <= 0)
+            errorMessage += "Le prix doit être supérieur à 0\n";
+
+        if (product.getCost() <= 0)
+            errorMessage += "Le coût doit être supérieur à 0\n";
+
+        if (product.getSize() <= 0)
+            errorMessage += "La taille doit être supérieure à 0\n";
+
+        if (product.getStock() <= 0)
+            errorMessage += "Le stock doit être supérieur à 0\n";
+
+        if (product.getCategory().getId() < 1)
+            errorMessage += "Sélectionnez une catégorie\n";
+
+        return errorMessage;
     }
 
     public void deleteProduct(int id) throws DeleteProductException {
