@@ -1,6 +1,9 @@
 package DataAccess;
 
-import Exceptions.*;
+import Exceptions.ConnectionException;
+import Exceptions.GetAllCustomersException;
+import Exceptions.GetBoughtHistoryException;
+import Exceptions.GetCustomerByIdException;
 import Model.Customer;
 import Model.Purchase;
 

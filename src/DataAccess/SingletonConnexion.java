@@ -1,7 +1,6 @@
 package DataAccess;
 
 import Exceptions.ConnectionException;
-import Exceptions.DBExceptions;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

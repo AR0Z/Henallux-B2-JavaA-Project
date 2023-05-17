@@ -1,11 +1,9 @@
 package View.TableModels;
 
-import Model.CustomerByProduct;
 import Model.SupplierByCategory;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class SuppliersByCategoryModel extends AbstractTableModel {
     private ArrayList<String> columnNames;

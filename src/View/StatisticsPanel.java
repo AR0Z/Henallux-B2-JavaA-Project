@@ -1,7 +1,10 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.*;
+import Exceptions.ConnectionException;
+import Exceptions.GetAllCategoriesException;
+import Exceptions.GetAllSuppliersException;
+import Exceptions.GetProductsByFilterException;
 import Model.Category;
 import Model.Filter;
 import Model.Supplier;

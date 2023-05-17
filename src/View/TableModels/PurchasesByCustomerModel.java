@@ -1,6 +1,5 @@
 package View.TableModels;
 
-import Model.Product;
 import Model.Purchase;
 
 import javax.swing.table.AbstractTableModel;

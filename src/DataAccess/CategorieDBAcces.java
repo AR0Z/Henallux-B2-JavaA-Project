@@ -1,6 +1,9 @@
 package DataAccess;
 
-import Exceptions.*;
+import Exceptions.ConnectionException;
+import Exceptions.GetAllCategoriesException;
+import Exceptions.GetCategoryByIdException;
+import Exceptions.GetSuppliersByCategoryException;
 import Model.Category;
 import Model.SupplierByCategory;
 

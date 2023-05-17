@@ -1,13 +1,14 @@
 package DataAccess;
 
 import Exceptions.ConnectionException;
-import Exceptions.DBExceptions;
 import Exceptions.GetAllSuppliersException;
 import Model.Supplier;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.CompletionException;
 
 
 public class SupplierDBAccess implements SupplierDAO {

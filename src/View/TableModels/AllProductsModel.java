@@ -5,7 +5,6 @@ import Model.Product;
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AllProductsModel extends AbstractTableModel {
     private ArrayList<String> columnNames;

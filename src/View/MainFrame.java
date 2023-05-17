@@ -3,7 +3,6 @@ package View;
 import Controller.ApplicationController;
 import Exceptions.CloseConnectionException;
 import Exceptions.ConnectionException;
-import Exceptions.DBExceptions;
 
 import javax.swing.*;
 import java.awt.*;

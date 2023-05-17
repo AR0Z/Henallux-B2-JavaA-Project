@@ -1,7 +1,9 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.*;
+import Exceptions.ConnectionException;
+import Exceptions.GetCategoryByIdException;
+import Exceptions.GetSuppliersByCategoryException;
 import Model.Category;
 import Model.SupplierByCategory;
 import View.ComboBox.ComboBoxCategories;

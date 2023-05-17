@@ -3,7 +3,7 @@ package View.ComboBox;
 import Controller.ApplicationController;
 import Exceptions.ConnectionException;
 import Exceptions.GetAllSuppliersException;
-import Model.*;
+import Model.Supplier;
 
 import javax.swing.*;
 import java.util.ArrayList;
