@@ -1,7 +1,7 @@
 package View.ComboBox;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.GetAllCategoriesException;
 import Model.Category;
 
 import javax.swing.*;
@@ -25,8 +25,7 @@ public class ComboBoxCategories extends JComboBox {
             for (Category category : categories) {
                 this.addItem(category.getLabel() + " (" + category.getId() + ")");
             }
-        } catch (DBExceptions e) {
-            e.printStackTrace();
+        } catch (GetAllCategoriesException e) {
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

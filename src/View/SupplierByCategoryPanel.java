@@ -1,7 +1,10 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.GetAllSuppliersException;
+import Exceptions.GetCategoryByIdException;
+import Exceptions.GetCustomerByIdException;
+import Exceptions.GetSuppliersByCategoryException;
 import Model.Category;
 import Model.SupplierByCategory;
 import View.ComboBox.ComboBoxCategories;
@@ -32,8 +35,7 @@ public class SupplierByCategoryPanel extends JPanel {
                 try {
                     Category category = controller.getCategoryById(comboBoxCategories.getId());
                     updateTable(category);
-                } catch (DBExceptions e) {
-                    e.printStackTrace();
+                } catch (GetCategoryByIdException e) {
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
 
@@ -69,8 +71,7 @@ public class SupplierByCategoryPanel extends JPanel {
                 model.update(suppliersByCategory);
             }
 
-        } catch (DBExceptions e) {
-            e.printStackTrace();
+        } catch (GetSuppliersByCategoryException e) {
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

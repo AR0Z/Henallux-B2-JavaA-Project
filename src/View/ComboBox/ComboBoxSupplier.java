@@ -1,7 +1,7 @@
 package View.ComboBox;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.GetAllSuppliersException;
 import Model.*;
 
 import javax.swing.*;
@@ -25,8 +25,7 @@ public class ComboBoxSupplier extends JComboBox {
             for (Supplier supplier : suppliers) {
                 addItem(supplier.getName() + " (" + supplier.getId() + ")");
             }
-        } catch (DBExceptions e) {
-            e.printStackTrace();
+        } catch (GetAllSuppliersException e) {
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

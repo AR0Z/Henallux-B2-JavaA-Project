@@ -1,7 +1,10 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.GetAllCategoriesException;
+import Exceptions.GetAllSuppliersException;
+import Exceptions.GetProductByIdException;
+import Exceptions.GetProductsByFilterException;
 import Model.Category;
 import Model.Filter;
 import Model.Supplier;
@@ -110,8 +113,8 @@ public class StatisticsPanel extends JPanel {
                 centerPanel.add(new JScrollPane(table));
                 centerPanel.revalidate();
                 centerPanel.repaint();
-            } catch (DBExceptions dbExceptions) {
-                JOptionPane.showMessageDialog(null, dbExceptions.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (GetAllCategoriesException | GetAllSuppliersException | GetProductsByFilterException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

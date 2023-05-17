@@ -1,6 +1,7 @@
 package DataAccess;
 
 import Exceptions.DBExceptions;
+import Exceptions.GetAllSuppliersException;
 import Model.Supplier;
 
 import java.sql.*;
@@ -19,7 +20,7 @@ public class SupplierDBAccess implements SupplierDAO {
 
     }
     @Override
-    public ArrayList<Supplier> getAllSuppliers() throws DBExceptions {
+    public ArrayList<Supplier> getAllSuppliers() throws GetAllSuppliersException {
         ArrayList<Supplier> suppliers = new ArrayList<>();
         try {
             String sqlInstruction = "select * from supplier;";
@@ -31,7 +32,7 @@ public class SupplierDBAccess implements SupplierDAO {
                 suppliers.add(supplier);
             }
         } catch (SQLException e) {
-            throw new DBExceptions(e.getMessage());
+            throw new GetAllSuppliersException();
         }
         return suppliers;
     }

@@ -1,7 +1,8 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.AddProductException;
+import Exceptions.GetCategoryByIdException;
 import Model.Category;
 import Model.Product;
 import View.ComboBox.ComboBoxCategories;
@@ -154,8 +155,8 @@ public class AddProductPanel extends JPanel {
                         JOptionPane.showMessageDialog(null, "Produit ajouté avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
                         clear();
                         controller.addProduct(product);
-                    } catch (DBExceptions e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur DB", JOptionPane.ERROR_MESSAGE);
+                    } catch (GetCategoryByIdException | AddProductException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }

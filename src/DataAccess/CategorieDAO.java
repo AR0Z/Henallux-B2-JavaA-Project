@@ -1,15 +1,17 @@
 package DataAccess;
 
-import Exceptions.DBExceptions;
+import Exceptions.GetAllCategoriesException;
+import Exceptions.GetCategoryByIdException;
+import Exceptions.GetSuppliersByCategoryException;
 import Model.Category;
 import Model.SupplierByCategory;
 
 import java.util.ArrayList;
 
 public interface CategorieDAO {
-    Category getCategoryById(int id) throws DBExceptions;
+    Category getCategoryById(int id) throws GetCategoryByIdException;
 
-    ArrayList<Category> getAllCategories() throws DBExceptions;
+    ArrayList<Category> getAllCategories() throws GetAllCategoriesException;
 
-    public ArrayList<SupplierByCategory> getSuppliersByCategory(int id) throws DBExceptions;
+    public ArrayList<SupplierByCategory> getSuppliersByCategory(int id) throws GetSuppliersByCategoryException;
 }

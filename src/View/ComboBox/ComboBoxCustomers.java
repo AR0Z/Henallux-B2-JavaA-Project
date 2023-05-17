@@ -1,7 +1,7 @@
 package View.ComboBox;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.GetAllCustomersException;
 import Model.Customer;
 
 import javax.swing.*;
@@ -25,8 +25,7 @@ public class ComboBoxCustomers extends JComboBox {
             for (Customer customer : customers) {
                 this.addItem(customer.getName() + " (" + customer.getId() + ")");
             }
-        } catch (DBExceptions e) {
-            e.printStackTrace();
+        } catch (GetAllCustomersException e) {
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

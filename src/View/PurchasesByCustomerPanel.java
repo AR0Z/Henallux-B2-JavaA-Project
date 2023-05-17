@@ -1,7 +1,8 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.GetBoughtHistoryException;
+import Exceptions.GetCustomerByIdException;
 import Model.Customer;
 import Model.Purchase;
 import View.ComboBox.ComboBoxCustomers;
@@ -32,8 +33,7 @@ public class PurchasesByCustomerPanel extends JPanel {
                 try {
                     Customer customer = controller.getCustomerById(comboBoxCustomers.getId());
                     updateTable(customer);
-                } catch (DBExceptions e) {
-                    e.printStackTrace();
+                } catch (GetCustomerByIdException e) {
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
 
@@ -68,8 +68,7 @@ public class PurchasesByCustomerPanel extends JPanel {
             }else{
                 model.update(searchBoughtHistories);
             }
-        } catch (DBExceptions e) {
-            e.printStackTrace();
+        } catch (GetBoughtHistoryException e) {
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

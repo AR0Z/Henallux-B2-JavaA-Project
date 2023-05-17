@@ -1,7 +1,8 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.GetCustomersWhoPurchasedProductException;
+import Exceptions.GetProductByIdException;
 import Model.CustomerByProduct;
 import Model.Product;
 import View.ComboBox.ComboBoxProducts;
@@ -32,8 +33,7 @@ public class CustomerByProductPanel extends JPanel {
                 try {
                     Product product = controller.getProductById(comboBoxProducts.getId());
                     updateTable(product);
-                } catch (DBExceptions e) {
-                    e.printStackTrace();
+                } catch (GetProductByIdException e) {
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
 
@@ -69,8 +69,7 @@ public class CustomerByProductPanel extends JPanel {
                 model.update(customerByProducts);
             }
 
-        } catch (DBExceptions e) {
-            e.printStackTrace();
+        } catch (GetCustomersWhoPurchasedProductException e) {
             JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

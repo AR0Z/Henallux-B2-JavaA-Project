@@ -1,7 +1,7 @@
 package Business;
 
 import DataAccess.*;
-import Exceptions.DBExceptions;
+import Exceptions.*;
 import Model.*;
 
 import java.util.ArrayList;
@@ -27,69 +27,69 @@ public class ApplicationManager {
 
     // Product methods
 
-    public void addProduct(Product product) throws DBExceptions {
+    public void addProduct(Product product) throws AddProductException {
         productDBAccess.addProduct(product);
     }
 
-    public void editProduct(Product product) throws DBExceptions {
+    public void editProduct(Product product) throws EditProductException {
         productDBAccess.editProduct(product);
     }
 
-    public void deleteProduct(int id) throws DBExceptions {
+    public void deleteProduct(int id) throws DeleteProductException {
         productDBAccess.deleteProduct(id);
     }
 
-    public Product getProductById(int id) throws DBExceptions {
+    public Product getProductById(int id) throws GetProductByIdException {
         return productDBAccess.getProductById(id);
     }
 
-    public ArrayList<Product> getAllProducts() throws DBExceptions {
+    public ArrayList<Product> getAllProducts() throws GetAllProductsException {
         return productDBAccess.getAllProducts();
     }
 
-    public ArrayList<CustomerByProduct> getCustomersWhoPurchasedProduct(int id) throws DBExceptions {
+    public ArrayList<CustomerByProduct> getCustomersWhoPurchasedProduct(int id) throws GetCustomersWhoPurchasedProductException {
         return productDBAccess.getCustomersWhoPurchasedProduct(id);
     }
 
-    public Boolean isArticleAvailableForDeleting(int id) throws DBExceptions {
+    public Boolean isArticleAvailableForDeleting(int id) throws IsArticleAvailableForDeletingException {
         return productDBAccess.isArticleAvailableForDeleting(id);
     }
 
     // Category methods
 
-    public Category getCategoryById(int id) throws DBExceptions {
+    public Category getCategoryById(int id) throws GetCategoryByIdException {
         return categorieDBAcces.getCategoryById(id);
     }
 
-    public ArrayList<Category> getAllCategories() throws DBExceptions {
+    public ArrayList<Category> getAllCategories() throws GetAllCategoriesException {
         return categorieDBAcces.getAllCategories();
+    }
+    public ArrayList<SupplierByCategory> getSuppliersByCategory(int id) throws GetSuppliersByCategoryException {
+        return categorieDBAcces.getSuppliersByCategory(id);
     }
 
     // Customer methods
 
-    public Customer getCustomerById(int id) throws DBExceptions {
+    public Customer getCustomerById(int id) throws GetCustomerByIdException {
         return customerDBAcces.getCustomerById(id);
     }
 
-    public ArrayList<Customer> getAllCustomers() throws DBExceptions {
+    public ArrayList<Customer> getAllCustomers() throws GetAllCustomersException {
         return customerDBAcces.getAllCustomers();
     }
 
-    public ArrayList<SupplierByCategory> getSuppliersByCategory(int id) throws DBExceptions {
-        return categorieDBAcces.getSuppliersByCategory(id);
-    }
 
-    public ArrayList<Purchase> getBoughtHistory(int id) throws DBExceptions {
+    public ArrayList<Purchase> getBoughtHistory(int id) throws GetBoughtHistoryException {
         return customerDBAcces.getBoughtHistory(id);
     }
 
     // Supplier methods
 
-    public ArrayList<Supplier> getAllSuppliers() throws DBExceptions{
+    public ArrayList<Supplier> getAllSuppliers() throws GetAllSuppliersException {
         return supplierDBAccess.getAllSuppliers();
     }
 
-    public ArrayList<ProductByFilter> getProductsByFilter(Filter filter) throws DBExceptions {
+    public ArrayList<ProductByFilter> getProductsByFilter(Filter filter) throws GetProductsByFilterException {
         return productDBAccess.getProductsByFilter(filter);
     }
 }

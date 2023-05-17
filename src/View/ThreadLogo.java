@@ -1,5 +1,7 @@
 package View;
 
+import javax.swing.*;
+
 public class ThreadLogo extends Thread {
     private MainPanel mainPanel;
 
@@ -18,7 +20,7 @@ public class ThreadLogo extends Thread {
                     i = 1;
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Il est impossible de créer le thread du logo ", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

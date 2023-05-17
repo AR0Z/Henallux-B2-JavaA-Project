@@ -1,7 +1,9 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.EditProductException;
+import Exceptions.GetCategoryByIdException;
+import Exceptions.GetProductByIdException;
 import Model.Category;
 import Model.Product;
 import View.ComboBox.ComboBoxCategories;
@@ -9,7 +11,6 @@ import View.ComboBox.ComboBoxProducts;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -38,8 +39,7 @@ public class EditProductPanel extends JPanel {
                 try {
                     Product product = controller.getProductById(comboBoxProducts.getId());
                     updateFields(product);
-                } catch (DBExceptions e) {
-                    e.printStackTrace();
+                } catch (GetProductByIdException e) {
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } else clear();
@@ -181,8 +181,7 @@ public class EditProductPanel extends JPanel {
                         clear();
                         comboBoxProducts.update();
                         JOptionPane.showMessageDialog(null, "Produit modifié avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (DBExceptions e) {
-                        e.printStackTrace();
+                    } catch (GetCategoryByIdException | EditProductException e) {
                         JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                 }

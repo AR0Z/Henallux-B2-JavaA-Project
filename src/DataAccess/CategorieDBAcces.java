@@ -1,6 +1,9 @@
 package DataAccess;
 
 import Exceptions.DBExceptions;
+import Exceptions.GetAllCategoriesException;
+import Exceptions.GetCategoryByIdException;
+import Exceptions.GetSuppliersByCategoryException;
 import Model.Category;
 import Model.SupplierByCategory;
 
@@ -23,7 +26,7 @@ public class CategorieDBAcces implements CategorieDAO {
     }
 
     @Override
-    public Category getCategoryById(int id) throws DBExceptions {
+    public Category getCategoryById(int id) throws GetCategoryByIdException {
         Category category = null;
         try {
             String sqlInstruction = "select * from category where id = ?;";
@@ -35,13 +38,13 @@ public class CategorieDBAcces implements CategorieDAO {
                 category.setId(data.getInt("id"));
                 category.setLabel(data.getString("label"));
             }
-        } catch (SQLException e) {
-            throw new DBExceptions(e.getMessage());
+        } catch (SQLException exception) {
+            throw new GetCategoryByIdException();
         }
         return category;
     }
 
-    public ArrayList<Category> getAllCategories() throws DBExceptions {
+    public ArrayList<Category> getAllCategories() throws GetAllCategoriesException {
         ArrayList<Category> categories = new ArrayList<>();
         try {
             String sqlInstruction = "select * from category;";
@@ -55,13 +58,13 @@ public class CategorieDBAcces implements CategorieDAO {
                 categories.add(category);
             }
         } catch (SQLException e) {
-            throw new DBExceptions(e.getMessage());
+            throw new GetAllCategoriesException();
         }
         return categories;
     }
 
     @Override
-    public ArrayList<SupplierByCategory> getSuppliersByCategory(int id) throws DBExceptions {
+    public ArrayList<SupplierByCategory> getSuppliersByCategory(int id) throws GetSuppliersByCategoryException {
         ArrayList<SupplierByCategory> suppliersByCategory = new ArrayList<>();
 
         try {
@@ -78,7 +81,7 @@ public class CategorieDBAcces implements CategorieDAO {
                 suppliersByCategory.add(supplierByCategory);
             }
         } catch (SQLException e) {
-            throw new DBExceptions(e.getMessage());
+            throw new GetSuppliersByCategoryException();
         }
 
         return suppliersByCategory;

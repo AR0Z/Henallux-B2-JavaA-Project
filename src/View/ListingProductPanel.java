@@ -1,7 +1,8 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.GetAllCategoriesException;
+import Exceptions.GetAllProductsException;
 import Model.Category;
 import Model.Product;
 import View.TableModels.AllProductsModel;
@@ -54,8 +55,7 @@ public class ListingProductPanel extends JPanel {
                 scrollPane.setViewportView(table);
                 revalidate();
                 repaint();
-            } catch (DBExceptions e) {
-                e.printStackTrace();
+            } catch (GetAllProductsException | GetAllCategoriesException e) {
                 JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });

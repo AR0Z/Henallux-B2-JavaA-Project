@@ -1,7 +1,9 @@
 package View;
 
 import Controller.ApplicationController;
-import Exceptions.DBExceptions;
+import Exceptions.DeleteProductException;
+import Exceptions.GetProductByIdException;
+import Exceptions.IsArticleAvailableForDeletingException;
 import Model.Product;
 import View.ComboBox.ComboBoxProducts;
 
@@ -25,8 +27,7 @@ public class RemoveProductPanel extends JPanel {
             if (comboBoxProducts.getSelectedIndex() >= 1) {
                 try {
                     product = controller.getProductById(comboBoxProducts.getId());
-                } catch (DBExceptions e) {
-                    e.printStackTrace();
+                } catch (GetProductByIdException e) {
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -59,13 +60,13 @@ public class RemoveProductPanel extends JPanel {
                             controller.deleteProduct(product.getId());
                             JOptionPane.showMessageDialog(this, "Le produit a bien été supprimé !", "Succès", JOptionPane.INFORMATION_MESSAGE);
                             comboBoxProducts.update();
-                        } catch (DBExceptions e) {
-                            e.printStackTrace();
+                        } catch (DeleteProductException e) {
                             JOptionPane.showMessageDialog(this, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
-                } catch (DBExceptions e) {
+            } catch (IsArticleAvailableForDeletingException e) {
+                JOptionPane.showMessageDialog(this, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Veuillez sélectionner un produit !", "Erreur", JOptionPane.ERROR_MESSAGE);

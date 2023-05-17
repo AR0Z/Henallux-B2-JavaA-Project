@@ -1,6 +1,9 @@
 package DataAccess;
 
 import Exceptions.DBExceptions;
+import Exceptions.GetAllCustomersException;
+import Exceptions.GetBoughtHistoryException;
+import Exceptions.GetCustomerByIdException;
 import Model.Customer;
 import Model.Purchase;
 
@@ -22,7 +25,7 @@ public class CustomerDBAcces implements CustomerDAO {
 
     }
 
-    public Customer getCustomerById(int id) throws DBExceptions {
+    public Customer getCustomerById(int id) throws GetCustomerByIdException {
         Customer customer = null;
 
         try {
@@ -35,13 +38,13 @@ public class CustomerDBAcces implements CustomerDAO {
                 customer = new Customer(data.getInt("id"), data.getString("last_name"), data.getString("first_name"), data.getString("email"), data.getInt("locality_id"), data.getString("phone"), data.getString("street_and_number"));
             }
         } catch (SQLException e) {
-            throw new DBExceptions(e.getMessage());
+            throw new GetCustomerByIdException();
         }
 
         return customer;
     }
 
-    public ArrayList<Customer> getAllCustomers() throws DBExceptions {
+    public ArrayList<Customer> getAllCustomers() throws GetAllCustomersException {
         ArrayList<Customer> customers = new ArrayList<>();
 
         try {
@@ -55,14 +58,14 @@ public class CustomerDBAcces implements CustomerDAO {
                 customers.add(customer);
             }
         } catch (SQLException e) {
-            throw new DBExceptions(e.getMessage());
+            throw new GetAllCustomersException();
         }
 
         return customers;
     }
 
     @Override
-    public ArrayList<Purchase> getBoughtHistory(int id) throws DBExceptions {
+    public ArrayList<Purchase> getBoughtHistory(int id) throws GetBoughtHistoryException {
         ArrayList<Purchase> purchaseList = new ArrayList<>();
 
         try {
@@ -79,7 +82,7 @@ public class CustomerDBAcces implements CustomerDAO {
                 purchaseList.add(purchase);
             }
         } catch (SQLException e) {
-            throw new DBExceptions(e.getMessage());
+            throw new GetBoughtHistoryException();
         }
 
         return purchaseList;
