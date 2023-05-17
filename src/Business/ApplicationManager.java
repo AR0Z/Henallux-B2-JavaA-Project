@@ -7,11 +7,11 @@ import Model.*;
 import java.util.ArrayList;
 
 public class ApplicationManager {
-    private ProductDBAccess productDBAccess;
-    private CategorieDBAcces categorieDBAcces;
-    private CustomerDBAcces customerDBAcces;
-    private SupplierDBAccess supplierDBAccess;
-    private DBAccess dbAccess;
+    private ProductDAO productDBAccess;
+    private CategorieDAO categorieDBAcces;
+    private CustomerDAO customerDBAcces;
+    private SupplierDAO supplierDBAccess;
+    private DataAccess dbAccess;
 
     public ApplicationManager() {
         productDBAccess = new ProductDBAccess();
@@ -21,7 +21,7 @@ public class ApplicationManager {
         dbAccess = new DBAccess();
     }
 
-    public void closeConnection() {
+    public void closeConnection() throws DBExceptions {
         dbAccess.closeConnection();
     }
 

@@ -22,10 +22,10 @@ public class Product {
         this.id = id;
         this.name = name;
         this.color = color;
-        this.price = price;
-        this.cost = cost;
-        this.size = size;
-        this.stock = stock;
+        setPrice(price);
+        setCost(cost);
+        setSize(size);
+        setStock(stock);
         this.additionDate = additionDate;
         this.isShippable = isShippable;
         this.description = description;

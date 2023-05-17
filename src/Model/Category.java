@@ -6,9 +6,9 @@ public class Category {
     private String description;
 
     public Category(int id, String label, String description) {
-        this.id = id;
-        this.label = label;
-        this.description = description;
+        setId(id);
+        setLabel(label);
+        setDescription(description);
     }
 
     public Category(int id, String label) {

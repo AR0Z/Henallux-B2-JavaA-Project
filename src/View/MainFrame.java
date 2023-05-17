@@ -1,6 +1,7 @@
 package View;
 
 import Controller.ApplicationController;
+import Exceptions.DBExceptions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,11 @@ public class MainFrame extends JFrame {
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                controller.closeConnection();
+                try{
+                    controller.closeConnection();
+                } catch (DBExceptions dbExceptions) {
+                    dbExceptions.printStackTrace();
+                }
                 System.exit(0);
             }
         });
@@ -67,7 +72,11 @@ public class MainFrame extends JFrame {
         MainPanel mainPanel = new MainPanel();
 
         exitProgramItem.addActionListener(e -> {
-            controller.closeConnection();
+            try{
+                controller.closeConnection();
+            } catch (DBExceptions dbExceptions) {
+                dbExceptions.printStackTrace();
+            }
             System.exit(0);
         });
 

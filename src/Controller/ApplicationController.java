@@ -13,7 +13,7 @@ public class ApplicationController {
         applicationManager = new ApplicationManager();
     }
 
-    public void closeConnection() {
+    public void closeConnection() throws DBExceptions {
         applicationManager.closeConnection();
     }
 

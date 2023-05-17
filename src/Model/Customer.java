@@ -20,10 +20,6 @@ public class Customer {
         this.streetAndNumber = streetAndNumber;
     }
 
-    public Customer(int id, String lastName, String firstName, String email, int localityFK, String streetAndNumber) {
-        this(id, lastName, firstName, email, localityFK, null, streetAndNumber);
-    }
-
     public int getId() {
         return id;
     }
