@@ -26,7 +26,7 @@ public class EditProductPanel extends JPanel {
     private JButton submitButton, clearButton;
     private JScrollPane scrollPane;
     private ComboBoxProducts comboBoxProducts;
-    private SimpleDateFormat dateFormat ;
+    private SimpleDateFormat dateFormat;
     public EditProductPanel() {
         try {
             controller = new ApplicationController();
@@ -90,7 +90,7 @@ public class EditProductPanel extends JPanel {
 
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateLabel = new JLabel("Date d'ajout jj/mm/aaaa:", SwingConstants.RIGHT);
-        dateField = new JFormattedTextField( dateFormat );
+        dateField = new JFormattedTextField(dateFormat);
 
         add(dateLabel);
         add(dateField);
@@ -133,7 +133,7 @@ public class EditProductPanel extends JPanel {
         imgLinkField.setText(product.getImgLink());
     }
 
-    private void submit(){
+    private void submit() {
         if (!checkFields()) {
             JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs obligatoire.", "Erreur", JOptionPane.ERROR_MESSAGE);
         } else {

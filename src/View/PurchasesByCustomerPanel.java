@@ -41,9 +41,7 @@ public class PurchasesByCustomerPanel extends JPanel {
                 } catch (GetCustomerByIdException e) {
                     JOptionPane.showMessageDialog(null, "Erreur : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
-
             }
-            ;
         });
 
         topPanel.add(comboBoxCustomers);
